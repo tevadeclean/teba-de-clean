@@ -15,6 +15,13 @@
       "when": 1770033362174,
       "tag": "0001_noisy_ironclad",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "5",
+      "when": 1770035363062,
+      "tag": "0002_friendly_penance",
+      "breakpoints": true
     }
   ]
 }

@@ -17,6 +17,8 @@ import FAQ from "./pages/FAQ";
 import Contact from "./pages/Contact";
 import Blog from "./pages/Blog";
 import BlogDetail from "./pages/BlogDetail";
+import DashboardLayout from "./components/DashboardLayout";
+import AdminTestimonials from "./pages/AdminTestimonials";
 
 function Router() {
   return (
@@ -34,6 +36,11 @@ function Router() {
         <Route path={"/contact"} component={Contact} />
         <Route path={"/blog"} component={Blog} />
         <Route path={"/blog/:id"} component={BlogDetail} />
+        <Route path={"/admin/testimonials"} component={() => (
+          <DashboardLayout>
+            <AdminTestimonials />
+          </DashboardLayout>
+        )} />
         <Route path={"/404"} component={NotFound} />
         {/* Final fallback route */}
         <Route component={NotFound} />

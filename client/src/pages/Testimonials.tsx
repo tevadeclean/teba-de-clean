@@ -28,7 +28,16 @@ export default function Testimonials() {
           ) : testimonials && testimonials.length > 0 ? (
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
               {testimonials.map((testimonial) => (
-                <Card key={testimonial.id} className="hover:shadow-lg transition-shadow">
+                <Card key={testimonial.id} className="hover:shadow-lg transition-shadow overflow-hidden">
+                  {testimonial.imageUrl && (
+                    <div className="h-48 overflow-hidden bg-muted">
+                      <img
+                        src={testimonial.imageUrl}
+                        alt={testimonial.customerName}
+                        className="w-full h-full object-cover"
+                      />
+                    </div>
+                  )}
                   <CardContent className="p-6">
                     <div className="flex items-center gap-1 mb-4">
                       {Array.from({ length: 5 }).map((_, i) => (
@@ -49,6 +58,13 @@ export default function Testimonials() {
                         {testimonial.serviceType === "residential" ? "家庭用" : "業務用"}
                       </div>
                     </div>
+                    {testimonial.sourceLabel && (
+                      <div className="mt-3 pt-3 border-t">
+                        <p className="text-xs text-muted-foreground italic">
+                          {testimonial.sourceLabel}
+                        </p>
+                      </div>
+                    )}
                   </CardContent>
                 </Card>
               ))}

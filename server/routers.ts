@@ -38,6 +38,9 @@ export const appRouter = router({
         rating: z.number().min(1).max(5),
         comment: z.string(),
         serviceType: z.enum(["residential", "commercial"]),
+        imageUrl: z.string().optional(),
+        source: z.enum(["curama", "google", "manual"]).optional(),
+        sourceLabel: z.string().optional(),
         isPublished: z.number().optional(),
       }))
       .mutation(async ({ input, ctx }) => {
@@ -55,6 +58,9 @@ export const appRouter = router({
         rating: z.number().min(1).max(5).optional(),
         comment: z.string().optional(),
         serviceType: z.enum(["residential", "commercial"]).optional(),
+        imageUrl: z.string().optional(),
+        source: z.enum(["curama", "google", "manual"]).optional(),
+        sourceLabel: z.string().optional(),
         isPublished: z.number().optional(),
       }))
       .mutation(async ({ input, ctx }) => {

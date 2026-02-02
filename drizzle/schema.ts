@@ -34,6 +34,9 @@ export const testimonials = mysqlTable("testimonials", {
   rating: int("rating").notNull(), // 1-5の評価
   comment: text("comment").notNull(),
   serviceType: mysqlEnum("serviceType", ["residential", "commercial"]).notNull(), // 家庭用 or 業務用
+  imageUrl: varchar("imageUrl", { length: 500 }), // 顧客写真のURL
+  source: mysqlEnum("source", ["curama", "google", "manual"]).default("manual").notNull(), // レビューソース
+  sourceLabel: varchar("sourceLabel", { length: 100 }), // 「くらしのマーケットから引用」など
   isPublished: int("isPublished").default(1).notNull(), // 1: 公開, 0: 非公開
   createdAt: timestamp("createdAt").defaultNow().notNull(),
   updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
