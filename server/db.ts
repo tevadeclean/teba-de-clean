@@ -1,6 +1,6 @@
-import { eq } from "drizzle-orm";
+import { eq, desc, and } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/mysql2";
-import { InsertUser, users } from "../drizzle/schema";
+import { InsertUser, users, testimonials, InsertTestimonial, blogPosts, InsertBlogPost, bookings, InsertBooking } from "../drizzle/schema";
 import { ENV } from './_core/env';
 
 let _db: ReturnType<typeof drizzle> | null = null;
@@ -89,4 +89,123 @@ export async function getUserByOpenId(openId: string) {
   return result.length > 0 ? result[0] : undefined;
 }
 
-// TODO: add feature queries here as your schema grows.
+// Testimonials (お客様の声)
+export async function getPublishedTestimonials() {
+  const db = await getDb();
+  if (!db) return [];
+  
+  return db.select().from(testimonials).where(eq(testimonials.isPublished, 1)).orderBy(desc(testimonials.createdAt));
+}
+
+export async function getAllTestimonials() {
+  const db = await getDb();
+  if (!db) return [];
+  
+  return db.select().from(testimonials).orderBy(desc(testimonials.createdAt));
+}
+
+export async function createTestimonial(data: InsertTestimonial) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  
+  await db.insert(testimonials).values(data);
+}
+
+export async function updateTestimonial(id: number, data: Partial<InsertTestimonial>) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  
+  await db.update(testimonials).set(data).where(eq(testimonials.id, id));
+}
+
+export async function deleteTestimonial(id: number) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  
+  await db.delete(testimonials).where(eq(testimonials.id, id));
+}
+
+// Blog Posts (作業実績)
+export async function getPublishedBlogPosts(category?: string) {
+  const db = await getDb();
+  if (!db) return [];
+  
+  if (category) {
+    return db.select().from(blogPosts)
+      .where(and(
+        eq(blogPosts.isPublished, 1),
+        eq(blogPosts.category, category as any)
+      ))
+      .orderBy(desc(blogPosts.createdAt));
+  }
+  
+  return db.select().from(blogPosts)
+    .where(eq(blogPosts.isPublished, 1))
+    .orderBy(desc(blogPosts.createdAt));
+}
+
+export async function getAllBlogPosts() {
+  const db = await getDb();
+  if (!db) return [];
+  
+  return db.select().from(blogPosts).orderBy(desc(blogPosts.createdAt));
+}
+
+export async function getBlogPostById(id: number) {
+  const db = await getDb();
+  if (!db) return undefined;
+  
+  const result = await db.select().from(blogPosts).where(eq(blogPosts.id, id)).limit(1);
+  return result.length > 0 ? result[0] : undefined;
+}
+
+export async function createBlogPost(data: InsertBlogPost) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  
+  await db.insert(blogPosts).values(data);
+}
+
+export async function updateBlogPost(id: number, data: Partial<InsertBlogPost>) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  
+  await db.update(blogPosts).set(data).where(eq(blogPosts.id, id));
+}
+
+export async function deleteBlogPost(id: number) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  
+  await db.delete(blogPosts).where(eq(blogPosts.id, id));
+}
+
+// Bookings (予約)
+export async function getAllBookings() {
+  const db = await getDb();
+  if (!db) return [];
+  
+  return db.select().from(bookings).orderBy(desc(bookings.createdAt));
+}
+
+export async function getBookingById(id: number) {
+  const db = await getDb();
+  if (!db) return undefined;
+  
+  const result = await db.select().from(bookings).where(eq(bookings.id, id)).limit(1);
+  return result.length > 0 ? result[0] : undefined;
+}
+
+export async function createBooking(data: InsertBooking) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  
+  await db.insert(bookings).values(data);
+}
+
+export async function updateBookingStatus(id: number, status: "pending" | "confirmed" | "completed" | "cancelled") {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  
+  await db.update(bookings).set({ status }).where(eq(bookings.id, id));
+}

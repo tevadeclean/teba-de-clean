@@ -1,10 +1,12 @@
 import { COOKIE_NAME } from "@shared/const";
 import { getSessionCookieOptions } from "./_core/cookies";
 import { systemRouter } from "./_core/systemRouter";
-import { publicProcedure, router } from "./_core/trpc";
+import { publicProcedure, protectedProcedure, router } from "./_core/trpc";
+import { z } from "zod";
+import * as db from "./db";
+import { notifyOwner } from "./_core/notification";
 
 export const appRouter = router({
-    // if you need to use socket.io, read and register route in server/_core/index.ts, all api should start with '/api/' so that the gateway can route correctly
   system: systemRouter,
   auth: router({
     me: publicProcedure.query(opts => opts.ctx.user),
@@ -17,12 +19,195 @@ export const appRouter = router({
     }),
   }),
 
-  // TODO: add feature routers here, e.g.
-  // todo: router({
-  //   list: protectedProcedure.query(({ ctx }) =>
-  //     db.getUserTodos(ctx.user.id)
-  //   ),
-  // }),
+  // お客様の声
+  testimonials: router({
+    list: publicProcedure.query(async () => {
+      return db.getPublishedTestimonials();
+    }),
+    
+    listAll: protectedProcedure.query(async ({ ctx }) => {
+      if (ctx.user.role !== 'admin') {
+        throw new Error('Admin only');
+      }
+      return db.getAllTestimonials();
+    }),
+    
+    create: protectedProcedure
+      .input(z.object({
+        customerName: z.string(),
+        rating: z.number().min(1).max(5),
+        comment: z.string(),
+        serviceType: z.enum(["residential", "commercial"]),
+        isPublished: z.number().optional(),
+      }))
+      .mutation(async ({ input, ctx }) => {
+        if (ctx.user.role !== 'admin') {
+          throw new Error('Admin only');
+        }
+        await db.createTestimonial(input);
+        return { success: true };
+      }),
+    
+    update: protectedProcedure
+      .input(z.object({
+        id: z.number(),
+        customerName: z.string().optional(),
+        rating: z.number().min(1).max(5).optional(),
+        comment: z.string().optional(),
+        serviceType: z.enum(["residential", "commercial"]).optional(),
+        isPublished: z.number().optional(),
+      }))
+      .mutation(async ({ input, ctx }) => {
+        if (ctx.user.role !== 'admin') {
+          throw new Error('Admin only');
+        }
+        const { id, ...data } = input;
+        await db.updateTestimonial(id, data);
+        return { success: true };
+      }),
+    
+    delete: protectedProcedure
+      .input(z.object({ id: z.number() }))
+      .mutation(async ({ input, ctx }) => {
+        if (ctx.user.role !== 'admin') {
+          throw new Error('Admin only');
+        }
+        await db.deleteTestimonial(input.id);
+        return { success: true };
+      }),
+  }),
+
+  // 作業実績ブログ
+  blog: router({
+    list: publicProcedure
+      .input(z.object({
+        category: z.string().optional(),
+      }).optional())
+      .query(async ({ input }) => {
+        return db.getPublishedBlogPosts(input?.category);
+      }),
+    
+    getById: publicProcedure
+      .input(z.object({ id: z.number() }))
+      .query(async ({ input }) => {
+        return db.getBlogPostById(input.id);
+      }),
+    
+    listAll: protectedProcedure.query(async ({ ctx }) => {
+      if (ctx.user.role !== 'admin') {
+        throw new Error('Admin only');
+      }
+      return db.getAllBlogPosts();
+    }),
+    
+    create: protectedProcedure
+      .input(z.object({
+        title: z.string(),
+        content: z.string(),
+        category: z.enum([
+          "residential_small",
+          "residential_medium",
+          "residential_large",
+          "commercial_small",
+          "commercial_medium",
+          "commercial_large",
+        ]),
+        area: z.string().optional(),
+        price: z.number().optional(),
+        location: z.string().optional(),
+        imageUrl: z.string().optional(),
+        isPublished: z.number().optional(),
+      }))
+      .mutation(async ({ input, ctx }) => {
+        if (ctx.user.role !== 'admin') {
+          throw new Error('Admin only');
+        }
+        await db.createBlogPost(input);
+        return { success: true };
+      }),
+    
+    update: protectedProcedure
+      .input(z.object({
+        id: z.number(),
+        title: z.string().optional(),
+        content: z.string().optional(),
+        category: z.enum([
+          "residential_small",
+          "residential_medium",
+          "residential_large",
+          "commercial_small",
+          "commercial_medium",
+          "commercial_large",
+        ]).optional(),
+        area: z.string().optional(),
+        price: z.number().optional(),
+        location: z.string().optional(),
+        imageUrl: z.string().optional(),
+        isPublished: z.number().optional(),
+      }))
+      .mutation(async ({ input, ctx }) => {
+        if (ctx.user.role !== 'admin') {
+          throw new Error('Admin only');
+        }
+        const { id, ...data } = input;
+        await db.updateBlogPost(id, data);
+        return { success: true };
+      }),
+    
+    delete: protectedProcedure
+      .input(z.object({ id: z.number() }))
+      .mutation(async ({ input, ctx }) => {
+        if (ctx.user.role !== 'admin') {
+          throw new Error('Admin only');
+        }
+        await db.deleteBlogPost(input.id);
+        return { success: true };
+      }),
+  }),
+
+  // 予約フォーム
+  bookings: router({
+    create: publicProcedure
+      .input(z.object({
+        name: z.string(),
+        email: z.string().email().optional(),
+        phone: z.string(),
+        serviceType: z.enum(["residential", "commercial"]),
+        preferredDate: z.string().optional(),
+        message: z.string().optional(),
+      }))
+      .mutation(async ({ input }) => {
+        await db.createBooking(input);
+        
+        // オーナーに通知
+        await notifyOwner({
+          title: "新しい予約が入りました",
+          content: `お名前: ${input.name}\n電話番号: ${input.phone}\nサービス種別: ${input.serviceType === "residential" ? "家庭用" : "業務用"}\n希望日時: ${input.preferredDate || "未指定"}`,
+        });
+        
+        return { success: true };
+      }),
+    
+    list: protectedProcedure.query(async ({ ctx }) => {
+      if (ctx.user.role !== 'admin') {
+        throw new Error('Admin only');
+      }
+      return db.getAllBookings();
+    }),
+    
+    updateStatus: protectedProcedure
+      .input(z.object({
+        id: z.number(),
+        status: z.enum(["pending", "confirmed", "completed", "cancelled"]),
+      }))
+      .mutation(async ({ input, ctx }) => {
+        if (ctx.user.role !== 'admin') {
+          throw new Error('Admin only');
+        }
+        await db.updateBookingStatus(input.id, input.status);
+        return { success: true };
+      }),
+  }),
 });
 
 export type AppRouter = typeof appRouter;
