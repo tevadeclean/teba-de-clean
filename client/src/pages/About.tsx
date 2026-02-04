@@ -36,9 +36,9 @@ export default function About() {
                 <div className="absolute -bottom-8 -right-8 bg-white p-8 rounded-2xl shadow-xl border border-primary/10 hidden md:block max-w-xs">
                   <div className="flex items-center gap-3 mb-3">
                     <div className="w-10 h-10 rounded-full bg-accent flex items-center justify-center">
-                      <Award className="w-6 h-6 text-accent-foreground" />
+                      <Sparkles className="w-6 h-6 text-accent-foreground" />
                     </div>
-                    <span className="font-black text-lg">世界一の称号</span>
+                    <span className="font-black text-lg">プロのこだわり</span>
                   </div>
                   <p className="text-sm text-muted-foreground leading-relaxed">
                     タヒチアンダンス・ファイヤーナイフダンスで世界一を獲得。その集中力をクリーニングに。
@@ -61,7 +61,7 @@ export default function About() {
                     南大東島で生まれ育ち、現在は3歳の娘を持つパパです。娘が生まれたことをきっかけに、<strong className="text-foreground font-bold">「家族の健康を守る空間づくり」</strong>について深く考えるようになりました。
                   </p>
                   <p>
-                    沖縄の高温多湿な環境では、エアコンのカビや汚れは避けられません。しかし、それは大切な家族の健康に直結します。「きれいな空気で家族を元気にしたい」という想いから、大手清掃店での厳しい修行を経て、これまでに<strong className="text-foreground font-bold text-primary">700台以上</strong>の施工実績を積み上げてきました。
+                    沖縄の高温多湿な環境では、エアコンのカビや汚れは避けられません。しかし、それは大切な家族の健康に直結します。「きれいな空気で家族を元気にしたい」という想いから、大手清掃店での厳しい修行を経て、これまでに<strong className="text-foreground font-bold text-primary">900台以上</strong>の施工実績を積み上げてきました。
                   </p>
                   <p>
                     実は、私はタヒチアンダンサー・ファイヤーナイフダンサーとしても活動しており、世界一のタイトルも獲得しています。踊りを通して磨いてきた<strong className="text-foreground font-bold">「集中力・丁寧さ・美しさへのこだわり」</strong>は、クリーニングの細部にも活かされています。
@@ -73,12 +73,12 @@ export default function About() {
 
                 <div className="mt-12 grid grid-cols-2 gap-6">
                   <div className="bg-muted/30 p-6 rounded-2xl border border-primary/5">
-                    <div className="text-3xl font-black text-primary mb-1">700+</div>
+                    <div className="text-3xl font-black text-primary mb-1">900+</div>
                     <div className="text-sm font-bold text-muted-foreground">累計施工台数</div>
                   </div>
                   <div className="bg-muted/30 p-6 rounded-2xl border border-primary/5">
-                    <div className="text-3xl font-black text-accent mb-1">No.1</div>
-                    <div className="text-sm font-bold text-muted-foreground">世界大会優勝実績</div>
+                    <div className="text-3xl font-black text-accent mb-1">World No.1</div>
+                    <div className="text-sm font-bold text-muted-foreground">ダンス世界大会実績</div>
                   </div>
                 </div>
               </div>
@@ -100,7 +100,7 @@ export default function About() {
                 {
                   icon: <Target className="w-10 h-10" />,
                   title: "確かな技術力",
-                  description: "大手清掃店での修行と700台以上の経験。最新機種から古い機種まで、安心してお任せください。"
+                  description: "大手清掃店での修行と900台以上の経験。最新機種から古い機種まで、安心してお任せください。"
                 }
               ].map((item, i) => (
                 <Card key={i} className="border-none shadow-xl bg-white hover:-translate-y-2 transition-transform duration-300">
@@ -120,7 +120,7 @@ export default function About() {
       <section className="py-24 bg-muted/30">
         <div className="container text-center">
           <Badge className="mb-6 bg-accent text-accent-foreground px-4 py-1 text-sm font-bold animate-pulse">
-            HPからの予約が一番安い！
+            公式サイトからの予約が一番おトクです！
           </Badge>
           <h2 className="text-3xl md:text-5xl font-black mb-8">
             店長が直接お伺いします。<br />

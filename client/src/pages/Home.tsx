@@ -16,7 +16,8 @@ import {
   Award,
   Gift,
   Baby,
-  ShieldCheck
+  ShieldCheck,
+  Info
 } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 
@@ -30,7 +31,7 @@ export default function Home() {
   const strengths = [
     {
       icon: <Award className="h-8 w-8" />,
-      title: "累計700台以上の施工実績",
+      title: "累計900台以上の施工実績",
       description: "豊富な経験に裏打ちされた確かな技術で、どんな汚れも逃しません。"
     },
     {
@@ -46,7 +47,7 @@ export default function Home() {
     {
       icon: <Gift className="h-8 w-8" />,
       title: "防カビ・抗菌コートがHP限定無料",
-      description: "HPからご予約いただいた方全員に、通常有料の防カビコートを無料で施工します。"
+      description: "公式サイトからご予約いただいた方全員に、通常有料の防カビコートを無料で施工します。"
     },
     {
       icon: <Sparkles className="h-8 w-8" />,
@@ -62,10 +63,15 @@ export default function Home() {
         <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxnIGZpbGw9IiNmZmZmZmYiIGZpbGwtb3BhY2l0eT0iMC4wNSI+PHBhdGggZD0iTTM2IDE2YzAtNC40MTggMy41ODItOCA4LThzOCAzLjU4MiA4IDgtMy41ODIgOC04IDgtOC0zLjU4Mi04LTh6bS0yMCAwYzAtNC40MTggMy41ODItOCA4LThzOCAzLjU4MiA4IDgtMy41ODIgOC04IDgtOC0zLjU4Mi04LTh6Ii8+PC9nPjwvZz48L3N2Zz4=')] opacity-30"></div>
         <div className="container relative py-24 md:py-40">
           <div className="max-w-4xl">
-            <Badge className="mb-8 bg-accent text-accent-foreground px-6 py-2 text-base font-black animate-pulse shadow-lg shadow-accent/20">
-              <Sparkles className="w-5 h-5 mr-2 inline" />
-              HPからの予約が一番安い！
-            </Badge>
+            <div className="inline-flex flex-col mb-8">
+              <Badge className="bg-accent text-accent-foreground px-6 py-2 text-base font-black animate-pulse shadow-lg shadow-accent/20 mb-2">
+                <Sparkles className="w-5 h-5 mr-2 inline" />
+                公式サイトからの予約が一番おトクです！
+              </Badge>
+              <p className="text-sm font-bold text-accent-foreground/80 ml-1">
+                ※他サイト経由より、安い料金でご案内しています。
+              </p>
+            </div>
             <h2 className="text-2xl md:text-3xl font-bold mb-6 text-accent-foreground/90 tracking-tight">
               家族の元気を空気で守る！
             </h2>
@@ -144,7 +150,7 @@ export default function Home() {
                 南大東島出身、3歳の娘を持つパパです。娘の誕生を機に「家族の健康を守る空間づくり」を志し、大手清掃店での修行を経て独立しました。
               </p>
               <p className="text-lg text-muted-foreground leading-relaxed mb-10">
-                実は世界一のダンサーとしての顔も持ち、そこで培った「集中力・丁寧さ・美しさへのこだわり」をクリーニングの細部に注いでいます。
+                実はタヒチアンダンサー・ファイヤーナイフダンサーとしても活動しており、世界一のタイトルも獲得しています。そこで培った「集中力・丁寧さ・美しさへのこだわり」をクリーニングの細部に注いでいます。
               </p>
               <Link href="/about">
                 <Button variant="outline" size="lg" className="font-bold px-8 py-6">
@@ -164,14 +170,17 @@ export default function Home() {
             <h2 className="text-4xl md:text-5xl font-black text-foreground mb-6 tracking-tight">
               <span className="text-primary">サービスメニュー</span>
             </h2>
-            <p className="text-muted-foreground text-lg">HPからのご予約が全メニュー最安値です</p>
+            <div className="bg-accent/10 border border-accent/20 rounded-2xl p-6 max-w-2xl mx-auto">
+              <p className="text-accent font-black text-xl mb-1">公式サイト（このページ）からのご予約が一番おトクです！</p>
+              <p className="text-muted-foreground font-bold">他サイト経由より、安い料金でご案内しています。</p>
+            </div>
           </div>
 
           <div className="grid md:grid-cols-2 gap-12">
             <Link href="/residential">
               <Card className="group hover:shadow-2xl transition-all duration-500 cursor-pointer border-none shadow-xl relative overflow-hidden bg-white">
                 <div className="absolute top-6 right-6">
-                  <Badge className="bg-accent text-accent-foreground font-black px-4 py-1 text-sm shadow-lg">最安値保証</Badge>
+                  <Badge className="bg-accent text-accent-foreground font-black px-4 py-1 text-sm shadow-lg">公式サイト最安値</Badge>
                 </div>
                 <CardContent className="p-12">
                   <div className="mb-8">
@@ -201,7 +210,7 @@ export default function Home() {
             <Link href="/commercial">
               <Card className="group hover:shadow-2xl transition-all duration-500 cursor-pointer border-none shadow-xl relative overflow-hidden bg-white">
                 <div className="absolute top-6 right-6">
-                  <Badge className="bg-accent text-accent-foreground font-black px-4 py-1 text-sm shadow-lg">最安値保証</Badge>
+                  <Badge className="bg-accent text-accent-foreground font-black px-4 py-1 text-sm shadow-lg">公式サイト最安値</Badge>
                 </div>
                 <CardContent className="p-12">
                   <div className="mb-8">
@@ -314,15 +323,16 @@ export default function Home() {
         <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxnIGZpbGw9IiNmZmZmZmYiIGZpbGwtb3BhY2l0eT0iMC4wNSI+PHBhdGggZD0iTTM2IDE2YzAtNC40MTggMy41ODItOCA4LThzOCAzLjU4MiA4IDgtMy41ODIgOC04IDgtOC0zLjU4Mi04LTh6bS0yMCAwYzAtNC40MTggMy41ODItOCA4LThzOCAzLjU4MiA4IDgtMy41ODIgOC04IDgtOC0zLjU4Mi04LTh6Ii8+PC9nPjwvZz48L3N2Zz4=')] opacity-20"></div>
         <div className="container relative text-center">
           <Badge className="mb-8 bg-accent text-accent-foreground px-6 py-2 text-lg font-black animate-bounce shadow-2xl shadow-accent/50">
-            HPからの予約が一番安い！
+            公式サイトからの予約が一番おトクです！
           </Badge>
           <h2 className="text-4xl md:text-6xl font-black mb-10 leading-tight tracking-tighter">
             エアコンクリーニングのご予約は<br />
             <span className="text-accent">今すぐ</span>お気軽に
           </h2>
           <p className="text-xl md:text-2xl mb-16 opacity-95 max-w-3xl mx-auto leading-relaxed">
-            HPからの予約が最安値です！さらに防カビコートも無料！<br />
-            お電話、LINE、予約フォームからお気軽にご相談ください。
+            公式サイト（このページ）からのご予約が一番おトクです！<br />
+            他サイト経由より、安い料金でご案内しています。<br />
+            さらに防カビコートも無料！お電話、LINE、予約フォームからお気軽にご相談ください。
           </p>
           <div className="flex flex-col sm:flex-row gap-8 justify-center">
             <Link href="/booking">
