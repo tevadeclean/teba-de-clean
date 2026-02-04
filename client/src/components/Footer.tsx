@@ -75,16 +75,16 @@ export default function Footer() {
               <li className="flex items-start gap-2">
                 <Phone className="h-4 w-4 mt-1 flex-shrink-0" />
                 <div>
-                  <a href="tel:098-XXX-XXXX" className="hover:text-accent transition-colors">
-                    098-XXX-XXXX
+                  <a href="tel:09059424412" className="hover:text-accent transition-colors">
+                    090-5942-4412
                   </a>
-                  <p className="text-xs opacity-80 mt-1">受付時間: 9:00〜18:00</p>
+                  <p className="text-xs opacity-80 mt-1">平日: 9:00〜18:00 / 土日祝: 9:00〜14:00</p>
                 </div>
               </li>
               <li className="flex items-start gap-2">
                 <Mail className="h-4 w-4 mt-1 flex-shrink-0" />
-                <a href="mailto:info@tebadeclean.com" className="hover:text-accent transition-colors">
-                  info@tebadeclean.com
+                <a href="mailto:office@teva-de-clean.jp" className="hover:text-accent transition-colors">
+                  office@teva-de-clean.jp
                 </a>
               </li>
               <li className="flex items-start gap-2">
@@ -93,7 +93,11 @@ export default function Footer() {
               </li>
               <li className="flex items-start gap-2">
                 <Clock className="h-4 w-4 mt-1 flex-shrink-0" />
-                <span>定休日: 日曜日</span>
+                <div>
+                  <p>平日: 9:00〜18:00</p>
+                  <p>土日祝: 9:00〜14:00</p>
+                  <p className="text-xs opacity-80 mt-1">時間外対応もご相談ください</p>
+                </div>
               </li>
             </ul>
           </div>

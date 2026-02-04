@@ -1,10 +1,8 @@
 import { Card, CardContent } from "@/components/ui/card";
-import { trpc } from "@/lib/trpc";
-import { Star, Loader2 } from "lucide-react";
+import { testimonials } from "@/data/siteData";
+import { Star } from "lucide-react";
 
 export default function Testimonials() {
-  const { data: testimonials, isLoading } = trpc.testimonials.list.useQuery();
-
   return (
     <div className="min-h-screen">
       {/* ヒーロー */}
@@ -21,23 +19,10 @@ export default function Testimonials() {
 
       <section className="section-padding">
         <div className="container">
-          {isLoading ? (
-            <div className="flex justify-center items-center py-20">
-              <Loader2 className="h-8 w-8 animate-spin text-primary" />
-            </div>
-          ) : testimonials && testimonials.length > 0 ? (
+          {testimonials && testimonials.length > 0 ? (
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
               {testimonials.map((testimonial) => (
                 <Card key={testimonial.id} className="hover:shadow-lg transition-shadow overflow-hidden">
-                  {testimonial.imageUrl && (
-                    <div className="h-48 overflow-hidden bg-muted">
-                      <img
-                        src={testimonial.imageUrl}
-                        alt={testimonial.customerName}
-                        className="w-full h-full object-cover"
-                      />
-                    </div>
-                  )}
                   <CardContent className="p-6">
                     <div className="flex items-center gap-1 mb-4">
                       {Array.from({ length: 5 }).map((_, i) => (
@@ -53,25 +38,20 @@ export default function Testimonials() {
                       {testimonial.comment}
                     </p>
                     <div className="flex items-center justify-between pt-4 border-t">
-                      <div className="font-medium">{testimonial.customerName}様</div>
-                      <div className="text-xs text-muted-foreground">
-                        {testimonial.serviceType === "residential" ? "家庭用" : "業務用"}
-                      </div>
-                    </div>
-                    {testimonial.sourceLabel && (
-                      <div className="mt-3 pt-3 border-t">
-                        <p className="text-xs text-muted-foreground italic">
-                          {testimonial.sourceLabel}
+                      <div>
+                        <p className="font-bold text-foreground">{testimonial.customerName}</p>
+                        <p className="text-sm text-muted-foreground">
+                          {testimonial.serviceType === "residential" ? "家庭用エアコン" : "業務用エアコン"}
                         </p>
                       </div>
-                    )}
+                    </div>
                   </CardContent>
                 </Card>
               ))}
             </div>
           ) : (
             <div className="text-center py-20">
-              <p className="text-muted-foreground">まだお客様の声が登録されていません</p>
+              <p className="text-muted-foreground">まだお客様の声がありません</p>
             </div>
           )}
         </div>

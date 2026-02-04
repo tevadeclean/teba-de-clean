@@ -6,9 +6,8 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import { trpc } from "@/lib/trpc";
-import { toast } from "sonner";
-import { CheckCircle2, Phone, Mail } from "lucide-react";
+import { contactInfo } from "@/data/siteData";
+import { CheckCircle2, Phone, Mail, MessageCircle } from "lucide-react";
 
 export default function Booking() {
   const [formData, setFormData] = useState({
@@ -20,37 +19,27 @@ export default function Booking() {
     message: ""
   });
 
-  const createBooking = trpc.bookings.create.useMutation({
-    onSuccess: () => {
-      toast.success("予約を受け付けました", {
-        description: "担当者より折り返しご連絡いたします。"
-      });
-      // フォームをリセット
-      setFormData({
-        name: "",
-        email: "",
-        phone: "",
-        serviceType: "residential",
-        preferredDate: "",
-        message: ""
-      });
-    },
-    onError: (error) => {
-      toast.error("予約の送信に失敗しました", {
-        description: error.message
-      });
-    }
-  });
-
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     
     if (!formData.name || !formData.phone) {
-      toast.error("必須項目を入力してください");
+      alert("お名前と電話番号は必須です");
       return;
     }
 
-    createBooking.mutate(formData);
+    // メール本文を作成
+    const subject = encodeURIComponent("【予約】エアコンクリーニングのお問い合わせ");
+    const body = encodeURIComponent(
+      `お名前: ${formData.name}\n` +
+      `メールアドレス: ${formData.email}\n` +
+      `電話番号: ${formData.phone}\n` +
+      `サービス種類: ${formData.serviceType === "residential" ? "家庭用エアコン" : "業務用エアコン"}\n` +
+      `希望日時: ${formData.preferredDate}\n` +
+      `その他ご要望:\n${formData.message}`
+    );
+
+    // メールクライアントを開く
+    window.location.href = `mailto:${contactInfo.email}?subject=${subject}&body=${body}`;
   };
 
   return (
@@ -81,7 +70,7 @@ export default function Booking() {
                     <form onSubmit={handleSubmit} className="space-y-6">
                       {/* お名前 */}
                       <div>
-                        <Label htmlFor="name">
+                        <Label htmlFor="name" className="text-base">
                           お名前 <span className="text-destructive">*</span>
                         </Label>
                         <Input
@@ -90,12 +79,28 @@ export default function Booking() {
                           onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                           placeholder="山田 太郎"
                           required
+                          className="mt-2"
+                        />
+                      </div>
+
+                      {/* メールアドレス */}
+                      <div>
+                        <Label htmlFor="email" className="text-base">
+                          メールアドレス
+                        </Label>
+                        <Input
+                          id="email"
+                          type="email"
+                          value={formData.email}
+                          onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                          placeholder="example@example.com"
+                          className="mt-2"
                         />
                       </div>
 
                       {/* 電話番号 */}
                       <div>
-                        <Label htmlFor="phone">
+                        <Label htmlFor="phone" className="text-base">
                           電話番号 <span className="text-destructive">*</span>
                         </Label>
                         <Input
@@ -103,45 +108,31 @@ export default function Booking() {
                           type="tel"
                           value={formData.phone}
                           onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                          placeholder="098-XXX-XXXX"
+                          placeholder="090-1234-5678"
                           required
+                          className="mt-2"
                         />
                       </div>
 
-                      {/* メールアドレス */}
+                      {/* サービス種類 */}
                       <div>
-                        <Label htmlFor="email">メールアドレス</Label>
-                        <Input
-                          id="email"
-                          type="email"
-                          value={formData.email}
-                          onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                          placeholder="example@email.com"
-                        />
-                      </div>
-
-                      {/* サービス種別 */}
-                      <div>
-                        <Label>
-                          サービス種別 <span className="text-destructive">*</span>
+                        <Label className="text-base mb-3 block">
+                          サービス種類 <span className="text-destructive">*</span>
                         </Label>
                         <RadioGroup
                           value={formData.serviceType}
-                          onValueChange={(value: "residential" | "commercial") => 
-                            setFormData({ ...formData, serviceType: value })
-                          }
-                          className="mt-2"
+                          onValueChange={(value) => setFormData({ ...formData, serviceType: value as "residential" | "commercial" })}
                         >
-                          <div className="flex items-center space-x-2">
+                          <div className="flex items-center space-x-2 mb-2">
                             <RadioGroupItem value="residential" id="residential" />
                             <Label htmlFor="residential" className="font-normal cursor-pointer">
-                              家庭用エアコンクリーニング
+                              家庭用エアコン（¥8,000〜）
                             </Label>
                           </div>
                           <div className="flex items-center space-x-2">
                             <RadioGroupItem value="commercial" id="commercial" />
                             <Label htmlFor="commercial" className="font-normal cursor-pointer">
-                              業務用エアコンクリーニング
+                              業務用エアコン（¥25,000〜）
                             </Label>
                           </div>
                         </RadioGroup>
@@ -149,38 +140,48 @@ export default function Booking() {
 
                       {/* 希望日時 */}
                       <div>
-                        <Label htmlFor="preferredDate">希望日時</Label>
+                        <Label htmlFor="preferredDate" className="text-base">
+                          希望日時
+                        </Label>
                         <Input
                           id="preferredDate"
                           value={formData.preferredDate}
                           onChange={(e) => setFormData({ ...formData, preferredDate: e.target.value })}
-                          placeholder="例：2026年2月10日 午前中"
+                          placeholder="例: 2024年12月25日 午前中"
+                          className="mt-2"
                         />
-                        <p className="text-xs text-muted-foreground mt-1">
-                          具体的な日時が決まっていない場合は、「平日午前中希望」などとご記入ください
+                        <p className="text-sm text-muted-foreground mt-2">
+                          第2希望、第3希望もご記入いただけるとスムーズです
                         </p>
                       </div>
 
-                      {/* その他要望 */}
+                      {/* その他ご要望 */}
                       <div>
-                        <Label htmlFor="message">その他ご要望・ご質問</Label>
+                        <Label htmlFor="message" className="text-base">
+                          その他ご要望・ご質問
+                        </Label>
                         <Textarea
                           id="message"
                           value={formData.message}
                           onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                          placeholder="エアコンの台数、設置場所、気になる点などをご記入ください"
+                          placeholder="エアコンの台数、お掃除機能の有無、気になる点など、お気軽にご記入ください"
                           rows={5}
+                          className="mt-2"
                         />
                       </div>
 
-                      <Button 
-                        type="submit" 
-                        size="lg" 
-                        className="w-full bg-accent hover:bg-accent/90 text-accent-foreground"
-                        disabled={createBooking.isPending}
+                      <Button
+                        type="submit"
+                        size="lg"
+                        className="w-full bg-accent hover:bg-accent/90 text-accent-foreground text-lg py-6"
                       >
-                        {createBooking.isPending ? "送信中..." : "予約を申し込む"}
+                        <Mail className="mr-2 h-5 w-5" />
+                        メールで送信
                       </Button>
+
+                      <p className="text-sm text-muted-foreground text-center">
+                        送信ボタンを押すと、メールアプリが起動します
+                      </p>
                     </form>
                   </CardContent>
                 </Card>
@@ -188,87 +189,77 @@ export default function Booking() {
 
               {/* サイドバー */}
               <div className="space-y-6">
-                {/* お問い合わせ方法 */}
+                {/* 予約の流れ */}
                 <Card>
                   <CardHeader>
-                    <CardTitle className="text-lg">その他のお問い合わせ方法</CardTitle>
+                    <CardTitle className="flex items-center gap-2">
+                      <CheckCircle2 className="h-5 w-5 text-accent" />
+                      予約の流れ
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <ol className="space-y-3 text-sm">
+                      <li className="flex gap-3">
+                        <span className="flex-shrink-0 w-6 h-6 rounded-full bg-accent text-accent-foreground flex items-center justify-center text-xs font-bold">1</span>
+                        <span>フォームに必要事項を入力</span>
+                      </li>
+                      <li className="flex gap-3">
+                        <span className="flex-shrink-0 w-6 h-6 rounded-full bg-accent text-accent-foreground flex items-center justify-center text-xs font-bold">2</span>
+                        <span>送信ボタンでメールアプリが起動</span>
+                      </li>
+                      <li className="flex gap-3">
+                        <span className="flex-shrink-0 w-6 h-6 rounded-full bg-accent text-accent-foreground flex items-center justify-center text-xs font-bold">3</span>
+                        <span>メールを送信</span>
+                      </li>
+                      <li className="flex gap-3">
+                        <span className="flex-shrink-0 w-6 h-6 rounded-full bg-accent text-accent-foreground flex items-center justify-center text-xs font-bold">4</span>
+                        <span>担当者より折り返しご連絡</span>
+                      </li>
+                    </ol>
+                  </CardContent>
+                </Card>
+
+                {/* その他の連絡方法 */}
+                <Card>
+                  <CardHeader>
+                    <CardTitle>その他の連絡方法</CardTitle>
                   </CardHeader>
                   <CardContent className="space-y-4">
                     <div>
-                      <div className="flex items-center gap-2 font-medium mb-2">
+                      <h4 className="font-bold mb-2 flex items-center gap-2">
                         <Phone className="h-4 w-4 text-primary" />
-                        <span>お電話</span>
-                      </div>
-                      <a href="tel:098-XXX-XXXX" className="text-primary hover:underline">
-                        098-XXX-XXXX
+                        お電話
+                      </h4>
+                      <a href={`tel:${contactInfo.phoneRaw}`} className="text-primary hover:underline font-bold">
+                        {contactInfo.phone}
                       </a>
                       <p className="text-xs text-muted-foreground mt-1">
-                        受付時間: 9:00〜18:00（日曜定休）
+                        平日: {contactInfo.businessHours.weekday}<br />
+                        土日祝: {contactInfo.businessHours.weekend}
                       </p>
                     </div>
 
                     <div>
-                      <div className="flex items-center gap-2 font-medium mb-2">
-                        <Mail className="h-4 w-4 text-primary" />
-                        <span>メール</span>
-                      </div>
-                      <a href="mailto:info@tebadeclean.com" className="text-primary hover:underline text-sm">
-                        info@tebadeclean.com
-                      </a>
-                    </div>
-
-                    <div>
+                      <h4 className="font-bold mb-2 flex items-center gap-2">
+                        <MessageCircle className="h-4 w-4 text-[#06C755]" />
+                        LINE
+                      </h4>
                       <Link href="/line">
-                        <Button variant="outline" className="w-full">
+                        <Button variant="outline" size="sm" className="w-full">
                           LINEで予約
                         </Button>
                       </Link>
                     </div>
-                  </CardContent>
-                </Card>
 
-                {/* 予約の流れ */}
-                <Card>
-                  <CardHeader>
-                    <CardTitle className="text-lg">予約の流れ</CardTitle>
-                  </CardHeader>
-                  <CardContent className="space-y-3">
-                    {[
-                      "フォーム送信",
-                      "担当者から連絡",
-                      "日程調整・見積もり",
-                      "クリーニング実施"
-                    ].map((step, index) => (
-                      <div key={index} className="flex items-start gap-3">
-                        <div className="w-6 h-6 rounded-full bg-primary text-primary-foreground flex items-center justify-center text-xs font-bold flex-shrink-0 mt-0.5">
-                          {index + 1}
-                        </div>
-                        <span className="text-sm">{step}</span>
-                      </div>
-                    ))}
-                  </CardContent>
-                </Card>
-
-                {/* 注意事項 */}
-                <Card>
-                  <CardHeader>
-                    <CardTitle className="text-lg">ご注意</CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <ul className="text-xs text-muted-foreground space-y-2">
-                      <li className="flex items-start gap-2">
-                        <CheckCircle2 className="h-3 w-3 mt-0.5 flex-shrink-0" />
-                        <span>お見積もりは無料です</span>
-                      </li>
-                      <li className="flex items-start gap-2">
-                        <CheckCircle2 className="h-3 w-3 mt-0.5 flex-shrink-0" />
-                        <span>繁忙期は予約が取りにくい場合があります</span>
-                      </li>
-                      <li className="flex items-start gap-2">
-                        <CheckCircle2 className="h-3 w-3 mt-0.5 flex-shrink-0" />
-                        <span>キャンセルは前日までにご連絡ください</span>
-                      </li>
-                    </ul>
+                    <div>
+                      <h4 className="font-bold mb-2 flex items-center gap-2">
+                        <Mail className="h-4 w-4 text-secondary-foreground" />
+                        メール
+                      </h4>
+                      <a href={`mailto:${contactInfo.email}`} className="text-sm text-primary hover:underline break-all">
+                        {contactInfo.email}
+                      </a>
+                    </div>
                   </CardContent>
                 </Card>
               </div>

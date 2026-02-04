@@ -1,16 +1,16 @@
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import { Link } from "wouter";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { trpc } from "@/lib/trpc";
-import { Loader2 } from "lucide-react";
+import { blogPosts } from "@/data/siteData";
 
 export default function Blog() {
   const [selectedCategory, setSelectedCategory] = useState<string | undefined>(undefined);
   
-  const { data: blogPosts, isLoading } = trpc.blog.list.useQuery({ 
-    category: selectedCategory 
-  });
+  const filteredPosts = useMemo(() => {
+    if (!selectedCategory) return blogPosts;
+    return blogPosts.filter(post => post.category === selectedCategory);
+  }, [selectedCategory]);
 
   const categories = [
     { value: undefined, label: "すべて" },
@@ -55,45 +55,33 @@ export default function Blog() {
           </div>
 
           {/* ブログ一覧 */}
-          {isLoading ? (
-            <div className="flex justify-center items-center py-20">
-              <Loader2 className="h-8 w-8 animate-spin text-primary" />
-            </div>
-          ) : blogPosts && blogPosts.length > 0 ? (
+          {filteredPosts && filteredPosts.length > 0 ? (
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {blogPosts.map((post) => (
+              {filteredPosts.map((post) => (
                 <Link key={post.id} href={`/blog/${post.id}`}>
-                  <Card className="group hover:shadow-xl transition-all cursor-pointer h-full">
-                    <CardContent className="p-0">
-                      {post.imageUrl && (
-                        <div className="aspect-video bg-muted overflow-hidden">
-                          <img 
-                            src={post.imageUrl} 
-                            alt={post.title}
-                            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                          />
-                        </div>
-                      )}
-                      <div className="p-6">
-                        <div className="inline-block bg-primary/10 text-primary text-xs font-medium px-3 py-1 rounded-full mb-3">
-                          {categories.find(c => c.value === post.category)?.label || post.category}
-                        </div>
-                        <h3 className="text-lg font-bold mb-3 group-hover:text-primary transition-colors line-clamp-2">
-                          {post.title}
-                        </h3>
-                        <div className="space-y-2 text-sm text-muted-foreground">
-                          {post.location && (
-                            <div>📍 {post.location}</div>
-                          )}
-                          {post.area && (
-                            <div>📐 作業面積: {post.area}㎡</div>
-                          )}
-                          {post.price && (
-                            <div className="text-primary font-bold text-base">
-                              💰 施工価格: ¥{post.price.toLocaleString()}
-                            </div>
-                          )}
-                        </div>
+                  <Card className="hover:shadow-lg transition-shadow cursor-pointer h-full">
+                    <CardContent className="p-6">
+                      <div className="mb-4">
+                        <span className="inline-block px-3 py-1 bg-primary/10 text-primary text-xs font-bold rounded-full">
+                          {categories.find(c => c.value === post.category)?.label}
+                        </span>
+                      </div>
+                      <h3 className="text-xl font-bold mb-3 line-clamp-2">
+                        {post.title}
+                      </h3>
+                      <p className="text-muted-foreground mb-4 line-clamp-3">
+                        {post.content}
+                      </p>
+                      <div className="flex flex-wrap gap-4 text-sm text-muted-foreground">
+                        {post.location && (
+                          <span>📍 {post.location}</span>
+                        )}
+                        {post.area && (
+                          <span>📐 {post.area}㎡</span>
+                        )}
+                        {post.price && (
+                          <span>💰 ¥{post.price.toLocaleString()}</span>
+                        )}
                       </div>
                     </CardContent>
                   </Card>
@@ -102,11 +90,7 @@ export default function Blog() {
             </div>
           ) : (
             <div className="text-center py-20">
-              <p className="text-muted-foreground">
-                {selectedCategory 
-                  ? "このカテゴリの作業実績はまだありません" 
-                  : "作業実績がまだ登録されていません"}
-              </p>
+              <p className="text-muted-foreground">該当する作業実績がありません</p>
             </div>
           )}
         </div>

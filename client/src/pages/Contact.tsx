@@ -1,6 +1,7 @@
 import { Link } from "wouter";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
+import { contactInfo } from "@/data/siteData";
 import { Phone, Mail, MapPin, Clock, MessageCircle, ArrowRight } from "lucide-react";
 
 export default function Contact() {
@@ -31,12 +32,13 @@ export default function Contact() {
                     </div>
                     <div>
                       <h3 className="text-xl font-bold mb-2">お電話</h3>
-                      <a href="tel:098-XXX-XXXX" className="text-2xl font-bold text-primary hover:underline">
-                        098-XXX-XXXX
+                      <a href={`tel:${contactInfo.phoneRaw}`} className="text-2xl font-bold text-primary hover:underline">
+                        {contactInfo.phone}
                       </a>
                       <p className="text-sm text-muted-foreground mt-2">
-                        受付時間: 9:00〜18:00<br />
-                        定休日: 日曜日
+                        平日: {contactInfo.businessHours.weekday}<br />
+                        土日祝: {contactInfo.businessHours.weekend}<br />
+                        {contactInfo.businessHours.note}
                       </p>
                     </div>
                   </div>
@@ -54,11 +56,11 @@ export default function Contact() {
                     </div>
                     <div>
                       <h3 className="text-xl font-bold mb-2">LINE</h3>
-                      <p className="text-muted-foreground">
-                        LINE ID: @XXXXXXX
+                      <p className="text-muted-foreground mb-4">
+                        LINEで気軽にお問い合わせ
                       </p>
                       <Link href="/line">
-                        <Button className="mt-4 bg-[#06C755] hover:bg-[#06C755]/90 text-white">
+                        <Button className="bg-[#06C755] hover:bg-[#06C755]/90 text-white">
                           友だち追加
                         </Button>
                       </Link>
@@ -78,17 +80,16 @@ export default function Contact() {
                     </div>
                     <div>
                       <h3 className="text-xl font-bold mb-2">メール</h3>
-                      <a href="mailto:info@tebadeclean.com" className="text-primary hover:underline break-all">
-                        info@tebadeclean.com
+                      <a href={`mailto:${contactInfo.email}`} className="text-primary hover:underline break-all">
+                        {contactInfo.email}
                       </a>
                       <p className="text-sm text-muted-foreground mt-2">
-                        24時間受付<br />
-                        返信は営業時間内に行います
+                        24時間受付（返信は営業時間内）
                       </p>
                     </div>
                   </div>
                   <p className="text-sm text-muted-foreground">
-                    詳細な内容を送りたい方におすすめ
+                    詳しい内容を記載したい方はメールが便利です
                   </p>
                 </CardContent>
               </Card>
@@ -101,100 +102,93 @@ export default function Contact() {
                     </div>
                     <div>
                       <h3 className="text-xl font-bold mb-2">予約フォーム</h3>
+                      <p className="text-muted-foreground mb-4">
+                        24時間いつでも予約可能
+                      </p>
                       <Link href="/booking">
-                        <Button className="mt-4 bg-accent hover:bg-accent/90 text-accent-foreground">
-                          フォームへ
+                        <Button className="bg-accent hover:bg-accent/90 text-accent-foreground">
+                          予約フォームへ
                         </Button>
                       </Link>
                     </div>
                   </div>
                   <p className="text-sm text-muted-foreground">
-                    24時間いつでも予約申し込みが可能
+                    フォームから必要事項を入力して送信するだけ
                   </p>
                 </CardContent>
               </Card>
             </div>
 
-            {/* 店舗情報 */}
+            {/* 対応エリア */}
             <Card className="mb-12">
               <CardContent className="p-8">
-                <h2 className="text-2xl font-bold mb-6">店舗情報</h2>
-                <div className="space-y-6">
-                  <div className="flex items-start gap-4">
-                    <MapPin className="h-6 w-6 text-primary flex-shrink-0 mt-1" />
-                    <div>
-                      <h3 className="font-bold mb-1">所在地</h3>
-                      <p className="text-muted-foreground">
-                        沖縄県[市町村名][住所]<br />
-                        ※詳細な住所はお問い合わせ時にお伝えします
-                      </p>
-                    </div>
+                <div className="flex items-start gap-4 mb-6">
+                  <div className="w-12 h-12 rounded-full bg-accent/10 flex items-center justify-center flex-shrink-0">
+                    <MapPin className="h-6 w-6 text-accent" />
                   </div>
-
-                  <div className="flex items-start gap-4">
-                    <Clock className="h-6 w-6 text-primary flex-shrink-0 mt-1" />
-                    <div>
-                      <h3 className="font-bold mb-1">営業時間</h3>
-                      <p className="text-muted-foreground">
-                        9:00〜18:00<br />
-                        定休日: 日曜日
-                      </p>
+                  <div className="flex-1">
+                    <h3 className="text-2xl font-bold mb-4">対応エリア</h3>
+                    <p className="text-muted-foreground mb-6">
+                      沖縄県内の以下のエリアに対応しております
+                    </p>
+                    <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
+                      {contactInfo.serviceAreas.map((area, index) => (
+                        <div key={index} className="flex items-center gap-2 text-sm">
+                          <div className="w-2 h-2 rounded-full bg-accent"></div>
+                          <span>{area}</span>
+                        </div>
+                      ))}
                     </div>
-                  </div>
-
-                  <div className="flex items-start gap-4">
-                    <MapPin className="h-6 w-6 text-primary flex-shrink-0 mt-1" />
-                    <div>
-                      <h3 className="font-bold mb-1">対応エリア</h3>
-                      <p className="text-muted-foreground">
-                        沖縄県内全域<br />
-                        ※離島については別途ご相談ください
-                      </p>
-                    </div>
+                    <p className="text-sm text-muted-foreground mt-6">
+                      ※上記以外のエリアでも対応可能な場合がございます。お気軽にお問い合わせください。
+                    </p>
                   </div>
                 </div>
               </CardContent>
             </Card>
 
-            {/* 対応エリア詳細 */}
-            <Card className="mb-12">
+            {/* 営業時間 */}
+            <Card>
               <CardContent className="p-8">
-                <h2 className="text-2xl font-bold mb-6">主な対応エリア</h2>
-                <div className="grid md:grid-cols-3 gap-4">
-                  {[
-                    "那覇市", "浦添市", "宜野湾市", "沖縄市", "うるま市", "名護市",
-                    "糸満市", "豊見城市", "南城市", "宮古島市", "石垣市", "その他県内全域"
-                  ].map((area, index) => (
-                    <div key={index} className="flex items-center gap-2 text-sm">
-                      <div className="w-2 h-2 rounded-full bg-primary"></div>
-                      <span>{area}</span>
+                <div className="flex items-start gap-4">
+                  <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
+                    <Clock className="h-6 w-6 text-primary" />
+                  </div>
+                  <div className="flex-1">
+                    <h3 className="text-2xl font-bold mb-4">営業時間</h3>
+                    <div className="space-y-2">
+                      <div className="flex justify-between items-center py-2 border-b">
+                        <span className="font-medium">平日</span>
+                        <span className="text-primary font-bold">{contactInfo.businessHours.weekday}</span>
+                      </div>
+                      <div className="flex justify-between items-center py-2 border-b">
+                        <span className="font-medium">土日祝</span>
+                        <span className="text-primary font-bold">{contactInfo.businessHours.weekend}</span>
+                      </div>
                     </div>
-                  ))}
+                    <p className="text-sm text-muted-foreground mt-4">
+                      {contactInfo.businessHours.note}
+                    </p>
+                  </div>
                 </div>
-                <p className="text-sm text-muted-foreground mt-6">
-                  ※上記以外のエリアでも対応可能な場合がございます。お気軽にお問い合わせください。
-                </p>
               </CardContent>
             </Card>
 
             {/* CTA */}
-            <div className="text-center bg-gradient-to-br from-primary to-primary/80 text-primary-foreground rounded-2xl p-8 md:p-12">
-              <h2 className="text-3xl font-black mb-4">
-                まずはお気軽に<br />
-                <span className="text-accent">お問い合わせください</span>
-              </h2>
-              <p className="text-lg opacity-95 mb-8 max-w-2xl mx-auto">
-                お見積もりは無料です。エアコンクリーニングのことなら、テバdeクリーンにお任せください。
+            <div className="mt-12 text-center bg-muted/50 rounded-2xl p-8">
+              <h3 className="text-2xl font-bold mb-4">まずはお気軽にご相談ください</h3>
+              <p className="text-muted-foreground mb-6">
+                お見積もりは無料です。ご不明な点がございましたらお気軽にお問い合わせください。
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <Link href="/booking">
                   <Button size="lg" className="bg-accent hover:bg-accent/90 text-accent-foreground">
                     予約フォームへ
-                    <ArrowRight className="ml-2 h-4 w-4" />
+                    <ArrowRight className="ml-2 h-5 w-5" />
                   </Button>
                 </Link>
-                <a href="tel:098-XXX-XXXX">
-                  <Button size="lg" variant="outline" className="bg-primary-foreground/10 border-primary-foreground/30 hover:bg-primary-foreground/20 text-primary-foreground">
+                <a href={`tel:${contactInfo.phoneRaw}`}>
+                  <Button size="lg" variant="outline">
                     電話で相談
                   </Button>
                 </a>

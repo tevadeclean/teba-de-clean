@@ -1,14 +1,14 @@
 import { Link, useRoute } from "wouter";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { trpc } from "@/lib/trpc";
-import { Loader2, ArrowLeft, MapPin, Ruler, DollarSign } from "lucide-react";
+import { blogPosts } from "@/data/siteData";
+import { ArrowLeft, MapPin, Ruler, DollarSign } from "lucide-react";
 
 export default function BlogDetail() {
   const [, params] = useRoute("/blog/:id");
   const postId = params?.id ? parseInt(params.id) : 0;
 
-  const { data: post, isLoading } = trpc.blog.getById.useQuery({ id: postId });
+  const post = blogPosts.find(p => p.id === postId);
 
   const categoryLabels: Record<string, string> = {
     residential_small: "家庭用小規模（〜20㎡）",
@@ -18,14 +18,6 @@ export default function BlogDetail() {
     commercial_medium: "業務用中規模",
     commercial_large: "業務用大規模"
   };
-
-  if (isLoading) {
-    return (
-      <div className="min-h-screen flex items-center justify-center">
-        <Loader2 className="h-8 w-8 animate-spin text-primary" />
-      </div>
-    );
-  }
 
   if (!post) {
     return (
@@ -96,17 +88,6 @@ export default function BlogDetail() {
               )}
             </div>
 
-            {/* 作業写真 */}
-            {post.imageUrl && (
-              <div className="mb-8">
-                <img 
-                  src={post.imageUrl} 
-                  alt={post.title}
-                  className="w-full rounded-lg shadow-lg"
-                />
-              </div>
-            )}
-
             {/* 作業内容 */}
             <Card className="mb-8">
               <CardContent className="p-8">
@@ -131,7 +112,7 @@ export default function BlogDetail() {
                     予約する
                   </Button>
                 </Link>
-                <a href="tel:098-XXX-XXXX">
+                <a href="tel:09059424412">
                   <Button size="lg" variant="outline">
                     電話で相談
                   </Button>

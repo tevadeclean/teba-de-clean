@@ -43,9 +43,9 @@ export default function Header() {
 
           {/* 電話番号とCTAボタン */}
           <div className="hidden lg:flex items-center gap-4">
-            <a href="tel:098-XXX-XXXX" className="flex items-center gap-2 text-sm font-medium text-primary hover:text-primary/80 transition-colors">
+            <a href="tel:09059424412" className="flex items-center gap-2 text-sm font-medium text-primary hover:text-primary/80 transition-colors">
               <Phone className="h-4 w-4" />
-              <span>098-XXX-XXXX</span>
+              <span>090-5942-4412</span>
             </a>
             <Link href="/booking">
               <Button size="sm" className="bg-accent hover:bg-accent/90 text-accent-foreground">
@@ -79,9 +79,9 @@ export default function Header() {
                 </Link>
               ))}
               <div className="pt-4 border-t flex flex-col gap-3">
-                <a href="tel:098-XXX-XXXX" className="flex items-center gap-2 text-sm font-medium text-primary">
+                <a href="tel:09059424412" className="flex items-center gap-2 text-sm font-medium text-primary">
                   <Phone className="h-4 w-4" />
-                  <span>098-XXX-XXXX</span>
+                  <span>090-5942-4412</span>
                 </a>
                 <Link href="/booking">
                   <Button className="w-full bg-accent hover:bg-accent/90 text-accent-foreground" onClick={() => setIsMenuOpen(false)}>

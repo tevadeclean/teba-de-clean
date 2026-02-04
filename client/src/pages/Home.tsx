@@ -1,7 +1,7 @@
 import { Link } from "wouter";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { trpc } from "@/lib/trpc";
+import { testimonials as testimonialsData, blogPosts as blogPostsData } from "@/data/siteData";
 import { 
   Sparkles, 
   Shield, 
@@ -17,16 +17,14 @@ import {
   Gift,
   Baby,
   ShieldCheck,
-  Info
+  Info,
+  Users
 } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 
 export default function Home() {
-  const { data: testimonials, isLoading: testimonialsLoading } = trpc.testimonials.list.useQuery();
-  const { data: blogPosts, isLoading: blogLoading } = trpc.blog.list.useQuery();
-
-  const recentTestimonials = testimonials?.slice(0, 3) || [];
-  const recentBlogPosts = blogPosts?.slice(0, 3) || [];
+  const recentTestimonials = testimonialsData.slice(0, 3);
+  const recentBlogPosts = blogPostsData.slice(0, 3);
 
   const strengths = [
     {
@@ -90,7 +88,7 @@ export default function Home() {
                   <ArrowRight className="ml-2 h-6 w-6" />
                 </Button>
               </Link>
-              <a href="tel:098-XXX-XXXX">
+              <a href="tel:09059424412">
                 <Button size="lg" variant="outline" className="bg-primary-foreground/10 border-primary-foreground/30 hover:bg-primary-foreground/20 text-primary-foreground text-xl px-12 py-8">
                   <Phone className="mr-2 h-6 w-6" />
                   電話で相談
@@ -274,7 +272,7 @@ export default function Home() {
       </section>
 
       {/* お客様の声 */}
-      {!testimonialsLoading && recentTestimonials.length > 0 && (
+      {recentTestimonials.length > 0 && (
         <section className="py-24 md:py-32">
           <div className="container">
             <div className="text-center mb-20">
