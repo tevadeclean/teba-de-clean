@@ -1,7 +1,7 @@
 import { Link } from "wouter";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { CheckCircle2, ArrowRight, Sparkles, Info } from "lucide-react";
+import { CheckCircle2, ArrowRight, Sparkles, Info, Gift } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 
 export default function Residential() {
@@ -13,7 +13,7 @@ export default function Residential() {
       "熱交換器（フィン）の高圧洗浄",
       "送風ファンの洗浄",
       "ドレンパンの洗浄",
-      "防カビ抗菌コーティング（無料）",
+      "防カビ抗菌コーティング（HP予約限定無料！）",
       "動作確認"
     ],
     prices: [
@@ -25,8 +25,7 @@ export default function Residential() {
   const options = [
     { name: "お掃除機能付き", price: "¥8,000", description: "お掃除ロボット搭載機種の場合" },
     { name: "完全分解洗浄", price: "¥8,000", description: "ドレンパン・送風ファンを取り外して丸洗い", highlight: true },
-    { name: "室外機洗浄", price: "¥3,000", description: "電気代の節約・故障予防に" },
-    { name: "消臭抗菌コート", price: "¥1,000", description: "カビの繁殖を抑え、嫌な臭いを防ぎます" }
+    { name: "室外機洗浄", price: "¥3,000", description: "電気代の節約・故障予防に" }
   ];
 
   return (
@@ -34,6 +33,9 @@ export default function Residential() {
       {/* ヒーロー */}
       <section className="bg-gradient-to-br from-secondary via-secondary/90 to-secondary/80 text-secondary-foreground py-16 md:py-24">
         <div className="container">
+          <Badge className="mb-4 bg-accent text-accent-foreground px-4 py-1 text-sm font-bold">
+            家族の元気を空気で守る！
+          </Badge>
           <h1 className="text-4xl md:text-5xl font-black mb-6">
             家庭用エアコンクリーニング
           </h1>
@@ -79,9 +81,15 @@ export default function Residential() {
                       {mainPlan.features.map((feature, i) => (
                         <div key={i} className="flex items-start gap-2">
                           <CheckCircle2 className="h-4 w-4 text-primary/60 flex-shrink-0 mt-1" />
-                          <span className="text-sm text-muted-foreground">{feature}</span>
+                          <span className={`text-sm ${i === 4 ? "text-accent font-bold" : "text-muted-foreground"}`}>
+                            {feature}
+                          </span>
                         </div>
                       ))}
+                    </div>
+                    <div className="bg-accent/10 p-3 rounded-lg border border-accent/20 flex items-center gap-2">
+                      <Gift className="w-5 h-5 text-accent" />
+                      <span className="text-xs font-bold text-accent">HP予約限定：防カビコート無料！</span>
                     </div>
                   </div>
                   <div className="space-y-4">
@@ -201,7 +209,7 @@ export default function Residential() {
             <span className="text-primary">ご予約はこちら</span>
           </h2>
           <p className="text-lg text-muted-foreground mb-8 max-w-2xl mx-auto">
-            HPからの予約が最安値です！お見積もりは無料ですので、お気軽にお問い合わせください。
+            HPからの予約が最安値です！さらに防カビコートも無料！お見積もりは無料ですので、お気軽にお問い合わせください。
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link href="/booking">

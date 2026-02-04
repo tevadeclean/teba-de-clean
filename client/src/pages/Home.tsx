@@ -10,7 +10,11 @@ import {
   CheckCircle2, 
   Star,
   ArrowRight,
-  Phone
+  Phone,
+  UserCheck,
+  Heart,
+  Award,
+  Gift
 } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 
@@ -20,6 +24,34 @@ export default function Home() {
 
   const recentTestimonials = testimonials?.slice(0, 3) || [];
   const recentBlogPosts = blogPosts?.slice(0, 3) || [];
+
+  const strengths = [
+    {
+      icon: <Award className="h-8 w-8" />,
+      title: "累計700台以上の施工実績",
+      description: "豊富な経験に裏打ちされた確かな技術で、どんな汚れも逃しません。"
+    },
+    {
+      icon: <UserCheck className="h-8 w-8" />,
+      title: "オーナー自らが伺う安心対応",
+      description: "外注なし！責任を持ってオーナー本人が最初から最後まで丁寧に作業いたします。"
+    },
+    {
+      icon: <Heart className="h-8 w-8" />,
+      title: "娘を持つパパだから女性も安心",
+      description: "小さなお子様がいるご家庭や女性の一人暮らしでも、安心してご依頼いただけます。"
+    },
+    {
+      icon: <Gift className="h-8 w-8" />,
+      title: "防カビ・抗菌コートがHP限定無料",
+      description: "HPからご予約いただいた方全員に、通常有料の防カビコートを無料で施工します。"
+    },
+    {
+      icon: <Sparkles className="h-8 w-8" />,
+      title: "大手洗浄店で修行した確かな技術",
+      description: "業界最大手での厳しい修行を経て習得した、最高水準の洗浄技術を提供します。"
+    }
+  ];
 
   return (
     <div className="min-h-screen">
@@ -32,6 +64,9 @@ export default function Home() {
               <Sparkles className="w-4 h-4 mr-2 inline" />
               HPからの予約が一番安い！
             </Badge>
+            <h2 className="text-xl md:text-2xl font-bold mb-4 text-accent-foreground/90">
+              家族の元気を空気で守る！
+            </h2>
             <h1 className="text-4xl md:text-6xl font-black mb-6 leading-tight">
               沖縄のエアコンを<br />
               <span className="text-accent">プロの技術</span>で<br />
@@ -58,21 +93,48 @@ export default function Home() {
         </div>
       </section>
 
+      {/* 5つの強み */}
+      <section className="section-padding bg-white">
+        <div className="container">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl md:text-4xl font-black text-foreground mb-4">
+              テバdeクリーンが<span className="text-primary">選ばれる5つの理由</span>
+            </h2>
+            <p className="text-muted-foreground max-w-2xl mx-auto">
+              お客様に安心と満足をお届けするための、私たちのこだわりです
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {strengths.map((strength, index) => (
+              <Card key={index} className={`border-2 transition-all duration-300 hover:border-primary/50 hover:shadow-lg ${index === 3 ? "border-accent/30 bg-accent/5" : ""}`}>
+                <CardContent className="p-8">
+                  <div className={`w-16 h-16 rounded-2xl flex items-center justify-center mb-6 ${index === 3 ? "bg-accent text-accent-foreground" : "bg-primary/10 text-primary"}`}>
+                    {strength.icon}
+                  </div>
+                  <h3 className="text-xl font-bold mb-4">{strength.title}</h3>
+                  <p className="text-muted-foreground text-sm leading-relaxed">
+                    {strength.description}
+                  </p>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* サービス概要 */}
-      <section className="section-padding">
+      <section className="section-padding bg-muted/30">
         <div className="container">
           <div className="text-center mb-12">
             <h2 className="text-3xl md:text-4xl font-black text-foreground mb-4">
-              テバdeクリーンの<span className="text-primary">サービス</span>
+              <span className="text-primary">サービスメニュー</span>
             </h2>
-            <p className="text-muted-foreground max-w-2xl mx-auto">
-              家庭用から業務用まで、あらゆるエアコンのクリーニングに対応しています
-            </p>
           </div>
 
           <div className="grid md:grid-cols-2 gap-8">
             <Link href="/residential">
-              <Card className="group hover:shadow-xl transition-all duration-300 cursor-pointer border-2 hover:border-primary relative overflow-hidden">
+              <Card className="group hover:shadow-xl transition-all duration-300 cursor-pointer border-2 hover:border-primary relative overflow-hidden bg-white">
                 <div className="absolute top-4 right-4">
                   <Badge className="bg-accent text-accent-foreground font-bold">最安値保証</Badge>
                 </div>
@@ -101,7 +163,7 @@ export default function Home() {
             </Link>
 
             <Link href="/commercial">
-              <Card className="group hover:shadow-xl transition-all duration-300 cursor-pointer border-2 hover:border-primary relative overflow-hidden">
+              <Card className="group hover:shadow-xl transition-all duration-300 cursor-pointer border-2 hover:border-primary relative overflow-hidden bg-white">
                 <div className="absolute top-4 right-4">
                   <Badge className="bg-accent text-accent-foreground font-bold">最安値保証</Badge>
                 </div>
@@ -128,52 +190,6 @@ export default function Home() {
                 </CardContent>
               </Card>
             </Link>
-          </div>
-        </div>
-      </section>
-
-      {/* 選ばれる理由 */}
-      <section className="section-padding bg-muted/30">
-        <div className="container">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-black text-foreground mb-4">
-              テバdeクリーンが<span className="text-accent">選ばれる理由</span>
-            </h2>
-          </div>
-
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {[
-              {
-                icon: <Sparkles className="h-8 w-8" />,
-                title: "プロの技術",
-                description: "経験豊富なスタッフが、最新の機材と技術で徹底洗浄"
-              },
-              {
-                icon: <Shield className="h-8 w-8" />,
-                title: "安心保証",
-                description: "賠償責任保険加入済み。万が一の際も安心です"
-              },
-              {
-                icon: <Clock className="h-8 w-8" />,
-                title: "迅速対応",
-                description: "お問い合わせから最短即日対応。お急ぎの方もご相談ください"
-              },
-              {
-                icon: <ThumbsUp className="h-8 w-8" />,
-                title: "高評価",
-                description: "お客様満足度98%。多くのリピーター様にご利用いただいています"
-              }
-            ].map((item, index) => (
-              <Card key={index} className="text-center">
-                <CardContent className="p-6">
-                  <div className="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center mx-auto mb-4 text-primary">
-                    {item.icon}
-                  </div>
-                  <h3 className="text-lg font-bold mb-2">{item.title}</h3>
-                  <p className="text-sm text-muted-foreground">{item.description}</p>
-                </CardContent>
-              </Card>
-            ))}
           </div>
         </div>
       </section>
