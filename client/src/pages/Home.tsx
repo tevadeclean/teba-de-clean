@@ -12,6 +12,7 @@ import {
   ArrowRight,
   Phone
 } from "lucide-react";
+import { Badge } from "@/components/ui/badge";
 
 export default function Home() {
   const { data: testimonials, isLoading: testimonialsLoading } = trpc.testimonials.list.useQuery();
@@ -27,6 +28,10 @@ export default function Home() {
         <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxnIGZpbGw9IiNmZmZmZmYiIGZpbGwtb3BhY2l0eT0iMC4wNSI+PHBhdGggZD0iTTM2IDE2YzAtNC40MTggMy41ODItOCA4LThzOCAzLjU4MiA4IDgtMy41ODIgOC04IDgtOC0zLjU4Mi04LTh6bS0yMCAwYzAtNC40MTggMy41ODItOCA4LThzOCAzLjU4MiA4IDgtMy41ODIgOC04IDgtOC0zLjU4Mi04LTh6Ii8+PC9nPjwvZz48L3N2Zz4=')] opacity-30"></div>
         <div className="container relative py-20 md:py-32">
           <div className="max-w-3xl">
+            <Badge className="mb-6 bg-accent text-accent-foreground px-4 py-1 text-sm font-bold animate-pulse">
+              <Sparkles className="w-4 h-4 mr-2 inline" />
+              HPからの予約が一番安い！
+            </Badge>
             <h1 className="text-4xl md:text-6xl font-black mb-6 leading-tight">
               沖縄のエアコンを<br />
               <span className="text-accent">プロの技術</span>で<br />
@@ -37,7 +42,7 @@ export default function Home() {
             </p>
             <div className="flex flex-col sm:flex-row gap-4">
               <Link href="/booking">
-                <Button size="lg" className="bg-accent hover:bg-accent/90 text-accent-foreground text-lg px-8">
+                <Button size="lg" className="bg-accent hover:bg-accent/90 text-accent-foreground text-lg px-8 font-bold">
                   今すぐ予約する
                   <ArrowRight className="ml-2 h-5 w-5" />
                 </Button>
@@ -67,7 +72,10 @@ export default function Home() {
 
           <div className="grid md:grid-cols-2 gap-8">
             <Link href="/residential">
-              <Card className="group hover:shadow-xl transition-all duration-300 cursor-pointer border-2 hover:border-primary">
+              <Card className="group hover:shadow-xl transition-all duration-300 cursor-pointer border-2 hover:border-primary relative overflow-hidden">
+                <div className="absolute top-4 right-4">
+                  <Badge className="bg-accent text-accent-foreground font-bold">最安値保証</Badge>
+                </div>
                 <CardContent className="p-8">
                   <div className="mb-4">
                     <div className="w-16 h-16 rounded-full bg-secondary flex items-center justify-center mb-4">
@@ -77,11 +85,14 @@ export default function Home() {
                     <p className="text-muted-foreground mb-4">
                       ご家庭のエアコンを徹底的に分解洗浄。カビや汚れを根こそぎ除去し、清潔な空気を取り戻します。
                     </p>
-                    <div className="text-primary font-bold text-lg">
-                      1台 ¥11,000〜
+                    <div className="text-primary font-black text-2xl">
+                      1台 ¥8,000〜
+                    </div>
+                    <div className="text-accent text-sm font-bold mt-1">
+                      2台目以降 ¥1,000引き！
                     </div>
                   </div>
-                  <div className="flex items-center text-primary font-medium">
+                  <div className="flex items-center text-primary font-medium mt-6">
                     詳しく見る
                     <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
                   </div>
@@ -90,7 +101,10 @@ export default function Home() {
             </Link>
 
             <Link href="/commercial">
-              <Card className="group hover:shadow-xl transition-all duration-300 cursor-pointer border-2 hover:border-primary">
+              <Card className="group hover:shadow-xl transition-all duration-300 cursor-pointer border-2 hover:border-primary relative overflow-hidden">
+                <div className="absolute top-4 right-4">
+                  <Badge className="bg-accent text-accent-foreground font-bold">最安値保証</Badge>
+                </div>
                 <CardContent className="p-8">
                   <div className="mb-4">
                     <div className="w-16 h-16 rounded-full bg-accent flex items-center justify-center mb-4">
@@ -100,11 +114,14 @@ export default function Home() {
                     <p className="text-muted-foreground mb-4">
                       店舗・オフィス・施設の業務用エアコンに対応。複数台の同時施工も可能です。
                     </p>
-                    <div className="text-primary font-bold text-lg">
-                      1台 ¥22,000〜
+                    <div className="text-primary font-black text-2xl">
+                      1台 ¥25,000〜
+                    </div>
+                    <div className="text-accent text-sm font-bold mt-1">
+                      2台目以降 10%引き！
                     </div>
                   </div>
-                  <div className="flex items-center text-primary font-medium">
+                  <div className="flex items-center text-primary font-medium mt-6">
                     詳しく見る
                     <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
                   </div>
@@ -263,7 +280,7 @@ export default function Home() {
                           />
                         </div>
                       )}
-                      <h3 className="text-lg font-bold mb-2 group-hover:text-primary transition-colors line-clamp-2">
+                      <h3 className="font-bold mb-2 group-hover:text-primary transition-colors line-clamp-2">
                         {post.title}
                       </h3>
                       {post.location && (
@@ -298,12 +315,12 @@ export default function Home() {
             <span className="text-accent">今すぐ</span>お気軽に
           </h2>
           <p className="text-lg mb-8 opacity-95 max-w-2xl mx-auto">
-            お電話、LINE、予約フォームからご予約いただけます。<br />
+            HPからの予約が最安値です！お電話、LINE、予約フォームからご予約いただけます。<br />
             お見積もりは無料です。
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link href="/booking">
-              <Button size="lg" className="bg-accent hover:bg-accent/90 text-accent-foreground text-lg px-8">
+              <Button size="lg" className="bg-accent hover:bg-accent/90 text-accent-foreground text-lg px-8 font-bold">
                 予約フォームへ
               </Button>
             </Link>

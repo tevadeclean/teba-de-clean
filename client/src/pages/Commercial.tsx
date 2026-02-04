@@ -1,12 +1,13 @@
 import { Link } from "wouter";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { Building2, Users, Clock, Shield, ArrowRight } from "lucide-react";
+import { Building2, Users, Clock, Shield, ArrowRight, Sparkles } from "lucide-react";
+import { Badge } from "@/components/ui/badge";
 
 export default function Commercial() {
   const pricing = [
-    { type: "壁掛けタイプ", price: "¥22,000〜" },
-    { type: "埋込・吊下げタイプ", price: "¥30,000〜" }
+    { type: "壁掛けタイプ", price: "¥25,000", note: "2台目以降 10%引き" },
+    { type: "埋込・吊下げタイプ", price: "¥30,000〜", note: "2台目以降 10%引き" }
   ];
 
   const targetFacilities = [
@@ -32,32 +33,46 @@ export default function Commercial() {
       <section className="section-padding">
         <div className="container">
           <div className="text-center mb-12">
+            <Badge className="mb-4 bg-accent text-accent-foreground px-4 py-1 text-sm font-bold animate-bounce">
+              <Sparkles className="w-4 h-4 mr-2 inline" />
+              HPからの予約が一番安い！
+            </Badge>
             <h2 className="text-3xl md:text-4xl font-black text-foreground mb-4">
               <span className="text-primary">料金</span>
             </h2>
           </div>
 
-          <div className="max-w-2xl mx-auto grid md:grid-cols-2 gap-6 mb-8">
+          <div className="max-w-3xl mx-auto grid md:grid-cols-2 gap-6 mb-8">
             {pricing.map((item, index) => (
-              <Card key={index} className="border-2 hover:border-primary transition-colors">
+              <Card key={index} className="border-2 hover:border-primary transition-colors overflow-hidden">
                 <CardContent className="p-8 text-center">
                   <h3 className="text-xl font-bold mb-4">{item.type}</h3>
-                  <div className="text-4xl font-black text-primary mb-4">{item.price}</div>
-                  <p className="text-sm text-muted-foreground">
-                    ※機種・状態により変動します
+                  <div className="flex items-baseline justify-center gap-1 mb-2">
+                    <div className="text-4xl font-black text-primary">{item.price}</div>
+                    <div className="text-sm text-muted-foreground">/ 台</div>
+                  </div>
+                  <div className="bg-accent/10 text-accent font-bold py-1 px-3 rounded-full text-sm inline-block mb-4">
+                    {item.note}
+                  </div>
+                  <p className="text-xs text-muted-foreground">
+                    ※機種・状態により変動する場合があります
                   </p>
                 </CardContent>
               </Card>
             ))}
           </div>
 
-          <div className="max-w-3xl mx-auto bg-muted/50 p-6 rounded-lg">
-            <h3 className="font-bold mb-3">料金に関する注意事項</h3>
+          <div className="max-w-3xl mx-auto bg-muted/50 p-6 rounded-lg border border-primary/10">
+            <h3 className="font-bold mb-3 flex items-center gap-2">
+              <Shield className="w-5 h-5 text-primary" />
+              料金に関する注意事項
+            </h3>
             <ul className="space-y-2 text-sm text-muted-foreground">
+              <li>• HPからのご予約が最安値となります</li>
               <li>• 高所取付の場合、追加料金が発生する場合があります</li>
               <li>• フィルターお掃除機能・自動昇降機能搭載の場合、金額が変動します</li>
               <li>• 見積希望の場合、見積り料：¥3,300が発生いたします（施工時は無料）</li>
-              <li>• 複数台同時施工の場合、割引適用可能です</li>
+              <li>• 複数台同時施工の場合、大幅割引適用可能です</li>
             </ul>
           </div>
         </div>
@@ -207,13 +222,13 @@ export default function Commercial() {
             <span className="text-primary">お見積もり・ご予約</span>
           </h2>
           <p className="text-lg text-muted-foreground mb-8 max-w-2xl mx-auto">
-            まずは無料でお見積もりいたします。お気軽にお問い合わせください。
+            HPからの予約が最安値です！まずは無料でお見積もりいたします。お気軽にお問い合わせください。
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link href="/booking">
-              <Button size="lg" className="bg-accent hover:bg-accent/90 text-accent-foreground">
+              <Button size="lg" className="bg-accent hover:bg-accent/90 text-accent-foreground font-bold px-10 py-6 text-xl">
                 予約・お見積もりフォームへ
-                <ArrowRight className="ml-2 h-4 w-4" />
+                <ArrowRight className="ml-2 h-5 w-5" />
               </Button>
             </Link>
             <a href="tel:098-XXX-XXXX">
