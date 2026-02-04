@@ -1,50 +1,32 @@
 import { Link } from "wouter";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { CheckCircle2, ArrowRight, Sparkles } from "lucide-react";
+import { CheckCircle2, ArrowRight, Sparkles, Info } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 
 export default function Residential() {
-  const pricingPlans = [
-    {
-      name: "スタンダードコース",
-      description: "通常分解洗浄",
-      features: [
-        "エアコン本体の分解洗浄",
-        "熱交換器（フィン）の高圧洗浄",
-        "送風ファンの洗浄",
-        "ドレンパンの洗浄",
-        "防カビ抗菌コーティング（無料）",
-        "動作確認"
-      ],
-      prices: [
-        { type: "お掃除機能なし", single: "¥8,000", multiple: "2台目以降 ¥7,000/台" },
-        { type: "お掃除機能あり", single: "¥16,000", multiple: "2台目以降 ¥15,000/台" }
-      ]
-    },
-    {
-      name: "ハイクオリティーコース",
-      description: "送風ファン・ドレンパン取外し洗浄",
-      features: [
-        "スタンダードコース全内容",
-        "送風ファン完全取外し洗浄",
-        "ドレンパン完全取外し洗浄",
-        "細部まで徹底洗浄",
-        "より長持ちする仕上がり"
-      ],
-      prices: [
-        { type: "お掃除機能なし", single: "¥16,000", multiple: "2台目以降 ¥15,000/台" },
-        { type: "お掃除機能あり", single: "¥24,000", multiple: "2台目以降 ¥23,000/台" }
-      ],
-      note: "※対象外メーカー：富士通、ダイキン、東芝、日立"
-    }
-  ];
+  const mainPlan = {
+    name: "エアコンクリーニング基本プラン",
+    description: "プロの技術による徹底分解洗浄",
+    features: [
+      "エアコン本体の分解洗浄",
+      "熱交換器（フィン）の高圧洗浄",
+      "送風ファンの洗浄",
+      "ドレンパンの洗浄",
+      "防カビ抗菌コーティング（無料）",
+      "動作確認"
+    ],
+    prices: [
+      { type: "お掃除機能なし", single: "¥8,000", multiple: "2台目以降 ¥7,000/台" },
+      { type: "お掃除機能あり", single: "¥16,000", multiple: "2台目以降 ¥15,000/台" }
+    ]
+  };
 
   const options = [
-    { name: "お掃除機能付き", price: "¥8,000" },
-    { name: "消臭抗菌コート", price: "¥1,000" },
-    { name: "室外機洗浄", price: "¥3,000" },
-    { name: "完全分解洗浄（ドレンパン、送風ファン取り外し）", price: "¥8,000" }
+    { name: "お掃除機能付き", price: "¥8,000", description: "お掃除ロボット搭載機種の場合" },
+    { name: "完全分解洗浄", price: "¥8,000", description: "ドレンパン・送風ファンを取り外して丸洗い", highlight: true },
+    { name: "室外機洗浄", price: "¥3,000", description: "電気代の節約・故障予防に" },
+    { name: "消臭抗菌コート", price: "¥1,000", description: "カビの繁殖を抑え、嫌な臭いを防ぎます" }
   ];
 
   return (
@@ -56,7 +38,7 @@ export default function Residential() {
             家庭用エアコンクリーニング
           </h1>
           <p className="text-lg md:text-xl max-w-3xl opacity-90">
-            ご家庭のエアコンを徹底的に分解洗浄。カビや汚れを根こそぎ除去し、清潔で快適な空気を取り戻します。お掃除機能付きエアコンにも対応しています。
+            ご家庭のエアコンを徹底的に分解洗浄。カビや汚れを根こそぎ除去し、清潔で快適な空気を取り戻します。
           </p>
         </div>
       </section>
@@ -73,73 +55,101 @@ export default function Residential() {
               <span className="text-primary">料金プラン</span>
             </h2>
             <p className="text-muted-foreground">
-              お客様のニーズに合わせて最適なコースをご用意しています
+              シンプルで分かりやすい料金体系をご用意しています
             </p>
           </div>
 
-          <div className="grid lg:grid-cols-2 gap-8 mb-12 max-w-5xl mx-auto">
-            {pricingPlans.map((plan, index) => (
-              <Card key={index} className={index === 0 ? "border-primary border-2 relative overflow-hidden" : ""}>
-                {index === 0 && (
-                  <div className="absolute top-0 right-0 bg-primary text-primary-foreground px-4 py-1 text-xs font-bold rounded-bl-lg">
-                    人気No.1
-                  </div>
-                )}
-                <CardHeader>
-                  <CardTitle className="text-2xl">{plan.name}</CardTitle>
-                  <p className="text-muted-foreground">{plan.description}</p>
-                </CardHeader>
-                <CardContent>
-                  <div className="space-y-4 mb-6">
-                    {plan.features.map((feature, i) => (
-                      <div key={i} className="flex items-start gap-2">
-                        <CheckCircle2 className="h-5 w-5 text-primary flex-shrink-0 mt-0.5" />
-                        <span className="text-sm">{feature}</span>
-                      </div>
-                    ))}
-                  </div>
-
-                  <div className="space-y-4 mb-4">
-                    {plan.prices.map((price, i) => (
-                      <div key={i} className="bg-muted/50 p-4 rounded-lg border border-primary/10">
-                        <div className="font-medium mb-2">{price.type}</div>
-                        <div className="flex items-baseline gap-2 mb-1">
-                          <div className="text-3xl font-black text-primary">{price.single}</div>
-                          <div className="text-sm text-muted-foreground">/ 台</div>
+          <div className="max-w-3xl mx-auto mb-16">
+            <Card className="border-primary border-2 relative overflow-hidden shadow-xl">
+              <div className="absolute top-0 right-0 bg-primary text-primary-foreground px-6 py-2 text-sm font-bold rounded-bl-xl">
+                おすすめ
+              </div>
+              <CardHeader className="bg-primary/5 border-b border-primary/10 pb-8">
+                <CardTitle className="text-3xl font-black text-primary mb-2">{mainPlan.name}</CardTitle>
+                <p className="text-muted-foreground text-lg">{mainPlan.description}</p>
+              </CardHeader>
+              <CardContent className="pt-8">
+                <div className="grid md:grid-cols-2 gap-8 mb-8">
+                  <div className="space-y-4">
+                    <h4 className="font-bold text-lg flex items-center gap-2">
+                      <CheckCircle2 className="w-5 h-5 text-primary" />
+                      作業内容
+                    </h4>
+                    <div className="space-y-3">
+                      {mainPlan.features.map((feature, i) => (
+                        <div key={i} className="flex items-start gap-2">
+                          <CheckCircle2 className="h-4 w-4 text-primary/60 flex-shrink-0 mt-1" />
+                          <span className="text-sm text-muted-foreground">{feature}</span>
                         </div>
-                        <div className="text-sm font-bold text-accent">{price.multiple}</div>
-                      </div>
-                    ))}
+                      ))}
+                    </div>
                   </div>
+                  <div className="space-y-4">
+                    <h4 className="font-bold text-lg flex items-center gap-2">
+                      <Sparkles className="w-5 h-5 text-accent" />
+                      基本料金
+                    </h4>
+                    <div className="space-y-4">
+                      {mainPlan.prices.map((price, i) => (
+                        <div key={i} className="bg-muted/50 p-4 rounded-xl border border-primary/10">
+                          <div className="font-bold text-sm mb-2 text-muted-foreground">{price.type}</div>
+                          <div className="flex items-baseline gap-1 mb-1">
+                            <div className="text-3xl font-black text-primary">{price.single}</div>
+                            <div className="text-xs text-muted-foreground">/ 台</div>
+                          </div>
+                          <div className="text-sm font-bold text-accent bg-accent/10 px-2 py-0.5 rounded inline-block">
+                            {price.multiple}
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
 
-                  {plan.note && (
-                    <p className="text-xs text-muted-foreground mb-4">{plan.note}</p>
-                  )}
-
-                  <Link href="/booking">
-                    <Button className="w-full bg-primary hover:bg-primary/90 font-bold py-6 text-lg">
-                      このコースで予約する
-                    </Button>
-                  </Link>
-                </CardContent>
-              </Card>
-            ))}
+                <Link href="/booking">
+                  <Button className="w-full bg-primary hover:bg-primary/90 font-bold py-8 text-xl shadow-lg shadow-primary/20">
+                    このプランで予約する
+                    <ArrowRight className="ml-2 h-6 w-6" />
+                  </Button>
+                </Link>
+              </CardContent>
+            </Card>
           </div>
 
           {/* オプション */}
           <div className="max-w-4xl mx-auto">
-            <h3 className="text-2xl font-bold mb-6 text-center">オプションメニュー</h3>
-            <div className="grid md:grid-cols-2 gap-4">
+            <div className="text-center mb-10">
+              <h3 className="text-2xl md:text-3xl font-bold mb-2">オプションメニュー</h3>
+              <p className="text-muted-foreground">さらに徹底的に綺麗にしたい方へ</p>
+            </div>
+            <div className="grid md:grid-cols-2 gap-6">
               {options.map((option, index) => (
-                <Card key={index} className="hover:border-primary/50 transition-colors">
+                <Card key={index} className={`transition-all duration-300 hover:shadow-md ${option.highlight ? "border-accent border-2 bg-accent/5" : "hover:border-primary/50"}`}>
                   <CardContent className="p-6">
-                    <div className="flex justify-between items-center gap-4">
-                      <span className="font-medium text-sm md:text-base">{option.name}</span>
-                      <span className="text-xl font-bold text-primary whitespace-nowrap">{option.price}</span>
+                    <div className="flex justify-between items-start gap-4 mb-2">
+                      <div>
+                        <div className="flex items-center gap-2">
+                          <span className="font-bold text-lg">{option.name}</span>
+                          {option.highlight && (
+                            <Badge className="bg-accent text-accent-foreground text-[10px] px-2 py-0">人気</Badge>
+                          )}
+                        </div>
+                        <p className="text-xs text-muted-foreground mt-1">{option.description}</p>
+                      </div>
+                      <div className="text-right">
+                        <span className="text-2xl font-black text-primary whitespace-nowrap">{option.price}</span>
+                        <div className="text-[10px] text-muted-foreground">/ 台</div>
+                      </div>
                     </div>
                   </CardContent>
                 </Card>
               ))}
+            </div>
+            <div className="mt-8 bg-muted/50 p-4 rounded-lg flex items-start gap-3 border border-dashed border-muted-foreground/30">
+              <Info className="w-5 h-5 text-muted-foreground flex-shrink-0 mt-0.5" />
+              <p className="text-xs text-muted-foreground leading-relaxed">
+                ※完全分解洗浄は、ドレンパンと送風ファンを完全に取り外して洗浄するオプションです。通常の分解洗浄では届かない奥の汚れまで徹底的に除去します。
+              </p>
             </div>
           </div>
         </div>
