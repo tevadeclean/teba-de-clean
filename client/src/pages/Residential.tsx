@@ -206,6 +206,8 @@ export default function Residential() {
                   className="w-full h-auto rounded-2xl shadow-2xl object-cover"
                 />
               </div>
+            </div>
+
             {/* ステップ2：分解・養生 */}
             <div className="grid md:grid-cols-2 gap-8 items-center mb-20 pb-20 border-b border-muted">
               <div className="order-1 md:order-1">
@@ -214,7 +216,7 @@ export default function Residential() {
                 </div>
                 <h3 className="text-3xl font-black mt-6 mb-4">分解・養生</h3>
                 <p className="text-lg text-muted-foreground leading-relaxed mb-6">
-                  エアコンを丁寧に分解し、周囲を专用の防水シートで保護します。お客様のお宅を汚さないよう、細心の注意を払って養生いたします。水しぶきや汚れが家具や壁に飛ばないよう万全を期します。
+                  エアコンを丁寧に分解し、周囲を専用の防水シートで保護します。お客様のお宅を汚さないよう、細心の注意を払って養生いたします。水しぶきや汚れが家具や壁に飛ばないよう万全を期します。
                 </p>
                 <ul className="space-y-2">
                   <li className="flex items-center gap-2">
@@ -243,6 +245,8 @@ export default function Residential() {
                   className="w-full h-auto rounded-2xl shadow-2xl object-cover"
                 />
               </div>
+            </div>
+
             {/* ステップ3：高圧洗浄・パーツ洗浄 */}
             <div className="grid md:grid-cols-2 gap-8 items-center mb-20 pb-20 border-b border-muted">
               <div className="order-2 md:order-1 space-y-4">
@@ -272,7 +276,7 @@ export default function Residential() {
                   </li>
                   <li className="flex items-center gap-2">
                     <CheckCircle2 className="w-5 h-5 text-primary" />
-                    <span className="text-muted-foreground">送風ファンの待機を上げる</span>
+                    <span className="text-muted-foreground">送風ファンの輝きを取り戻す</span>
                   </li>
                   <li className="flex items-center gap-2">
                     <CheckCircle2 className="w-5 h-5 text-primary" />
@@ -290,7 +294,7 @@ export default function Residential() {
                 </div>
                 <h3 className="text-3xl font-black mt-6 mb-4">外装・パーツの洗浄</h3>
                 <p className="text-lg text-muted-foreground leading-relaxed mb-6">
-取り外した外装パネルやフィルターなどのパーツを、一つひとつ丁寧に手洗いします。ベランダやお府の使用が難しい場合はお風呂場を使わせていただきます。（お風呂をお借りした場合は排水溶まで責任を持って清浄させていただきます）
+                  取り外した外装パネルやフィルターなどのパーツを、一つひとつ丁寧に手洗いします。ベランダやお庭の使用が難しい場合はお風呂場を使わせていただきます。（お風呂をお借りした場合は排水溝まで責任を持って清浄させていただきます）
                 </p>
                 <ul className="space-y-2">
                   <li className="flex items-center gap-2">
@@ -299,11 +303,11 @@ export default function Residential() {
                   </li>
                   <li className="flex items-center gap-2">
                     <CheckCircle2 className="w-5 h-5 text-primary" />
-                    <span className="text-muted-foreground">ベランダやお府を活用して洗浄</span>
+                    <span className="text-muted-foreground">ベランダやお庭を活用</span>
                   </li>
                   <li className="flex items-center gap-2">
                     <CheckCircle2 className="w-5 h-5 text-primary" />
-                    <span className="text-muted-foreground">お風呂場使用時は排水溶まで責任を持って清浄</span>
+                    <span className="text-muted-foreground">お風呂場使用時は排水溝まで清浄</span>
                   </li>
                 </ul>
               </div>
@@ -361,58 +365,43 @@ export default function Residential() {
               <span className="text-accent">作業内容</span>
             </h2>
           </div>
-
-          <div className="max-w-4xl mx-auto grid md:grid-cols-2 gap-6">
-            {[
-              { title: "動作確認", description: "作業前にエアコンの動作を確認します" },
-              { title: "養生", description: "周辺を防水シートで保護します" },
-              { title: "分解", description: "エアコンを丁寧に分解します" },
-              { title: "パーツ洗浄", description: "取り外したパーツを個別に洗浄" },
-              { title: "本体洗浄", description: "高圧洗浄機で徹底洗浄" },
-              { title: "防カビコーティング", description: "仕上げに防カビ抗菌コーティング" },
-              { title: "組み立て", description: "丁寧に組み立てます" },
-              { title: "最終確認", description: "動作確認とお客様への説明" }
-            ].map((item, index) => (
-              <Card key={index}>
-                <CardContent className="p-6">
-                  <div className="flex items-start gap-4">
-                    <div className="w-10 h-10 rounded-full bg-primary text-primary-foreground flex items-center justify-center font-bold flex-shrink-0">
-                      {index + 1}
-                    </div>
-                    <div>
-                      <h3 className="font-bold mb-1">{item.title}</h3>
-                      <p className="text-sm text-muted-foreground">{item.description}</p>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-            ))}
+          <div className="max-w-4xl mx-auto">
+            <div className="grid md:grid-cols-2 gap-4">
+              {[
+                "本体ユニットの分解・洗浄",
+                "アルミフィンの高圧洗浄",
+                "送風ファンの高圧洗浄",
+                "ドレンパンの洗浄",
+                "外装パネル・フィルターの洗浄",
+                "防カビ・抗菌コート（無料）",
+                "動作確認・簡易清掃",
+                "作業周辺の養生・後片付け"
+              ].map((item, i) => (
+                <div key={i} className="flex items-center gap-3 bg-white p-4 rounded-xl shadow-sm border border-muted">
+                  <CheckCircle2 className="w-5 h-5 text-primary flex-shrink-0" />
+                  <span className="font-bold text-sm">{item}</span>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </section>
 
       {/* CTA */}
-      <section className="section-padding">
+      <section className="py-20 bg-primary text-primary-foreground">
         <div className="container text-center">
           <h2 className="text-3xl md:text-4xl font-black mb-8">
-            家庭用エアコンクリーニングの<br />
-            <span className="text-primary">ご予約はこちら</span>
+            沖縄のエアコンを、もっと綺麗に、もっと快適に。
           </h2>
-          <p className="text-lg text-muted-foreground mb-8 max-w-2xl mx-auto leading-relaxed">
-            HPからの予約が最安値です！<br className="hidden md:block" />
-            さらに防カビコートも無料！<br className="hidden md:block" />
-            お見積もりは無料ですので、お気軽にお問い合わせください。
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+          <div className="flex flex-col md:flex-row gap-4 justify-center">
             <Link href="/booking">
-              <Button size="lg" className="bg-accent hover:bg-accent/90 text-accent-foreground font-bold px-10 py-6 text-xl">
-                予約フォームへ
-                <ArrowRight className="ml-2 h-5 w-5" />
+              <Button size="lg" className="bg-accent hover:bg-accent/90 text-accent-foreground font-black px-12 py-8 text-xl rounded-full shadow-xl">
+                今すぐ予約する
               </Button>
             </Link>
-            <Link href="/">
-              <Button size="lg" variant="outline">
-                ホームに戻る
+            <Link href="/line">
+              <Button size="lg" variant="outline" className="border-white text-white hover:bg-white/10 font-black px-12 py-8 text-xl rounded-full">
+                LINEで相談する
               </Button>
             </Link>
           </div>
