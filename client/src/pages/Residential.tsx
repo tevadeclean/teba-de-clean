@@ -315,6 +315,40 @@ export default function Residential() {
                 />
               </div>
             </div>
+
+            {/* ステップ5：防カビ・抗菌コート・動作確認 */}
+            <div className="grid md:grid-cols-2 gap-8 items-center mb-20">
+              <div className="order-2 md:order-1">
+                <div className="bg-accent/10 rounded-2xl p-4 border border-accent/20">
+                  <span className="inline-block bg-accent text-accent-foreground font-black px-4 py-1 rounded-full text-sm mb-4">ステップ5</span>
+                </div>
+                <h3 className="text-3xl font-black mt-6 mb-4">防カビ・抗菌コート・動作確認</h3>
+                <p className="text-lg text-muted-foreground leading-relaxed mb-6">
+                  仕上げに防カビ・抗菌コートを隅々まで吹きかけ、パーツを元通りに組み立てます。最後に動作確認を行い、お客様に仕上がりをチェックしていただいて作業完了です。当サイトからご予約いただいた場合は、防カビ・抗菌コートを無料で実施いたします！
+                </p>
+                <ul className="space-y-2">
+                  <li className="flex items-center gap-2">
+                    <CheckCircle2 className="w-5 h-5 text-primary" />
+                    <span className="text-muted-foreground">防カビ・抗菌コートで未来のカビを抑制</span>
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <CheckCircle2 className="w-5 h-5 text-primary" />
+                    <span className="text-muted-foreground">丁寧なパーツ組み立て</span>
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <CheckCircle2 className="w-5 h-5 text-primary" />
+                    <span className="text-muted-foreground">最終動作確認とお客様チェック</span>
+                  </li>
+                </ul>
+              </div>
+              <div className="order-1 md:order-2">
+                <img 
+                  src="/images/process-05-coating.jpg" 
+                  alt="防カビ・抗菌コート" 
+                  className="w-full h-auto rounded-2xl shadow-2xl object-cover"
+                />
+              </div>
+            </div>
           </div>
         </div>
       </section>
