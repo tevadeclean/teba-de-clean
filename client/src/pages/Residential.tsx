@@ -33,35 +33,41 @@ export default function Residential() {
       step: "1",
       title: "動作確認",
       description: "作業前にエアコンの動作をしっかり確認。異音や効き具合をチェックし、最適な洗浄プランを立てます。",
-      images: ["/images/process-01-check.jpg"],
+      images: [{ src: "/images/process-01-check.jpg", pos: "center" }],
       points: ["動作音の確認", "冷暖房の効きチェック"]
     },
     {
       step: "2",
       title: "分解・養生",
       description: "丁寧に分解し、周囲を専用シートで保護。家具や壁を汚さないよう万全を期します。",
-      images: ["/images/process-02-disassemble.jpg", "/images/process-02-protection.jpg"],
+      images: [
+        { src: "/images/process-02-disassemble.jpg", pos: "top" },
+        { src: "/images/process-02-protection.jpg", pos: "center" }
+      ],
       points: ["丁寧な分解", "徹底した防水養生"]
     },
     {
       step: "3",
       title: "高圧洗浄",
       description: "専用洗剤と高圧洗浄機で、アルミフィンやファンに溜まったカビやホコリを一掃します。",
-      images: ["/images/process-03-highpressure.jpg", "/images/process-03-parts.jpg"],
+      images: [
+        { src: "/images/process-03-highpressure.jpg", pos: "top" },
+        { src: "/images/process-03-parts.jpg", pos: "center" }
+      ],
       points: ["高圧で根こそぎ洗浄", "奥の汚れまで除去"]
     },
     {
       step: "4",
       title: "パーツ洗浄",
-      description: "外装パネルやフィルターを丁寧に手洗い。お風呂場をお借りした際は排水溝まで清掃します。",
-      images: ["/images/process-04-parts-cleaning.jpg"],
+      description: "外装パネルやフィルターを丁寧に手洗い。基本的にはベランダやお庭をお借りして洗浄しますが、難しい場合はお風呂場を使わせていただきます。（お風呂をお借りした際は排水溝まで責任を持って清掃します）",
+      images: [{ src: "/images/process-04-parts-cleaning.jpg", pos: "center" }],
       points: ["パネルの隅々まで手洗い", "排水溝まで責任清掃"]
     },
     {
       step: "5",
       title: "仕上げ・確認",
       description: "防カビコートを塗布し組み立て。最後に動作確認を行い、お客様にチェックしていただき完了です。",
-      images: ["/images/process-05-coating.jpg"],
+      images: [{ src: "/images/process-05-coating.jpg", pos: "top" }],
       points: ["防カビコート（無料）", "最終動作確認"]
     }
   ];
@@ -242,9 +248,10 @@ export default function Residential() {
                         {step.images.map((img, imgIdx) => (
                           <div key={imgIdx} className="relative aspect-[4/3] overflow-hidden rounded-xl shadow-md">
                             <img 
-                              src={img} 
+                              src={img.src} 
                               alt={`${step.title} ${imgIdx + 1}`} 
                               className="absolute inset-0 w-full h-full object-cover hover:scale-105 transition-transform duration-500"
+                              style={{ objectPosition: img.pos }}
                             />
                           </div>
                         ))}
