@@ -204,12 +204,14 @@ export default function Residential() {
       {/* CTA */}
       <section className="section-padding">
         <div className="container text-center">
-          <h2 className="text-3xl md:text-4xl font-black mb-6">
+          <h2 className="text-3xl md:text-4xl font-black mb-8">
             家庭用エアコンクリーニングの<br />
             <span className="text-primary">ご予約はこちら</span>
           </h2>
-          <p className="text-lg text-muted-foreground mb-8 max-w-2xl mx-auto">
-            HPからの予約が最安値です！さらに防カビコートも無料！お見積もりは無料ですので、お気軽にお問い合わせください。
+          <p className="text-lg text-muted-foreground mb-8 max-w-2xl mx-auto leading-relaxed">
+            HPからの予約が最安値です！<br className="hidden md:block" />
+            さらに防カビコートも無料！<br className="hidden md:block" />
+            お見積もりは無料ですので、お気軽にお問い合わせください。
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link href="/booking">

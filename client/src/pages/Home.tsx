@@ -100,7 +100,7 @@ export default function Home() {
       </section>
 
       {/* 5つの強み */}
-      <section className="py-24 md:py-32 bg-white">
+      <section className="section-padding bg-white">
         <div className="container">
           <div className="text-center mb-20">
             <h2 className="text-4xl md:text-5xl font-black text-foreground mb-6 tracking-tight">
@@ -130,7 +130,7 @@ export default function Home() {
       </section>
 
       {/* 店長ストーリー要約 */}
-      <section className="py-24 md:py-32 bg-muted/30">
+      <section className="section-padding bg-muted/30">
         <div className="container">
           <div className="max-w-6xl mx-auto bg-white rounded-[3rem] overflow-hidden shadow-2xl flex flex-col lg:flex-row">
             <div className="lg:w-1/2 aspect-square lg:aspect-auto bg-gradient-to-br from-primary/20 to-accent/20 flex items-center justify-center">
@@ -162,7 +162,7 @@ export default function Home() {
       </section>
 
       {/* サービス概要 */}
-      <section className="py-24 md:py-32">
+      <section className="section-padding">
         <div className="container">
           <div className="text-center mb-20">
             <h2 className="text-4xl md:text-5xl font-black text-foreground mb-6 tracking-tight">
@@ -239,7 +239,7 @@ export default function Home() {
       </section>
 
       {/* 作業の流れ */}
-      <section className="py-24 md:py-32 bg-muted/30">
+      <section className="section-padding bg-muted/30">
         <div className="container">
           <div className="text-center mb-20">
             <h2 className="text-4xl md:text-5xl font-black text-foreground mb-6 tracking-tight">
@@ -273,7 +273,7 @@ export default function Home() {
 
       {/* お客様の声 */}
       {recentTestimonials.length > 0 && (
-        <section className="py-24 md:py-32">
+        <section className="section-padding">
           <div className="container">
             <div className="text-center mb-20">
               <h2 className="text-4xl md:text-5xl font-black text-foreground mb-6 tracking-tight">

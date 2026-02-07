@@ -217,12 +217,14 @@ export default function Commercial() {
       {/* CTA */}
       <section className="section-padding">
         <div className="container text-center">
-          <h2 className="text-3xl md:text-4xl font-black mb-6">
+          <h2 className="text-3xl md:text-4xl font-black mb-8">
             業務用エアコンクリーニングの<br />
             <span className="text-primary">お見積もり・ご予約</span>
           </h2>
-          <p className="text-lg text-muted-foreground mb-8 max-w-2xl mx-auto">
-            HPからの予約が最安値です！まずは無料でお見積もりいたします。お気軽にお問い合わせください。
+          <p className="text-lg text-muted-foreground mb-8 max-w-2xl mx-auto leading-relaxed">
+            HPからの予約が最安値です！<br className="hidden md:block" />
+            まずは無料でお見積もりいたします。<br className="hidden md:block" />
+            お気軽にお問い合わせください。
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link href="/booking">
