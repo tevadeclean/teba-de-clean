@@ -206,6 +206,43 @@ export default function Residential() {
                   className="w-full h-auto rounded-2xl shadow-2xl object-cover"
                 />
               </div>
+            {/* ステップ2：分解・養生 */}
+            <div className="grid md:grid-cols-2 gap-8 items-center mb-20 pb-20 border-b border-muted">
+              <div className="order-1 md:order-1">
+                <div className="bg-primary/10 rounded-2xl p-4 border border-primary/20">
+                  <span className="inline-block bg-primary text-primary-foreground font-black px-4 py-1 rounded-full text-sm mb-4">ステップ2</span>
+                </div>
+                <h3 className="text-3xl font-black mt-6 mb-4">分解・養生</h3>
+                <p className="text-lg text-muted-foreground leading-relaxed mb-6">
+                  エアコンを丁寧に分解し、周囲を专用の防水シートで保護します。お客様のお宅を汚さないよう、細心の注意を払って養生いたします。水しぶきや汚れが家具や壁に飛ばないよう万全を期します。
+                </p>
+                <ul className="space-y-2">
+                  <li className="flex items-center gap-2">
+                    <CheckCircle2 className="w-5 h-5 text-primary" />
+                    <span className="text-muted-foreground">エアコン本体の丁寧な分解</span>
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <CheckCircle2 className="w-5 h-5 text-primary" />
+                    <span className="text-muted-foreground">周囲を防水シートで保護</span>
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <CheckCircle2 className="w-5 h-5 text-primary" />
+                    <span className="text-muted-foreground">家具・壁への水飛び対策</span>
+                  </li>
+                </ul>
+              </div>
+              <div className="order-2 md:order-2 space-y-4">
+                <img 
+                  src="/images/process-02-disassemble.jpg" 
+                  alt="分解・養生" 
+                  className="w-full h-auto rounded-2xl shadow-2xl object-cover"
+                />
+                <img 
+                  src="/images/process-02-protection.jpg" 
+                  alt="養生完了" 
+                  className="w-full h-auto rounded-2xl shadow-2xl object-cover"
+                />
+              </div>
             </div>
           </div>
         </div>
