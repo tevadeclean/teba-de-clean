@@ -243,6 +243,43 @@ export default function Residential() {
                   className="w-full h-auto rounded-2xl shadow-2xl object-cover"
                 />
               </div>
+            {/* ステップ3：高圧洗浄・パーツ洗浄 */}
+            <div className="grid md:grid-cols-2 gap-8 items-center mb-20 pb-20 border-b border-muted">
+              <div className="order-2 md:order-1 space-y-4">
+                <img 
+                  src="/images/process-03-highpressure.jpg" 
+                  alt="高圧洗浄" 
+                  className="w-full h-auto rounded-2xl shadow-2xl object-cover"
+                />
+                <img 
+                  src="/images/process-03-parts.jpg" 
+                  alt="パーツ洗浄" 
+                  className="w-full h-auto rounded-2xl shadow-2xl object-cover"
+                />
+              </div>
+              <div className="order-1 md:order-2">
+                <div className="bg-accent/10 rounded-2xl p-4 border border-accent/20">
+                  <span className="inline-block bg-accent text-accent-foreground font-black px-4 py-1 rounded-full text-sm mb-4">ステップ3</span>
+                </div>
+                <h3 className="text-3xl font-black mt-6 mb-4">高圧洗浄・パーツ洗浄</h3>
+                <p className="text-lg text-muted-foreground leading-relaxed mb-6">
+                  専用の洗剤と高圧洗浄機を使用して、アルミフィンや送風ファンに溜まったカビやホコリを一掃します。完全分解洗浄プランでは、ドレンパンやファンも取り外して、パーツごとに隅々まで洗い上げます。
+                </p>
+                <ul className="space-y-2">
+                  <li className="flex items-center gap-2">
+                    <CheckCircle2 className="w-5 h-5 text-primary" />
+                    <span className="text-muted-foreground">高圧洗浄機でアルミフィンを洗浄</span>
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <CheckCircle2 className="w-5 h-5 text-primary" />
+                    <span className="text-muted-foreground">送風ファンの待機を上げる</span>
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <CheckCircle2 className="w-5 h-5 text-primary" />
+                    <span className="text-muted-foreground">完全分解洗浄でドレンパン、ファンを洗浄</span>
+                  </li>
+                </ul>
+              </div>
             </div>
           </div>
         </div>
