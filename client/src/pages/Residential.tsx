@@ -28,6 +28,44 @@ export default function Residential() {
     { name: "室外機洗浄", price: "¥3,000", description: "電気代の節約・故障予防に" }
   ];
 
+  const processSteps = [
+    {
+      step: "1",
+      title: "動作確認",
+      description: "作業前にエアコンの動作をしっかり確認。異音や効き具合をチェックし、最適な洗浄プランを立てます。",
+      images: ["/images/process-01-check.jpg"],
+      points: ["動作音の確認", "冷暖房の効きチェック"]
+    },
+    {
+      step: "2",
+      title: "分解・養生",
+      description: "丁寧に分解し、周囲を専用シートで保護。家具や壁を汚さないよう万全を期します。",
+      images: ["/images/process-02-disassemble.jpg", "/images/process-02-protection.jpg"],
+      points: ["丁寧な分解", "徹底した防水養生"]
+    },
+    {
+      step: "3",
+      title: "高圧洗浄",
+      description: "専用洗剤と高圧洗浄機で、アルミフィンやファンに溜まったカビやホコリを一掃します。",
+      images: ["/images/process-03-highpressure.jpg", "/images/process-03-parts.jpg"],
+      points: ["高圧で根こそぎ洗浄", "奥の汚れまで除去"]
+    },
+    {
+      step: "4",
+      title: "パーツ洗浄",
+      description: "外装パネルやフィルターを丁寧に手洗い。お風呂場をお借りした際は排水溝まで清掃します。",
+      images: ["/images/process-04-parts-cleaning.jpg"],
+      points: ["パネルの隅々まで手洗い", "排水溝まで責任清掃"]
+    },
+    {
+      step: "5",
+      title: "仕上げ・確認",
+      description: "防カビコートを塗布し組み立て。最後に動作確認を行い、お客様にチェックしていただき完了です。",
+      images: ["/images/process-05-coating.jpg"],
+      points: ["防カビコート（無料）", "最終動作確認"]
+    }
+  ];
+
   return (
     <div className="min-h-screen">
       {/* ヒーロー */}
@@ -163,8 +201,8 @@ export default function Residential() {
         </div>
       </section>
 
-      {/* 掃除の工程（写真付き） */}
-      <section className="section-padding">
+      {/* 掃除の工程（コンパクト版） */}
+      <section className="section-padding bg-muted/30">
         <div className="container">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-black text-foreground mb-4">
@@ -173,213 +211,76 @@ export default function Residential() {
             <p className="text-muted-foreground text-lg">店長が丁寧に対応する、安心の作業フロー</p>
           </div>
 
-          <div className="max-w-6xl mx-auto">
-            {/* ステップ1：動作確認 */}
-            <div className="grid md:grid-cols-2 gap-8 items-center mb-20 pb-20 border-b border-muted">
-              <div className="order-2 md:order-1">
-                <div className="bg-accent/10 rounded-2xl p-4 border border-accent/20">
-                  <span className="inline-block bg-accent text-accent-foreground font-black px-4 py-1 rounded-full text-sm mb-4">ステップ1</span>
-                </div>
-                <h3 className="text-3xl font-black mt-6 mb-4">動作確認</h3>
-                <p className="text-lg text-muted-foreground leading-relaxed mb-6">
-                  作業前にエアコンの動作をしっかり確認します。異音や効き具合をチェックし、最適な洗浄プランを立てます。お客様のご質問にもこの段階でお答えします。
-                </p>
-                <ul className="space-y-2">
-                  <li className="flex items-center gap-2">
-                    <CheckCircle2 className="w-5 h-5 text-primary" />
-                    <span className="text-muted-foreground">動作音の確認</span>
-                  </li>
-                  <li className="flex items-center gap-2">
-                    <CheckCircle2 className="w-5 h-5 text-primary" />
-                    <span className="text-muted-foreground">冷房・暖房の効き具合チェック</span>
-                  </li>
-                  <li className="flex items-center gap-2">
-                    <CheckCircle2 className="w-5 h-5 text-primary" />
-                    <span className="text-muted-foreground">汚れの状態を把握</span>
-                  </li>
-                </ul>
-              </div>
-              <div className="order-1 md:order-2">
-                <img 
-                  src="/images/process-01-check.jpg" 
-                  alt="動作確認" 
-                  className="w-full h-auto rounded-2xl shadow-2xl object-cover"
-                />
-              </div>
-            </div>
-
-            {/* ステップ2：分解・養生 */}
-            <div className="grid md:grid-cols-2 gap-8 items-center mb-20 pb-20 border-b border-muted">
-              <div className="order-1 md:order-1">
-                <div className="bg-primary/10 rounded-2xl p-4 border border-primary/20">
-                  <span className="inline-block bg-primary text-primary-foreground font-black px-4 py-1 rounded-full text-sm mb-4">ステップ2</span>
-                </div>
-                <h3 className="text-3xl font-black mt-6 mb-4">分解・養生</h3>
-                <p className="text-lg text-muted-foreground leading-relaxed mb-6">
-                  エアコンを丁寧に分解し、周囲を専用の防水シートで保護します。お客様のお宅を汚さないよう、細心の注意を払って養生いたします。水しぶきや汚れが家具や壁に飛ばないよう万全を期します。
-                </p>
-                <ul className="space-y-2">
-                  <li className="flex items-center gap-2">
-                    <CheckCircle2 className="w-5 h-5 text-primary" />
-                    <span className="text-muted-foreground">エアコン本体の丁寧な分解</span>
-                  </li>
-                  <li className="flex items-center gap-2">
-                    <CheckCircle2 className="w-5 h-5 text-primary" />
-                    <span className="text-muted-foreground">周囲を防水シートで保護</span>
-                  </li>
-                  <li className="flex items-center gap-2">
-                    <CheckCircle2 className="w-5 h-5 text-primary" />
-                    <span className="text-muted-foreground">家具・壁への水飛び対策</span>
-                  </li>
-                </ul>
-              </div>
-              <div className="order-2 md:order-2 space-y-4">
-                <img 
-                  src="/images/process-02-disassemble.jpg" 
-                  alt="分解・養生" 
-                  className="w-full h-auto rounded-2xl shadow-2xl object-cover"
-                />
-                <img 
-                  src="/images/process-02-protection.jpg" 
-                  alt="養生完了" 
-                  className="w-full h-auto rounded-2xl shadow-2xl object-cover"
-                />
-              </div>
-            </div>
-
-            {/* ステップ3：高圧洗浄・パーツ洗浄 */}
-            <div className="grid md:grid-cols-2 gap-8 items-center mb-20 pb-20 border-b border-muted">
-              <div className="order-2 md:order-1 space-y-4">
-                <img 
-                  src="/images/process-03-highpressure.jpg" 
-                  alt="高圧洗浄" 
-                  className="w-full h-auto rounded-2xl shadow-2xl object-cover"
-                />
-                <img 
-                  src="/images/process-03-parts.jpg" 
-                  alt="パーツ洗浄" 
-                  className="w-full h-auto rounded-2xl shadow-2xl object-cover"
-                />
-              </div>
-              <div className="order-1 md:order-2">
-                <div className="bg-accent/10 rounded-2xl p-4 border border-accent/20">
-                  <span className="inline-block bg-accent text-accent-foreground font-black px-4 py-1 rounded-full text-sm mb-4">ステップ3</span>
-                </div>
-                <h3 className="text-3xl font-black mt-6 mb-4">高圧洗浄・パーツ洗浄</h3>
-                <p className="text-lg text-muted-foreground leading-relaxed mb-6">
-                  専用の洗剤と高圧洗浄機を使用して、アルミフィンや送風ファンに溜まったカビやホコリを一掃します。完全分解洗浄プランでは、ドレンパンやファンも取り外して、パーツごとに隅々まで洗い上げます。
-                </p>
-                <ul className="space-y-2">
-                  <li className="flex items-center gap-2">
-                    <CheckCircle2 className="w-5 h-5 text-primary" />
-                    <span className="text-muted-foreground">高圧洗浄機でアルミフィンを洗浄</span>
-                  </li>
-                  <li className="flex items-center gap-2">
-                    <CheckCircle2 className="w-5 h-5 text-primary" />
-                    <span className="text-muted-foreground">送風ファンの輝きを取り戻す</span>
-                  </li>
-                  <li className="flex items-center gap-2">
-                    <CheckCircle2 className="w-5 h-5 text-primary" />
-                    <span className="text-muted-foreground">完全分解洗浄でドレンパン、ファンを洗浄</span>
-                  </li>
-                </ul>
-              </div>
-            </div>
-
-            {/* ステップ4：外装・パーツの洗浄 */}
-            <div className="grid md:grid-cols-2 gap-8 items-center mb-20 pb-20 border-b border-muted">
-              <div className="order-1 md:order-1">
-                <div className="bg-primary/10 rounded-2xl p-4 border border-primary/20">
-                  <span className="inline-block bg-primary text-primary-foreground font-black px-4 py-1 rounded-full text-sm mb-4">ステップ4</span>
-                </div>
-                <h3 className="text-3xl font-black mt-6 mb-4">外装・パーツの洗浄</h3>
-                <p className="text-lg text-muted-foreground leading-relaxed mb-6">
-                  取り外した外装パネルやフィルターなどのパーツを、一つひとつ丁寧に手洗いします。ベランダやお庭の使用が難しい場合はお風呂場を使わせていただきます。（お風呂をお借りした場合は排水溝まで責任を持って清浄させていただきます）
-                </p>
-                <ul className="space-y-2">
-                  <li className="flex items-center gap-2">
-                    <CheckCircle2 className="w-5 h-5 text-primary" />
-                    <span className="text-muted-foreground">外装パネルを丁寧に手洗い</span>
-                  </li>
-                  <li className="flex items-center gap-2">
-                    <CheckCircle2 className="w-5 h-5 text-primary" />
-                    <span className="text-muted-foreground">ベランダやお庭を活用</span>
-                  </li>
-                  <li className="flex items-center gap-2">
-                    <CheckCircle2 className="w-5 h-5 text-primary" />
-                    <span className="text-muted-foreground">お風呂場使用時は排水溝まで清浄</span>
-                  </li>
-                </ul>
-              </div>
-              <div className="order-2 md:order-2">
-                <img 
-                  src="/images/process-04-parts-cleaning.jpg" 
-                  alt="外装・パーツの洗浄" 
-                  className="w-full h-auto rounded-2xl shadow-2xl object-cover"
-                />
-              </div>
-            </div>
-
-            {/* ステップ5：防カビ・抗菌コート・動作確認 */}
-            <div className="grid md:grid-cols-2 gap-8 items-center mb-20">
-              <div className="order-2 md:order-1">
-                <div className="bg-accent/10 rounded-2xl p-4 border border-accent/20">
-                  <span className="inline-block bg-accent text-accent-foreground font-black px-4 py-1 rounded-full text-sm mb-4">ステップ5</span>
-                </div>
-                <h3 className="text-3xl font-black mt-6 mb-4">防カビ・抗菌コート・動作確認</h3>
-                <p className="text-lg text-muted-foreground leading-relaxed mb-6">
-                  仕上げに防カビ・抗菌コートを隅々まで吹きかけ、パーツを元通りに組み立てます。最後に動作確認を行い、お客様に仕上がりをチェックしていただいて作業完了です。当サイトからご予約いただいた場合は、防カビ・抗菌コートを無料で実施いたします！
-                </p>
-                <ul className="space-y-2">
-                  <li className="flex items-center gap-2">
-                    <CheckCircle2 className="w-5 h-5 text-primary" />
-                    <span className="text-muted-foreground">防カビ・抗菌コートで未来のカビを抑制</span>
-                  </li>
-                  <li className="flex items-center gap-2">
-                    <CheckCircle2 className="w-5 h-5 text-primary" />
-                    <span className="text-muted-foreground">丁寧なパーツ組み立て</span>
-                  </li>
-                  <li className="flex items-center gap-2">
-                    <CheckCircle2 className="w-5 h-5 text-primary" />
-                    <span className="text-muted-foreground">最終動作確認とお客様チェック</span>
-                  </li>
-                </ul>
-              </div>
-              <div className="order-1 md:order-2">
-                <img 
-                  src="/images/process-05-coating.jpg" 
-                  alt="防カビ・抗菌コート" 
-                  className="w-full h-auto rounded-2xl shadow-2xl object-cover"
-                />
-              </div>
+          <div className="max-w-5xl mx-auto">
+            <div className="grid gap-8">
+              {processSteps.map((step, idx) => (
+                <Card key={idx} className="overflow-hidden border-none shadow-lg hover:shadow-xl transition-shadow">
+                  <div className="grid md:grid-cols-5 items-stretch">
+                    {/* テキスト部分 (3/5) */}
+                    <div className="md:col-span-3 p-6 md:p-8 flex flex-col justify-center">
+                      <div className="flex items-center gap-3 mb-4">
+                        <span className="flex-shrink-0 w-10 h-10 rounded-full bg-primary text-primary-foreground flex items-center justify-center font-black text-xl">
+                          {step.step}
+                        </span>
+                        <h3 className="text-2xl font-black">{step.title}</h3>
+                      </div>
+                      <p className="text-muted-foreground leading-relaxed mb-6">
+                        {step.description}
+                      </p>
+                      <div className="flex flex-wrap gap-3">
+                        {step.points.map((point, pIdx) => (
+                          <div key={pIdx} className="flex items-center gap-1.5 bg-primary/5 px-3 py-1 rounded-full border border-primary/10">
+                            <CheckCircle2 className="w-4 h-4 text-primary" />
+                            <span className="text-xs font-bold text-primary/80">{point}</span>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                    {/* 画像部分 (2/5) */}
+                    <div className="md:col-span-2 bg-muted flex items-center justify-center p-4 md:p-6">
+                      <div className={`grid ${step.images.length > 1 ? 'grid-cols-2' : 'grid-cols-1'} gap-3 w-full`}>
+                        {step.images.map((img, imgIdx) => (
+                          <div key={imgIdx} className="relative aspect-[4/3] overflow-hidden rounded-xl shadow-md">
+                            <img 
+                              src={img} 
+                              alt={`${step.title} ${imgIdx + 1}`} 
+                              className="absolute inset-0 w-full h-full object-cover hover:scale-105 transition-transform duration-500"
+                            />
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                </Card>
+              ))}
             </div>
           </div>
         </div>
       </section>
 
-      {/* 作業内容 */}
-      <section className="section-padding bg-muted/30">
+      {/* 作業内容一覧 */}
+      <section className="section-padding">
         <div className="container">
           <div className="text-center mb-12">
             <h2 className="text-3xl md:text-4xl font-black text-foreground mb-4">
-              <span className="text-accent">作業内容</span>
+              <span className="text-accent">作業内容一覧</span>
             </h2>
           </div>
           <div className="max-w-4xl mx-auto">
-            <div className="grid md:grid-cols-2 gap-4">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
               {[
-                "本体ユニットの分解・洗浄",
-                "アルミフィンの高圧洗浄",
-                "送風ファンの高圧洗浄",
-                "ドレンパンの洗浄",
-                "外装パネル・フィルターの洗浄",
-                "防カビ・抗菌コート（無料）",
-                "動作確認・簡易清掃",
-                "作業周辺の養生・後片付け"
+                "本体分解・洗浄",
+                "フィン高圧洗浄",
+                "ファン高圧洗浄",
+                "ドレンパン洗浄",
+                "パネル・フィルター",
+                "防カビコート",
+                "動作確認",
+                "養生・後片付け"
               ].map((item, i) => (
-                <div key={i} className="flex items-center gap-3 bg-white p-4 rounded-xl shadow-sm border border-muted">
-                  <CheckCircle2 className="w-5 h-5 text-primary flex-shrink-0" />
-                  <span className="font-bold text-sm">{item}</span>
+                <div key={i} className="flex flex-col items-center text-center gap-2 bg-white p-4 rounded-2xl shadow-sm border border-muted hover:border-primary/30 transition-colors">
+                  <CheckCircle2 className="w-6 h-6 text-primary" />
+                  <span className="font-bold text-xs">{item}</span>
                 </div>
               ))}
             </div>
