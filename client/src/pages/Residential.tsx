@@ -281,6 +281,40 @@ export default function Residential() {
                 </ul>
               </div>
             </div>
+
+            {/* ステップ4：外装・パーツの洗浄 */}
+            <div className="grid md:grid-cols-2 gap-8 items-center mb-20 pb-20 border-b border-muted">
+              <div className="order-1 md:order-1">
+                <div className="bg-primary/10 rounded-2xl p-4 border border-primary/20">
+                  <span className="inline-block bg-primary text-primary-foreground font-black px-4 py-1 rounded-full text-sm mb-4">ステップ4</span>
+                </div>
+                <h3 className="text-3xl font-black mt-6 mb-4">外装・パーツの洗浄</h3>
+                <p className="text-lg text-muted-foreground leading-relaxed mb-6">
+取り外した外装パネルやフィルターなどのパーツを、一つひとつ丁寧に手洗いします。ベランダやお府の使用が難しい場合はお風呂場を使わせていただきます。（お風呂をお借りした場合は排水溶まで責任を持って清浄させていただきます）
+                </p>
+                <ul className="space-y-2">
+                  <li className="flex items-center gap-2">
+                    <CheckCircle2 className="w-5 h-5 text-primary" />
+                    <span className="text-muted-foreground">外装パネルを丁寧に手洗い</span>
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <CheckCircle2 className="w-5 h-5 text-primary" />
+                    <span className="text-muted-foreground">ベランダやお府を活用して洗浄</span>
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <CheckCircle2 className="w-5 h-5 text-primary" />
+                    <span className="text-muted-foreground">お風呂場使用時は排水溶まで責任を持って清浄</span>
+                  </li>
+                </ul>
+              </div>
+              <div className="order-2 md:order-2">
+                <img 
+                  src="/images/process-04-parts-cleaning.jpg" 
+                  alt="外装・パーツの洗浄" 
+                  className="w-full h-auto rounded-2xl shadow-2xl object-cover"
+                />
+              </div>
+            </div>
           </div>
         </div>
       </section>
