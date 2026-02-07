@@ -163,6 +163,54 @@ export default function Residential() {
         </div>
       </section>
 
+      {/* 掃除の工程（写真付き） */}
+      <section className="section-padding">
+        <div className="container">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl md:text-4xl font-black text-foreground mb-4">
+              <span className="text-primary">掃除の工程</span>
+            </h2>
+            <p className="text-muted-foreground text-lg">店長が丁寧に対応する、安心の作業フロー</p>
+          </div>
+
+          <div className="max-w-6xl mx-auto">
+            {/* ステップ1：動作確認 */}
+            <div className="grid md:grid-cols-2 gap-8 items-center mb-20 pb-20 border-b border-muted">
+              <div className="order-2 md:order-1">
+                <div className="bg-accent/10 rounded-2xl p-4 border border-accent/20">
+                  <span className="inline-block bg-accent text-accent-foreground font-black px-4 py-1 rounded-full text-sm mb-4">ステップ1</span>
+                </div>
+                <h3 className="text-3xl font-black mt-6 mb-4">動作確認</h3>
+                <p className="text-lg text-muted-foreground leading-relaxed mb-6">
+                  作業前にエアコンの動作をしっかり確認します。異音や効き具合をチェックし、最適な洗浄プランを立てます。お客様のご質問にもこの段階でお答えします。
+                </p>
+                <ul className="space-y-2">
+                  <li className="flex items-center gap-2">
+                    <CheckCircle2 className="w-5 h-5 text-primary" />
+                    <span className="text-muted-foreground">動作音の確認</span>
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <CheckCircle2 className="w-5 h-5 text-primary" />
+                    <span className="text-muted-foreground">冷房・暖房の効き具合チェック</span>
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <CheckCircle2 className="w-5 h-5 text-primary" />
+                    <span className="text-muted-foreground">汚れの状態を把握</span>
+                  </li>
+                </ul>
+              </div>
+              <div className="order-1 md:order-2">
+                <img 
+                  src="/images/process-01-check.jpg" 
+                  alt="動作確認" 
+                  className="w-full h-auto rounded-2xl shadow-2xl object-cover"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* 作業内容 */}
       <section className="section-padding bg-muted/30">
         <div className="container">
