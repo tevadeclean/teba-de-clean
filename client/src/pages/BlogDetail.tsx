@@ -5,6 +5,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { ArrowLeft, MapPin, Calendar, CreditCard } from "lucide-react";
 import { fetchBlogPostsFromSheet, BlogPost } from "@/lib/googleSheets";
 import { BLOG_SHEET_CSV_URL } from "@/const";
+import { contactInfo } from "@/data/siteData";
 
 export default function BlogDetail() {
   const [, params] = useRoute("/blog/:id");
@@ -13,10 +14,19 @@ export default function BlogDetail() {
 
   useEffect(() => {
     async function loadPost() {
-      const posts = await fetchBlogPostsFromSheet(BLOG_SHEET_CSV_URL);
-      const found = posts.find(p => p.id === params?.id);
-      setPost(found || null);
-      setLoading(false);
+      try {
+        if (BLOG_SHEET_CSV_URL.includes("_L_L_L_")) {
+          setLoading(false);
+          return;
+        }
+        const posts = await fetchBlogPostsFromSheet(BLOG_SHEET_CSV_URL);
+        const found = posts.find(p => p.id === params?.id);
+        setPost(found || null);
+      } catch (error) {
+        console.error("Failed to load blog post:", error);
+      } finally {
+        setLoading(false);
+      }
     }
     loadPost();
   }, [params?.id]);
@@ -169,7 +179,7 @@ export default function BlogDetail() {
                       料金表・予約
                     </Button>
                   </Link>
-                  <a href="https://lin.ee/xxxxxx">
+                  <a href={contactInfo.lineUrl} target="_blank" rel="noopener noreferrer">
                     <Button size="lg" variant="outline" className="bg-transparent border-2 border-white text-white hover:bg-white/10 font-black px-12 py-7 rounded-full text-lg">
                       LINEで相談
                     </Button>

@@ -13,9 +13,19 @@ export default function Blog() {
 
   useEffect(() => {
     async function loadPosts() {
-      const data = await fetchBlogPostsFromSheet(BLOG_SHEET_CSV_URL);
-      setPosts(data);
-      setLoading(false);
+      try {
+        // BLOG_SHEET_CSV_URLがプレースホルダーの場合は読み込まない
+        if (BLOG_SHEET_CSV_URL.includes("_L_L_L_")) {
+          setLoading(false);
+          return;
+        }
+        const data = await fetchBlogPostsFromSheet(BLOG_SHEET_CSV_URL);
+        setPosts(data || []);
+      } catch (error) {
+        console.error("Failed to load blog posts:", error);
+      } finally {
+        setLoading(false);
+      }
     }
     loadPosts();
   }, []);

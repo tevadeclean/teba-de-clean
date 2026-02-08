@@ -32,9 +32,13 @@ export default function Home() {
 
   useEffect(() => {
     async function loadRecentTestimonials() {
-      const sheetData = await fetchTestimonialsFromSheet(ACTUAL_SHEET_CSV_URL);
-      if (sheetData.length > 0) {
-        setRecentTestimonials(sheetData.slice(0, 3));
+      try {
+        const sheetData = await fetchTestimonialsFromSheet(ACTUAL_SHEET_CSV_URL);
+        if (sheetData && sheetData.length > 0) {
+          setRecentTestimonials(sheetData.slice(0, 3));
+        }
+      } catch (error) {
+        console.error("Failed to load testimonials from sheet:", error);
       }
     }
     loadRecentTestimonials();
