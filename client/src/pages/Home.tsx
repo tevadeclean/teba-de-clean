@@ -18,7 +18,8 @@ import {
   Baby,
   ShieldCheck,
   Info,
-  Users
+  Users,
+  Play
 } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 
@@ -129,10 +130,56 @@ export default function Home() {
         </div>
       </section>
 
-      {/* 店長ストーリー要約 */}
+      {/* 動画セクション */}
       <section className="section-padding bg-muted/30">
         <div className="container">
-          <div className="max-w-6xl mx-auto bg-white rounded-[3rem] overflow-hidden shadow-2xl flex flex-col lg:flex-row">
+          <div className="max-w-5xl mx-auto">
+            <div className="text-center mb-12">
+              <Badge className="mb-4 bg-primary/10 text-primary px-4 py-1 text-sm font-bold">
+                <Play className="w-4 h-4 mr-2 inline" />
+                作業風景を動画でチェック
+              </Badge>
+              <h2 className="text-3xl md:text-4xl font-black mb-6">
+                1分でわかる！テバdeクリーンの徹底洗浄
+              </h2>
+              <p className="text-muted-foreground text-lg">
+                プロの技術と、劇的なビフォーアフターを動画でご確認ください。
+              </p>
+            </div>
+            
+            <div className="relative aspect-[9/16] max-w-[350px] mx-auto rounded-[2rem] overflow-hidden shadow-2xl border-8 border-white">
+              <iframe 
+                className="absolute inset-0 w-full h-full"
+                src="https://www.youtube.com/embed/Sd_05JT5kuQ" 
+                title="テバdeクリーン 作業風景"
+                frameBorder="0" 
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                allowFullScreen
+              ></iframe>
+            </div>
+            
+            <div className="mt-12 grid md:grid-cols-3 gap-6 text-center">
+              <div className="p-6 bg-white rounded-2xl shadow-sm">
+                <div className="text-primary font-black text-2xl mb-2">徹底分解</div>
+                <p className="text-sm text-muted-foreground">隅々までパーツを外し、隠れたカビも見逃しません。</p>
+              </div>
+              <div className="p-6 bg-white rounded-2xl shadow-sm">
+                <div className="text-primary font-black text-2xl mb-2">高圧洗浄</div>
+                <p className="text-sm text-muted-foreground">専用洗剤と高圧の水で、奥底の汚れを根こそぎ除去。</p>
+              </div>
+              <div className="p-6 bg-white rounded-2xl shadow-sm">
+                <div className="text-primary font-black text-2xl mb-2">劇的変化</div>
+                <p className="text-sm text-muted-foreground">真っ黒な汚水が、洗浄の証。空気が一瞬で変わります。</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* 店長ストーリー要約 */}
+      <section className="section-padding bg-white">
+        <div className="container">
+          <div className="max-w-6xl mx-auto bg-muted/20 rounded-[3rem] overflow-hidden shadow-xl flex flex-col lg:flex-row">
             <div className="lg:w-1/2 aspect-square lg:aspect-auto bg-gradient-to-br from-primary/20 to-accent/20 flex items-center justify-center">
               <Users className="h-32 w-32 text-muted-foreground/30" />
             </div>
@@ -162,7 +209,7 @@ export default function Home() {
       </section>
 
       {/* サービス概要 */}
-      <section className="section-padding">
+      <section className="section-padding bg-muted/30">
         <div className="container">
           <div className="text-center mb-20">
             <h2 className="text-4xl md:text-5xl font-black text-foreground mb-6 tracking-tight">
@@ -238,111 +285,131 @@ export default function Home() {
         </div>
       </section>
 
-      {/* 作業の流れ */}
-      <section className="section-padding bg-muted/30">
+      {/* 作業の流れ（簡易版） */}
+      <section className="section-padding bg-white">
         <div className="container">
           <div className="text-center mb-20">
             <h2 className="text-4xl md:text-5xl font-black text-foreground mb-6 tracking-tight">
-              <span className="text-primary">作業の流れ</span>
+              安心の<span className="text-primary">作業フロー</span>
             </h2>
+            <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
+              丁寧な説明と確かな技術で、安心してお任せいただけます
+            </p>
           </div>
 
-          <div className="max-w-4xl mx-auto space-y-12">
+          <div className="grid md:grid-cols-4 gap-8">
             {[
-              { step: "1", title: "お問い合わせ", description: "お電話・LINE・予約フォームからお気軽にご連絡ください" },
-              { step: "2", title: "日程調整", description: "ご希望の日時をお伺いし、訪問日を決定します" },
-              { step: "3", title: "現地調査・見積もり", description: "エアコンの状態を確認し、正確なお見積もりを提示します" },
-              { step: "4", title: "クリーニング作業", description: "プロの技術で徹底的に分解洗浄。約2〜3時間で完了します" },
-              { step: "5", title: "動作確認・お引き渡し", description: "クリーニング後の動作確認を行い、作業完了です" }
+              { step: "01", title: "動作確認", desc: "作業前にしっかりチェック" },
+              { step: "02", title: "分解・養生", desc: "周囲を汚さない徹底保護" },
+              { step: "03", title: "高圧洗浄", desc: "カビ・汚れを根こそぎ除去" },
+              { step: "04", title: "仕上げ", desc: "防カビコートで清潔維持" }
             ].map((item, index) => (
-              <div key={index} className="flex gap-8 items-start">
-                <div className="flex-shrink-0">
-                  <div className="w-16 h-16 rounded-2xl bg-accent flex items-center justify-center text-accent-foreground font-black text-2xl shadow-lg shadow-accent/20">
-                    {item.step}
-                  </div>
+              <div key={index} className="relative p-8 bg-muted/20 rounded-3xl text-center">
+                <div className="text-primary/20 font-black text-6xl absolute top-4 left-1/2 -translate-x-1/2">
+                  {item.step}
                 </div>
-                <div className="flex-1 pt-2">
-                  <h3 className="text-2xl font-bold mb-3 tracking-tight">{item.title}</h3>
-                  <p className="text-lg text-muted-foreground leading-relaxed">{item.description}</p>
+                <div className="relative z-10">
+                  <h3 className="text-xl font-bold mb-2 mt-8">{item.title}</h3>
+                  <p className="text-sm text-muted-foreground">{item.desc}</p>
                 </div>
               </div>
             ))}
+          </div>
+          
+          <div className="text-center mt-12">
+            <Link href="/residential">
+              <Button variant="link" className="text-primary font-bold text-lg">
+                詳しい工程を写真で見る
+                <ArrowRight className="ml-2 h-5 w-5" />
+              </Button>
+            </Link>
           </div>
         </div>
       </section>
 
       {/* お客様の声 */}
-      {recentTestimonials.length > 0 && (
-        <section className="section-padding">
-          <div className="container">
-            <div className="text-center mb-20">
-              <h2 className="text-4xl md:text-5xl font-black text-foreground mb-6 tracking-tight">
-                <span className="text-primary">お客様の声</span>
-              </h2>
-            </div>
-
-            <div className="grid md:grid-cols-3 gap-10 mb-16">
-              {recentTestimonials.map((testimonial) => (
-                <Card key={testimonial.id} className="border-none shadow-xl bg-muted/20">
-                  <CardContent className="p-10">
-                    <div className="flex items-center gap-1 mb-6">
-                      {Array.from({ length: 5 }).map((_, i) => (
-                        <Star
-                          key={i}
-                          className={`h-6 w-6 ${
-                            i < testimonial.rating ? "fill-accent text-accent" : "text-muted"
-                          }`}
-                        />
-                      ))}
-                    </div>
-                    <p className="text-lg text-muted-foreground mb-8 leading-relaxed italic">
-                      "{testimonial.comment}"
-                    </p>
-                    <div className="text-lg font-black">{testimonial.customerName}様</div>
-                  </CardContent>
-                </Card>
-              ))}
-            </div>
-
-            <div className="text-center">
-              <Link href="/testimonials">
-                <Button variant="outline" size="lg" className="font-bold px-10 py-8 text-lg">
-                  お客様の声をもっと見る
-                  <ArrowRight className="ml-2 h-5 w-5" />
-                </Button>
-              </Link>
-            </div>
+      <section className="section-padding bg-muted/30">
+        <div className="container">
+          <div className="text-center mb-20">
+            <h2 className="text-4xl md:text-5xl font-black text-foreground mb-6 tracking-tight">
+              お客様からの<span className="text-primary">嬉しいお声</span>
+            </h2>
+            <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
+              実際にサービスをご利用いただいたお客様の感想です
+            </p>
           </div>
-        </section>
-      )}
 
-      {/* CTA */}
-      <section className="py-32 md:py-48 bg-gradient-to-br from-primary to-primary/80 text-primary-foreground relative overflow-hidden">
+          <div className="grid md:grid-cols-3 gap-8">
+            {recentTestimonials.map((testimonial, index) => (
+              <Card key={index} className="border-none shadow-xl bg-white rounded-[2rem]">
+                <CardContent className="p-10">
+                  <div className="flex gap-1 mb-6">
+                    {[...Array(5)].map((_, i) => (
+                      <Star key={i} className="h-5 w-5 fill-accent text-accent" />
+                    ))}
+                  </div>
+                  <p className="text-muted-foreground italic mb-8 leading-relaxed">
+                    "{testimonial.content}"
+                  </p>
+                  <div className="flex items-center gap-4">
+                    <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center">
+                      <UserCheck className="h-6 w-6 text-primary" />
+                    </div>
+                    <div>
+                      <div className="font-bold">{testimonial.name} 様</div>
+                      <div className="text-xs text-muted-foreground">{testimonial.location}</div>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+          
+          <div className="text-center mt-16">
+            <Link href="/testimonials">
+              <Button variant="outline" size="lg" className="font-bold px-10 py-6 rounded-full">
+                もっと見る
+              </Button>
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* CTAセクション */}
+      <section className="py-24 bg-primary text-primary-foreground relative overflow-hidden">
         <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxnIGZpbGw9IiNmZmZmZmYiIGZpbGwtb3BhY2l0eT0iMC4wNSI+PHBhdGggZD0iTTM2IDE2YzAtNC40MTggMy41ODItOCA4LThzOCAzLjU4MiA4IDgtMy41ODIgOC04IDgtOC0zLjU4Mi04LTh6bS0yMCAwYzAtNC40MTggMy41ODItOCA4LThzOCAzLjU4MiA4IDgtMy41ODIgOC04IDgtOC0zLjU4Mi04LTh6Ii8+PC9nPjwvZz48L3N2Zz4=')] opacity-20"></div>
         <div className="container relative text-center">
-          <Badge className="mb-8 bg-accent text-accent-foreground px-6 py-2 text-lg font-black animate-bounce shadow-2xl shadow-accent/50">
-            公式サイトからの予約が一番おトクです！
+          <Badge className="mb-8 bg-accent text-accent-foreground px-6 py-2 text-lg font-black shadow-xl">
+            今なら防カビコート無料！
           </Badge>
           <h2 className="text-4xl md:text-6xl font-black mb-10 leading-tight tracking-tighter">
-            エアコンクリーニングのご予約は<br />
-            <span className="text-accent">今すぐ</span>お気軽に
+            沖縄のエアコンを、<br />もっと綺麗に、もっと快適に。
           </h2>
-          <p className="text-xl md:text-2xl mb-16 opacity-95 max-w-3xl mx-auto leading-relaxed">
-            公式サイト（このページ）からのご予約が一番おトクです！<br />
-            他サイト経由より、安い料金でご案内しています。<br />
-            さらに防カビコートも無料！お電話、LINE、予約フォームからお気軽にご相談ください。
+          <p className="text-xl md:text-2xl mb-12 opacity-90 max-w-2xl mx-auto leading-relaxed">
+            プロの技術で、あなたの家族の健康を守ります。<br />
+            まずはお気軽にご相談ください。
           </p>
-          <div className="flex flex-col sm:flex-row gap-8 justify-center">
+          <div className="flex flex-col sm:flex-row gap-6 justify-center">
             <Link href="/booking">
-              <Button size="lg" className="bg-accent hover:bg-accent/90 text-accent-foreground text-2xl px-16 py-10 font-black shadow-2xl shadow-accent/40">
-                予約フォームへ
+              <Button size="lg" className="bg-accent hover:bg-accent/90 text-accent-foreground text-2xl px-16 py-10 font-black rounded-full shadow-2xl shadow-accent/40">
+                今すぐ予約する
               </Button>
             </Link>
             <Link href="/line">
-              <Button size="lg" variant="outline" className="bg-primary-foreground/10 border-primary-foreground/30 hover:bg-primary-foreground/20 text-primary-foreground text-2xl px-16 py-10 font-black">
-                LINEで予約
+              <Button size="lg" variant="outline" className="bg-white/10 border-white/30 hover:bg-white/20 text-white text-2xl px-16 py-10 font-black rounded-full">
+                LINEで相談
               </Button>
             </Link>
+          </div>
+          <div className="mt-12 flex items-center justify-center gap-8 opacity-80">
+            <div className="flex items-center gap-2">
+              <ShieldCheck className="w-6 h-6" />
+              <span className="font-bold">安心の損害保険加入</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <Clock className="w-6 h-6" />
+              <span className="font-bold">土日祝も対応可能</span>
+            </div>
           </div>
         </div>
       </section>
