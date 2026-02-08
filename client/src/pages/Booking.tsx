@@ -19,10 +19,10 @@ export default function Booking() {
   ];
 
   const pricingData = [
-    { name: "家庭用（お掃除機能なし）", desc: "一般的な壁掛けエアコンです。リモコンに「フィルター掃除」などのボタンがありません。", price: "8,000円", highlight: false },
-    { name: "家庭用（お掃除機能あり）", desc: "リモコンに「手動掃除」「フィルター掃除」などのボタンがある、または本体に厚みがある機種です。", price: "15,000円", highlight: false },
-    { name: "業務用エアコン", desc: "店舗・オフィス用の天井カセット型、吊り下げ型など。全機種対応いたします。", price: "25,000円〜", highlight: false },
-    { name: "完全分解洗浄", desc: "ドレンパンまで外して洗う徹底コース。「カビの臭いが気になる」方に最適です。", price: "+3,000円", isOption: true },
+    { name: "家庭用（お掃除機能なし）", desc: "一般的な壁掛けエアコンです。", price: "8,000円", highlight: false },
+    { name: "家庭用（お掃除機能あり）", desc: "リモコンに「フィルター掃除」などのボタンがある、お掃除機能付きのタイプです。", price: "15,000円", highlight: false },
+    { name: "業務用エアコン", desc: "店舗・オフィス用の天井カセット型、吊り下げ型など", price: "25,000円〜", highlight: false },
+    { name: "完全分解洗浄", desc: "ドレンパンと送風ファンを外してから洗浄します。より徹底的に綺麗にしたい方におすすめです。", price: "+8,000円", isOption: true },
     { name: "室外機洗浄", desc: "電気代の節約や故障予防に。エアコンの効きが悪いと感じる場合にもおすすめです。", price: "+3,000円", isOption: true },
   ];
 
@@ -37,7 +37,7 @@ export default function Booking() {
         </div>
 
         {/* 1. メニュー・料金ガイド */}
-        <section className="mb-10 md:mb-12">
+        <section className="mb-10 md:mb-12" id="pricing-table">
           <div className="flex items-center justify-center gap-2 mb-4 md:mb-6">
             <Badge variant="outline" className="bg-primary/10 text-primary border-primary/20 px-3 py-1">
               <Info className="w-4 h-4 mr-2" />
@@ -97,7 +97,7 @@ export default function Booking() {
               <div className="p-3 md:p-4 bg-primary/5 border-t border-primary/10 flex items-center justify-center gap-2">
                 <Sparkles className="w-4 h-4 text-primary flex-shrink-0" />
                 <p className="text-[11px] md:text-sm font-bold text-primary text-center">
-                  当サイトからのご予約限定：防カビ・抗菌コートを無料で施工いたします！
+                  公式LINEからのご予約限定：防カビ・抗菌コートを無料で施工いたします！
                 </p>
               </div>
             </CardContent>
