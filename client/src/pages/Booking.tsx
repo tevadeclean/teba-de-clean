@@ -2,14 +2,6 @@ import { useState } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { CheckCircle2, Info, Sparkles } from "lucide-react";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
 
 export default function Booking() {
   const [agreed, setAgreed] = useState(false);
@@ -26,19 +18,27 @@ export default function Booking() {
     "10年以上経過している機器については保障できない場合があります"
   ];
 
+  const pricingData = [
+    { name: "家庭用（お掃除機能なし）", desc: "一般的な壁掛けエアコンです。リモコンに「フィルター掃除」などのボタンがありません。", price: "8,000円", highlight: false },
+    { name: "家庭用（お掃除機能あり）", desc: "リモコンに「手動掃除」「フィルター掃除」などのボタンがある、または本体に厚みがある機種です。", price: "15,000円", highlight: true },
+    { name: "業務用エアコン", desc: "店舗・オフィス用の天井カセット型、吊り下げ型など。全機種対応いたします。", price: "25,000円〜", highlight: false },
+    { name: "完全分解洗浄", desc: "ドレンパンまで外して洗う徹底コース。「カビの臭いが気になる」方に最適です。", price: "+3,000円", isOption: true },
+    { name: "室外機洗浄", desc: "電気代の節約や故障予防に。エアコンの効きが悪いと感じる場合にもおすすめです。", price: "+3,000円", isOption: true },
+  ];
+
   return (
-    <div className="min-h-screen bg-muted/30 py-12">
-      <div className="container max-w-4xl">
-        <div className="text-center mb-10">
-          <h1 className="text-3xl md:text-4xl font-black mb-4">ご予約・お見積もり</h1>
-          <p className="text-muted-foreground">
+    <div className="min-h-screen bg-muted/30 py-8 md:py-12">
+      <div className="container max-w-4xl px-4">
+        <div className="text-center mb-8 md:mb-10">
+          <h1 className="text-2xl md:text-4xl font-black mb-3 md:mb-4">ご予約・お見積もり</h1>
+          <p className="text-sm md:text-base text-muted-foreground">
             以下の内容をご確認の上、フォームよりお申し込みください。
           </p>
         </div>
 
         {/* 1. メニュー・料金ガイド */}
-        <section className="mb-12">
-          <div className="flex items-center justify-center gap-2 mb-6">
+        <section className="mb-10 md:mb-12">
+          <div className="flex items-center justify-center gap-2 mb-4 md:mb-6">
             <Badge variant="outline" className="bg-primary/10 text-primary border-primary/20 px-3 py-1">
               <Info className="w-4 h-4 mr-2" />
               メニューの選び方・料金ガイド
@@ -47,59 +47,56 @@ export default function Booking() {
           
           <Card className="border-2 shadow-sm overflow-hidden">
             <CardContent className="p-0">
-              <div className="overflow-x-auto">
-                <Table>
-                  <TableHeader className="bg-muted/50">
-                    <TableRow>
-                      <TableHead className="w-[200px] font-bold text-foreground">メニュー名</TableHead>
-                      <TableHead className="font-bold text-foreground">特徴・選び方</TableHead>
-                      <TableHead className="w-[120px] text-right font-bold text-foreground">料金(税込)</TableHead>
-                    </TableRow>
-                  </TableHeader>
-                  <TableBody>
-                    <TableRow>
-                      <TableCell className="font-bold">家庭用（お掃除機能なし）</TableCell>
-                      <TableCell className="text-sm text-muted-foreground">
-                        一般的な壁掛けエアコンです。リモコンに「フィルター掃除」などのボタンがありません。
-                      </TableCell>
-                      <TableCell className="text-right font-black text-primary">8,000円</TableCell>
-                    </TableRow>
-                    <TableRow className="bg-accent/5">
-                      <TableCell className="font-bold text-accent">家庭用（お掃除機能あり）</TableCell>
-                      <TableCell className="text-sm text-muted-foreground">
-                        リモコンに「手動掃除」「フィルター掃除」などのボタンがある、または本体に厚みがある機種です。
-                      </TableCell>
-                      <TableCell className="text-right font-black text-accent">15,000円</TableCell>
-                    </TableRow>
-                    <TableRow>
-                      <TableCell className="font-bold">業務用エアコン</TableCell>
-                      <TableCell className="text-sm text-muted-foreground">
-                        店舗・オフィス用の天井カセット型、吊り下げ型など。全機種対応いたします。
-                      </TableCell>
-                      <TableCell className="text-right font-black text-primary">25,000円〜</TableCell>
-                    </TableRow>
-                    <TableRow>
-                      <TableCell className="font-bold">完全分解洗浄</TableCell>
-                      <TableCell className="text-sm text-muted-foreground">
-                        <Badge variant="secondary" className="mr-2">オプション</Badge>
-                        ドレンパンまで外して洗う徹底コース。「カビの臭いが気になる」方に最適です。
-                      </TableCell>
-                      <TableCell className="text-right font-bold text-foreground">+3,000円</TableCell>
-                    </TableRow>
-                    <TableRow>
-                      <TableCell className="font-bold">室外機洗浄</TableCell>
-                      <TableCell className="text-sm text-muted-foreground">
-                        <Badge variant="secondary" className="mr-2">オプション</Badge>
-                        電気代の節約や故障予防に。エアコンの効きが悪いと感じる場合にもおすすめです。
-                      </TableCell>
-                      <TableCell className="text-right font-bold text-foreground">+3,000円</TableCell>
-                    </TableRow>
-                  </TableBody>
-                </Table>
+              {/* PC用テーブル表示 */}
+              <div className="hidden md:block overflow-x-auto">
+                <table className="w-full text-left border-collapse">
+                  <thead className="bg-muted/50 border-b">
+                    <tr>
+                      <th className="p-4 font-bold text-foreground">メニュー名</th>
+                      <th className="p-4 font-bold text-foreground">特徴・選び方</th>
+                      <th className="p-4 text-right font-bold text-foreground w-[140px]">料金(税込)</th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y">
+                    {pricingData.map((item, i) => (
+                      <tr key={i} className={item.highlight ? "bg-accent/5" : ""}>
+                        <td className={`p-4 font-bold ${item.highlight ? "text-accent" : ""}`}>{item.name}</td>
+                        <td className="p-4 text-sm text-muted-foreground">
+                          {item.isOption && <Badge variant="secondary" className="mr-2">オプション</Badge>}
+                          {item.desc}
+                        </td>
+                        <td className={`p-4 text-right font-black ${item.highlight ? "text-accent" : item.isOption ? "text-foreground" : "text-primary"}`}>
+                          {item.price}
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
               </div>
-              <div className="p-4 bg-primary/5 border-t border-primary/10 flex items-center justify-center gap-2">
-                <Sparkles className="w-4 h-4 text-primary" />
-                <p className="text-sm font-bold text-primary">
+
+              {/* スマホ用リスト表示（横スクロールなし） */}
+              <div className="md:hidden divide-y">
+                {pricingData.map((item, i) => (
+                  <div key={i} className={`p-4 ${item.highlight ? "bg-accent/5" : ""}`}>
+                    <div className="flex justify-between items-start mb-1">
+                      <div className={`font-bold text-base ${item.highlight ? "text-accent" : ""}`}>
+                        {item.name}
+                      </div>
+                      <div className={`font-black text-lg ${item.highlight ? "text-accent" : item.isOption ? "text-foreground" : "text-primary"}`}>
+                        {item.price}
+                      </div>
+                    </div>
+                    <div className="text-xs text-muted-foreground leading-relaxed">
+                      {item.isOption && <Badge variant="secondary" className="mr-1 scale-75 origin-left">オプション</Badge>}
+                      {item.desc}
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+              <div className="p-3 md:p-4 bg-primary/5 border-t border-primary/10 flex items-center justify-center gap-2">
+                <Sparkles className="w-4 h-4 text-primary flex-shrink-0" />
+                <p className="text-[11px] md:text-sm font-bold text-primary text-center">
                   当サイトからのご予約限定：防カビ・抗菌コートを無料で施工いたします！
                 </p>
               </div>
@@ -108,8 +105,8 @@ export default function Booking() {
         </section>
 
         {/* 2. 事前確認事項 */}
-        <section className="mb-12">
-          <div className="flex items-center justify-center gap-2 mb-6">
+        <section className="mb-10 md:mb-12">
+          <div className="flex items-center justify-center gap-2 mb-4 md:mb-6">
             <Badge variant="outline" className="bg-accent/10 text-accent border-accent/20 px-3 py-1">
               <CheckCircle2 className="w-4 h-4 mr-2" />
               ご予約前の確認事項
@@ -117,10 +114,10 @@ export default function Booking() {
           </div>
 
           <Card className="border-2 shadow-sm">
-            <CardContent className="p-6 md:p-8">
-              <div className="grid gap-4 mb-8">
+            <CardContent className="p-5 md:p-8">
+              <div className="grid gap-3 md:gap-4 mb-6 md:mb-8">
                 {requirements.map((req, index) => (
-                  <div key={index} className="flex items-start gap-3 text-sm md:text-base text-muted-foreground">
+                  <div key={index} className="flex items-start gap-3 text-xs md:text-base text-muted-foreground">
                     <div className="mt-1.5 w-1.5 h-1.5 rounded-full bg-accent flex-shrink-0" />
                     <p>{req}</p>
                   </div>
@@ -135,7 +132,7 @@ export default function Booking() {
                   checked={agreed}
                   onChange={(e) => setAgreed(e.target.checked)}
                 />
-                <label htmlFor="agree" className="font-bold cursor-pointer select-none">
+                <label htmlFor="agree" className="font-bold text-sm md:text-base cursor-pointer select-none">
                   上記の確認事項に同意します
                 </label>
               </div>
@@ -146,8 +143,8 @@ export default function Booking() {
         {/* 3. Googleフォーム */}
         <section className={`transition-opacity duration-500 ${agreed ? 'opacity-100' : 'opacity-30 pointer-events-none'}`}>
           <div className="text-center mb-6">
-            <h2 className="text-2xl font-bold mb-2">予約・お見積もりフォーム</h2>
-            {!agreed && <p className="text-sm text-destructive font-bold">※上の確認事項に同意いただくと入力可能になります</p>}
+            <h2 className="text-xl md:text-2xl font-bold mb-2">予約・お見積もりフォーム</h2>
+            {!agreed && <p className="text-xs md:text-sm text-destructive font-bold">※上の確認事項に同意いただくと入力可能になります</p>}
           </div>
           
           <div className="bg-white rounded-xl shadow-lg overflow-hidden border-2 border-primary/20">
