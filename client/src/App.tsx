@@ -24,7 +24,7 @@ import AdminBlog from "./pages/AdminBlog";
 function Router() {
   return (
     <Switch>
-      {/* Admin Routes (No Header/Footer) */}
+      {/* Admin Routes */}
       <Route path="/admin">
         {() => (
           <DashboardLayout>
@@ -50,24 +50,23 @@ function Router() {
         )}
       </Route>
 
-      {/* Public Routes (With Header/Footer) */}
-      <Route>
+      {/* Public Routes */}
+      <Route path="/:rest*">
         {() => (
           <>
             <Header />
             <Switch>
-              <Route path={"/"} component={Home} />
-              <Route path={"/residential"} component={Residential} />
-              <Route path={"/commercial"} component={Commercial} />
-              <Route path={"/about"} component={About} />
-              <Route path={"/booking"} component={Booking} />
-              <Route path={"/line"} component={Line} />
-              <Route path={"/testimonials"} component={Testimonials} />
-              <Route path={"/faq"} component={FAQ} />
-              <Route path={"/contact"} component={Contact} />
-              <Route path={"/blog"} component={Blog} />
-              <Route path={"/blog/:id"} component={BlogDetail} />
-              <Route path={"/404"} component={NotFound} />
+              <Route path="/" component={Home} />
+              <Route path="/residential" component={Residential} />
+              <Route path="/commercial" component={Commercial} />
+              <Route path="/about" component={About} />
+              <Route path="/booking" component={Booking} />
+              <Route path="/line" component={Line} />
+              <Route path="/testimonials" component={Testimonials} />
+              <Route path="/faq" component={FAQ} />
+              <Route path="/contact" component={Contact} />
+              <Route path="/blog" component={Blog} />
+              <Route path="/blog/:id" component={BlogDetail} />
               <Route component={NotFound} />
             </Switch>
             <Footer />
