@@ -28,6 +28,29 @@ export default function Contact() {
                 <CardContent className="p-8">
                   <div className="flex items-start gap-4 mb-6">
                     <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
+                      <Mail className="h-6 w-6 text-primary" />
+                    </div>
+                    <div>
+                      <h3 className="text-xl font-bold mb-2">企業様向けお問い合わせ</h3>
+                      <p className="text-muted-foreground mb-4">
+                        法人のお客様、または複数台の業務用エアコンクリーニングをご検討の企業様は、専用フォームよりお問い合わせください。
+                      </p>
+                      <Link href="/booking">
+                        <Button className="bg-primary hover:bg-primary/90 text-primary-foreground">
+                          企業様向けフォームへ
+                        </Button>
+                      </Link>
+                    </div>
+                  </div>
+                  <p className="text-sm text-muted-foreground">
+                    詳細なご要望や複数台のお見積もりはこちらから
+                  </p>
+                </CardContent>
+              </Card>
+              <Card>
+                <CardContent className="p-8">
+                  <div className="flex items-start gap-4 mb-6">
+                    <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
                       <Phone className="h-6 w-6 text-primary" />
                     </div>
                     <div>
@@ -59,11 +82,11 @@ export default function Contact() {
                       <p className="text-muted-foreground mb-4">
                         LINEで気軽にお問い合わせ
                       </p>
-                      <Link href="/line">
+                      <a href={contactInfo.lineUrl} target="_blank" rel="noopener noreferrer">
                         <Button className="bg-[#06C755] hover:bg-[#06C755]/90 text-white">
                           友だち追加
                         </Button>
-                      </Link>
+                      </a>
                     </div>
                   </div>
                   <p className="text-sm text-muted-foreground">
@@ -94,29 +117,7 @@ export default function Contact() {
                 </CardContent>
               </Card>
 
-              <Card>
-                <CardContent className="p-8">
-                  <div className="flex items-start gap-4 mb-6">
-                    <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
-                      <ArrowRight className="h-6 w-6 text-primary" />
-                    </div>
-                    <div>
-                      <h3 className="text-xl font-bold mb-2">予約フォーム</h3>
-                      <p className="text-muted-foreground mb-4">
-                        24時間いつでも予約可能
-                      </p>
-                      <Link href="/booking">
-                        <Button className="bg-accent hover:bg-accent/90 text-accent-foreground">
-                          予約フォームへ
-                        </Button>
-                      </Link>
-                    </div>
-                  </div>
-                  <p className="text-sm text-muted-foreground">
-                    フォームから必要事項を入力して送信するだけ
-                  </p>
-                </CardContent>
-              </Card>
+
             </div>
 
             {/* 対応エリア */}
@@ -181,9 +182,15 @@ export default function Contact() {
                 お見積もりは無料です。ご不明な点がございましたらお気軽にお問い合わせください。
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                <a href={contactInfo.lineUrl} target="_blank" rel="noopener noreferrer">
+                  <Button size="lg" className="bg-[#00C300] hover:bg-[#00C300]/90 text-white">
+                    LINEで予約・お問い合わせ
+                    <MessageCircle className="ml-2 h-5 w-5" />
+                  </Button>
+                </a>
                 <Link href="/booking">
-                  <Button size="lg" className="bg-accent hover:bg-accent/90 text-accent-foreground">
-                    予約フォームへ
+                  <Button size="lg" variant="outline">
+                    企業様向けお問い合わせ
                     <ArrowRight className="ml-2 h-5 w-5" />
                   </Button>
                 </Link>

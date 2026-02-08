@@ -6,12 +6,13 @@ import ErrorBoundary from "./components/ErrorBoundary";
 import { ThemeProvider } from "./contexts/ThemeContext";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
+import FloatingLineButton from "./components/FloatingLineButton";
 import Home from "./pages/Home";
 import Residential from "./pages/Residential";
 import Commercial from "./pages/Commercial";
 import About from "./pages/About";
-import Booking from "./pages/Booking";
-import Line from "./pages/Line";
+
+
 import Testimonials from "./pages/Testimonials";
 import FAQ from "./pages/FAQ";
 import Contact from "./pages/Contact";
@@ -60,8 +61,8 @@ function Router() {
               <Route path="/residential" component={Residential} />
               <Route path="/commercial" component={Commercial} />
               <Route path="/about" component={About} />
-              <Route path="/booking" component={Booking} />
-              <Route path="/line" component={Line} />
+
+
               <Route path="/testimonials" component={Testimonials} />
               <Route path="/faq" component={FAQ} />
               <Route path="/contact" component={Contact} />
@@ -70,6 +71,7 @@ function Router() {
               <Route component={NotFound} />
             </Switch>
             <Footer />
+            <FloatingLineButton />
           </>
         )}
       </Route>
