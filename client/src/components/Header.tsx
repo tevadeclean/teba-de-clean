@@ -88,7 +88,7 @@ export default function Header() {
                   <Button className="w-full bg-[#00C300] hover:bg-[#00C300]/90 text-white" onClick={() => setIsMenuOpen(false)}>
                     LINEで予約
                   </Button>
-                </Link>
+                </a>
               </div>
             </nav>
           </div>
