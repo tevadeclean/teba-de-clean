@@ -140,9 +140,9 @@ export default function Commercial() {
                     <Shield className="h-5 w-5 text-primary" />
                   </div>
                   <div>
-                    <h3 className="text-base font-bold mb-1">安心のエコ洗剤使用</h3>
+                    <h3 className="text-base font-bold mb-1">徹底した高圧洗浄</h3>
                     <p className="text-xs text-muted-foreground leading-relaxed">
-                      身体に優しいエコ洗剤を利用して隅々まで洗浄します。飲食店や保育施設、介護施設でも安心してご利用いただけます。
+                      プロ仕様の専用洗剤と高圧洗浄機を使用し、内部に潜むカビや汚れを根こそぎ除去。清潔な空気環境を取り戻します。
                     </p>
                   </div>
                 </div>
