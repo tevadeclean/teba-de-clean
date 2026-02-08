@@ -40,7 +40,7 @@ export default function About() {
                   <span className="font-black text-sm">プロのこだわり</span>
                 </div>
                 <p className="text-xs text-muted-foreground leading-relaxed">
-                  タヒチアンダンス・ファイヤーナイフダンスで世界一を獲得。その集中力をクリーニングに。
+                  大手エアコンクリーニング店で培った技術と、細部まで妥協しない丁寧な作業を大切にしています。
                 </p>
               </div>
             </div>
@@ -73,7 +73,7 @@ export default function About() {
               <div className="mt-8 grid grid-cols-2 gap-4">
                 <div className="bg-muted/30 p-4 rounded-xl border border-primary/5">
                   <div className="text-2xl font-black text-primary mb-1">900+</div>
-                  <div className="text-[10px] font-bold text-muted-foreground">累計施工台数</div>
+                  <div className="text-[10px] font-bold text-muted-foreground">施工台数900台以上</div>
                 </div>
                 <div className="bg-muted/30 p-4 rounded-xl border border-primary/5">
                   <div className="text-2xl font-black text-accent mb-1">World No.1</div>
