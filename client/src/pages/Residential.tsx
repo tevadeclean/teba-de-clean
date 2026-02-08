@@ -1,7 +1,7 @@
 import { Link } from "wouter";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { CheckCircle2, ArrowRight, Sparkles, Gift } from "lucide-react";
+import { CheckCircle2, ArrowRight, Sparkles } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 
 export default function Residential() {
@@ -23,7 +23,6 @@ export default function Residential() {
   };
 
   const options = [
-    { name: "お掃除機能付き", price: "¥8,000", description: "お掃除ロボット搭載機種の場合" },
     { name: "完全分解洗浄", price: "¥8,000", description: "ドレンパン・送風ファンを取り外して丸洗い", highlight: true },
     { name: "室外機洗浄", price: "¥3,000", description: "電気代の節約・故障予防に" }
   ];
@@ -33,7 +32,7 @@ export default function Residential() {
       step: "1",
       title: "動作確認",
       description: "作業前にエアコンの動作をしっかり確認。異音や効き具合をチェックし、最適な洗浄プランを立てます。",
-      images: [{ src: "/images/IMG_5383.jpg", pos: "center 20%" }],
+      images: [{ src: "/images/process-01-check.jpg", pos: "center 20%" }],
       points: ["動作音の確認", "冷暖房の効きチェック"]
     },
     {
@@ -41,8 +40,8 @@ export default function Residential() {
       title: "分解・養生",
       description: "丁寧に分解し、周囲を専用シートで保護。家具や壁を汚さないよう万全を期します。",
       images: [
-        { src: "/images/IMG_5384.jpg", pos: "center 20%" },
-        { src: "/images/IMG_5385.jpg", pos: "center 20%" }
+        { src: "/images/process-02-disassemble.jpg", pos: "center 20%" },
+        { src: "/images/process-02-protection.jpg", pos: "center 20%" }
       ],
       points: ["丁寧な分解", "徹底した防水養生"]
     },
@@ -51,8 +50,8 @@ export default function Residential() {
       title: "高圧洗浄",
       description: "専用洗剤と高圧洗浄機で、アルミフィンやファンに溜まったカビやホコリを一掃します。",
       images: [
-        { src: "/images/IMG_5387.jpg", pos: "center 20%" },
-        { src: "/images/IMG_5388.jpg", pos: "center 20%" }
+        { src: "/images/process-03-highpressure.jpg", pos: "center 20%" },
+        { src: "/images/process-03-parts.jpg", pos: "center 20%" }
       ],
       points: ["高圧で根こそぎ洗浄", "奥の汚れまで除去"]
     },
@@ -60,14 +59,14 @@ export default function Residential() {
       step: "4",
       title: "パーツ洗浄",
       description: "外装パネルやフィルターを丁寧に手洗い。基本的にはベランダやお庭をお借りして洗浄しますが、難しい場合はお風呂場を使わせていただきます。（お風呂をお借りした際は排水溝まで責任を持って清掃します）",
-      images: [{ src: "/images/IMG_5388.jpg", pos: "center 20%" }],
+      images: [{ src: "/images/process-04-parts-cleaning.jpg", pos: "center 20%" }],
       points: ["パネルの隅々まで手洗い", "排水溝まで責任清掃"]
     },
     {
       step: "5",
       title: "仕上げ・確認",
       description: "防カビコートを塗布し組み立て。最後に動作確認を行い、お客様にチェックしていただき完了です。",
-      images: [{ src: "/images/IMG_5386.jpg", pos: "center 20%" }],
+      images: [{ src: "/images/process-05-coating.jpg", pos: "center 20%" }],
       points: ["防カビコート（無料）", "最終動作確認"]
     }
   ];
