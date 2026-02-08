@@ -35,6 +35,27 @@ function parseCSVLine(line: string): string[] {
 }
 
 /**
+ * 日付文字列を比較可能な数値に変換する
+ * 例: "2025年11月29日" -> 20251129
+ */
+function parseDateToNumber(dateStr: string): number {
+  if (!dateStr) return 0;
+  const match = dateStr.match(/(\d+)年(\d+)月(\d+)日/);
+  if (match) {
+    const year = match[1];
+    const month = match[2].padStart(2, '0');
+    const day = match[3].padStart(2, '0');
+    return parseInt(`${year}${month}${day}`, 10);
+  }
+  // YYYY/MM/DD 形式などの場合
+  const parts = dateStr.split(/[\/\-]/);
+  if (parts.length === 3) {
+    return parseInt(parts[0] + parts[1].padStart(2, '0') + parts[2].padStart(2, '0'), 10);
+  }
+  return 0;
+}
+
+/**
  * スプレッドシートのCSV URLからデータを取得してパースする
  */
 export async function fetchTestimonialsFromSheet(csvUrl: string): Promise<Testimonial[]> {
@@ -48,7 +69,7 @@ export async function fetchTestimonialsFromSheet(csvUrl: string): Promise<Testim
     // 実際のデータの並び順: 日付, 名前, 評価, サービス内容, コメント, (空)
     // 0: 日付, 1: 名前, 2: 評価, 3: サービス内容, 4: コメント
     
-    return lines.slice(1).map((line, index) => {
+    const testimonials = lines.slice(1).map((line, index) => {
       const values = parseCSVLine(line);
       
       // 評価が空、または数値でない場合は5にする
@@ -67,6 +88,11 @@ export async function fetchTestimonialsFromSheet(csvUrl: string): Promise<Testim
         comment: values[4] || '',
         serviceType: serviceType
       };
+    });
+
+    // 日付の新しい順にソート
+    return testimonials.sort((a, b) => {
+      return parseDateToNumber(b.createdAt) - parseDateToNumber(a.createdAt);
     });
   } catch (error) {
     console.error('Failed to fetch testimonials from Google Sheets:', error);

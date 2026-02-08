@@ -1,7 +1,9 @@
+import { useEffect, useState } from "react";
 import { Link } from "wouter";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { testimonials as testimonialsData } from "@/data/siteData";
+import { testimonials as staticTestimonials } from "@/data/siteData";
+import { fetchTestimonialsFromSheet, Testimonial } from "@/lib/googleSheets";
 import { 
   Sparkles, 
   Clock, 
@@ -12,9 +14,8 @@ import {
   Award,
   Gift,
   ShieldCheck,
-  Play,
   HelpCircle,
-  MessageCircle
+  Star
 } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import {
@@ -24,8 +25,20 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 
+const ACTUAL_SHEET_CSV_URL = "https://docs.google.com/spreadsheets/d/1mkobJlasnMVNuxmAGntVntpz7ZSNv-rudq0-kQ2qLxw/gviz/tq?tqx=out:csv";
+
 export default function Home() {
-  const recentTestimonials = testimonialsData.slice(0, 3);
+  const [recentTestimonials, setRecentTestimonials] = useState<Testimonial[]>(staticTestimonials.slice(0, 3));
+
+  useEffect(() => {
+    async function loadRecentTestimonials() {
+      const sheetData = await fetchTestimonialsFromSheet(ACTUAL_SHEET_CSV_URL);
+      if (sheetData.length > 0) {
+        setRecentTestimonials(sheetData.slice(0, 3));
+      }
+    }
+    loadRecentTestimonials();
+  }, []);
 
   const strengths = [
     {
@@ -76,7 +89,7 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-white">
-      {/* ヒーローセクション - PCでも高さを抑え、コンテンツ幅を制限 */}
+      {/* ヒーローセクション */}
       <section className="relative bg-gradient-to-br from-primary via-primary/90 to-primary/80 text-primary-foreground overflow-hidden">
         <div className="container relative py-10 md:py-24 max-w-6xl">
           <div className="max-w-3xl">
@@ -111,7 +124,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* 5つの強み - PCで3列、スマホでコンパクトに */}
+      {/* 5つの強み */}
       <section className="py-10 md:py-16 bg-white">
         <div className="container max-w-6xl">
           <div className="text-center mb-8 md:mb-12">
@@ -140,7 +153,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* 動画セクション - PCでもサイズを制限 */}
+      {/* 動画セクション */}
       <section className="py-10 md:py-16 bg-muted/30">
         <div className="container max-w-6xl">
           <div className="max-w-4xl mx-auto">
@@ -164,7 +177,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* 店長ストーリー - PCで横並び、幅制限 */}
+      {/* 店長ストーリー */}
       <section className="py-10 md:py-16 bg-white">
         <div className="container max-w-5xl">
           <div className="bg-muted/20 rounded-3xl overflow-hidden flex flex-col md:flex-row items-center">
@@ -190,7 +203,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* よくある質問 - 幅制限 */}
+      {/* よくある質問 */}
       <section className="py-10 md:py-16 bg-muted/30">
         <div className="container max-w-4xl">
           <div className="text-center mb-8">
@@ -217,8 +230,8 @@ export default function Home() {
         </div>
       </section>
 
-      {/* お客様の声 - スライダー形式またはグリッド */}
-      <section className="py-10 md:py-16 bg-muted/30">
+      {/* お客様の声 */}
+      <section className="py-10 md:py-16 bg-white">
         <div className="container max-w-6xl">
           <div className="text-center mb-8 md:mb-12">
             <h2 className="text-2xl md:text-3xl font-black mb-2">お客様の声</h2>
@@ -227,7 +240,7 @@ export default function Home() {
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {recentTestimonials.map((testimonial, index) => (
-              <Card key={index} className="border-none shadow-sm bg-white">
+              <Card key={index} className="border-none shadow-sm bg-muted/20">
                 <CardContent className="p-6">
                   <div className="flex items-center justify-between mb-4">
                     <div className="flex items-center gap-1">
@@ -264,8 +277,8 @@ export default function Home() {
         </div>
       </section>
 
-      {/* サービスメニュー - PCで2列、幅制限 */}
-      <section className="py-10 md:py-16 bg-white">
+      {/* サービスメニュー */}
+      <section className="py-10 md:py-16 bg-muted/30">
         <div className="container max-w-5xl">
           <div className="text-center mb-8">
             <h2 className="text-2xl md:text-3xl font-black mb-2">サービスメニュー</h2>
@@ -306,7 +319,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* CTAセクション - コンパクト化 */}
+      {/* CTAセクション */}
       <section className="py-12 md:py-16 bg-primary text-primary-foreground relative overflow-hidden">
         <div className="container max-w-4xl relative text-center">
           <h2 className="text-2xl md:text-3xl font-black mb-6 tracking-tight">
