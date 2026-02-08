@@ -19,13 +19,20 @@ import {
   ShieldCheck,
   Info,
   Users,
-  Play
+  Play,
+  HelpCircle,
+  MessageCircle
 } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
 
 export default function Home() {
   const recentTestimonials = testimonialsData.slice(0, 3);
-  const recentBlogPosts = blogPostsData.slice(0, 3);
 
   const strengths = [
     {
@@ -52,6 +59,25 @@ export default function Home() {
       icon: <Sparkles className="h-8 w-8" />,
       title: "大手洗浄店で修行した確かな技術",
       description: "業界最大手での厳しい修行を経て習得した、最高水準の洗浄技術を提供します。"
+    }
+  ];
+
+  const faqs = [
+    {
+      q: "追加料金がかかる場合はありますか？",
+      a: "当日の急な追加料金は発生しません。ご安心ください。正確な見積もりのため、お掃除機能の有無など、お客様の状況を事前にお知らせいただけますと幸いです。"
+    },
+    {
+      q: "無料で駐車できる場所がない場合はどうしたらいいですか？",
+      a: "付近の有料パーキングを使用しますが、その場合のパーキング代は当店が全額負担いたします。お客様にご負担いただくことはございません。"
+    },
+    {
+      q: "保険に加入されていますか？",
+      a: "はい、損害保険に加入しております。万が一のトラブルの際も、責任を持って誠実に対応させていただきます。"
+    },
+    {
+      q: "作業中はずっと立ち会う必要がありますか？",
+      a: "作業開始時の動作確認と、終了時の仕上がりチェックの際はお立ち会いをお願いしておりますが、作業中はお部屋でお休みいただいたり、外出していただいても構いません。"
     }
   ];
 
@@ -188,14 +214,17 @@ export default function Home() {
                 店長ストーリー
               </Badge>
               <h2 className="text-3xl md:text-4xl font-black mb-8 leading-tight">
-                「きれいな空気で家族を元気にしたい」<br />
-                パパ店長の想い
+                「ご家族の大切な空間を預かる」<br />
+                パパ店長としての想い
               </h2>
-              <p className="text-lg text-muted-foreground leading-relaxed mb-8">
-                南大東島出身、3歳の娘を持つパパです。娘の誕生を機に「家族の健康を守る空間づくり」を志し、大手清掃店での修行を経て独立しました。
+              <p className="text-lg text-muted-foreground leading-relaxed mb-6">
+                南大東島出身、3歳の娘を持つパパです。私自身も一人の親として、お客様のお宅を訪問する際は「ご家族の大切な空間を預かる」という責任と感謝の気持ちで作業に臨んでいます。
+              </p>
+              <p className="text-lg text-muted-foreground leading-relaxed mb-6">
+                実はタヒチアンダンサー・ファイヤーナイフダンサーとしても活動しており、世界一のタイトルも獲得しています。ダンススタジオ経営の経験も活かし、お客様との円滑なコミュニケーションと、プロとしての細部へのこだわりを大切にしています。
               </p>
               <p className="text-lg text-muted-foreground leading-relaxed mb-10">
-                実はタヒチアンダンサー・ファイヤーナイフダンサーとしても活動しており、世界一のタイトルも獲得しています。そこで培った「集中力・丁寧さ・美しさへのこだわり」をクリーニングの細部に注いでいます。
+                「きれいな空気で家族を元気にしたい」。その想いを胸に、大手清掃店での修行を経て培った確かな技術で、あなたのエアコンを新品のような輝きに仕上げます。
               </p>
               <Link href="/about">
                 <Button variant="outline" size="lg" className="font-bold px-8 py-6">
@@ -208,8 +237,52 @@ export default function Home() {
         </div>
       </section>
 
-      {/* サービス概要 */}
+      {/* よくある質問 */}
       <section className="section-padding bg-muted/30">
+        <div className="container">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl md:text-5xl font-black text-foreground mb-6 tracking-tight">
+              よくある<span className="text-primary">ご質問</span>
+            </h2>
+            <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
+              お客様からよくいただく疑問にお答えします
+            </p>
+          </div>
+
+          <div className="max-w-3xl mx-auto">
+            <Accordion type="single" collapsible className="w-full space-y-4">
+              {faqs.map((faq, index) => (
+                <AccordionItem key={index} value={`item-${index}`} className="bg-white rounded-2xl px-6 border-none shadow-sm">
+                  <AccordionTrigger className="text-left font-bold text-lg py-6 hover:no-underline">
+                    <div className="flex items-start gap-4">
+                      <HelpCircle className="w-6 h-6 text-primary flex-shrink-0 mt-0.5" />
+                      <span>{faq.q}</span>
+                    </div>
+                  </AccordionTrigger>
+                  <AccordionContent className="text-muted-foreground text-base pb-6 leading-relaxed pl-10">
+                    {faq.a}
+                  </AccordionContent>
+                </AccordionItem>
+              ))}
+            </Accordion>
+            
+            <div className="mt-12 text-center">
+              <p className="text-muted-foreground mb-6">その他のご質問はLINEや電話でも承っております</p>
+              <div className="flex justify-center gap-4">
+                <Link href="/line">
+                  <Button variant="outline" className="rounded-full px-8">
+                    <MessageCircle className="w-5 h-5 mr-2" />
+                    LINEで質問する
+                  </Button>
+                </Link>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* サービス概要 */}
+      <section className="section-padding bg-white">
         <div className="container">
           <div className="text-center mb-20">
             <h2 className="text-4xl md:text-5xl font-black text-foreground mb-6 tracking-tight">
@@ -286,7 +359,7 @@ export default function Home() {
       </section>
 
       {/* 作業の流れ（簡易版） */}
-      <section className="section-padding bg-white">
+      <section className="section-padding bg-muted/30">
         <div className="container">
           <div className="text-center mb-20">
             <h2 className="text-4xl md:text-5xl font-black text-foreground mb-6 tracking-tight">
@@ -304,8 +377,8 @@ export default function Home() {
               { step: "03", title: "高圧洗浄", desc: "カビ・汚れを根こそぎ除去" },
               { step: "04", title: "仕上げ", desc: "防カビコートで清潔維持" }
             ].map((item, index) => (
-              <div key={index} className="relative p-8 bg-muted/20 rounded-3xl text-center">
-                <div className="text-primary/20 font-black text-6xl absolute top-4 left-1/2 -translate-x-1/2">
+              <div key={index} className="relative p-8 bg-white rounded-3xl text-center shadow-sm">
+                <div className="text-primary/10 font-black text-6xl absolute top-4 left-1/2 -translate-x-1/2">
                   {item.step}
                 </div>
                 <div className="relative z-10">
@@ -328,7 +401,7 @@ export default function Home() {
       </section>
 
       {/* お客様の声 */}
-      <section className="section-padding bg-muted/30">
+      <section className="section-padding bg-white">
         <div className="container">
           <div className="text-center mb-20">
             <h2 className="text-4xl md:text-5xl font-black text-foreground mb-6 tracking-tight">
@@ -341,7 +414,7 @@ export default function Home() {
 
           <div className="grid md:grid-cols-3 gap-8">
             {recentTestimonials.map((testimonial, index) => (
-              <Card key={index} className="border-none shadow-xl bg-white rounded-[2rem]">
+              <Card key={index} className="border-none shadow-xl bg-muted/20 rounded-[2rem]">
                 <CardContent className="p-10">
                   <div className="flex gap-1 mb-6">
                     {[...Array(5)].map((_, i) => (

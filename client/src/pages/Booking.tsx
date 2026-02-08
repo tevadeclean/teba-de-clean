@@ -2,12 +2,24 @@ import { Link } from "wouter";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { contactInfo } from "@/data/siteData";
-import { CheckCircle2, Phone, Mail, MessageCircle, Info, Sparkles, HelpCircle } from "lucide-react";
+import { CheckCircle2, Phone, MessageCircle, Info, Sparkles, HelpCircle, AlertTriangle, Gift } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 
 export default function Booking() {
+  const preCheckItems = [
+    "おそうじ機能付きエアコンの場合は必ず事前にお知らせください（機種により対応できない場合がございます）。",
+    "カバーの洗い場として、お風呂場またはベランダをお借りします。",
+    "作業に際し、電気と水道をお借りします。",
+    "エアコンの下は作業スペースになるため、荷物や家具がある場合は事前に移動をお願いします。",
+    "高所に設置してあるエアコン（足場が必要な場合）は、予約時に必ずご連絡ください。",
+    "取り外し不可、動作確認不可、異音・故障がある場合は作業を承れないことがございます。",
+    "設備の劣化等により、洗浄の際に塗装がはがれてしまう場合があります。",
+    "変質や染色などの汚れは、クリーニングでは完全に落とせない場合があります。",
+    "10年以上経過している機器については、メーカーの部品供給が終了しているため、保障できない場合があります。"
+  ];
+
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen bg-white">
       {/* ヒーロー */}
       <section className="bg-gradient-to-br from-primary via-primary/90 to-primary/80 text-primary-foreground py-16 md:py-24">
         <div className="container">
@@ -36,7 +48,7 @@ export default function Booking() {
               </div>
 
               <div className="grid md:grid-cols-2 gap-6">
-                <Card className="border-primary/20 hover:border-primary/50 transition-colors">
+                <Card className="border-primary/20 hover:border-primary/50 transition-colors shadow-sm">
                   <CardHeader className="pb-2">
                     <CardTitle className="flex items-center gap-2 text-xl">
                       <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center text-primary">1</div>
@@ -55,7 +67,7 @@ export default function Booking() {
                   </CardContent>
                 </Card>
 
-                <Card className="border-primary/20 hover:border-primary/50 transition-colors">
+                <Card className="border-primary/20 hover:border-primary/50 transition-colors shadow-sm">
                   <CardHeader className="pb-2">
                     <CardTitle className="flex items-center gap-2 text-xl">
                       <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center text-primary">2</div>
@@ -75,12 +87,43 @@ export default function Booking() {
                 </Card>
               </div>
               
-              <div className="mt-8 bg-accent/10 p-4 rounded-xl border border-accent/20 flex items-center gap-3">
-                <Sparkles className="w-6 h-6 text-accent flex-shrink-0" />
-                <p className="text-sm font-bold text-accent">
-                  当サイトからのご予約限定！「防カビ・抗菌コート」を無料で実施させていただきます。
-                </p>
+              <div className="mt-8 bg-accent/10 p-6 rounded-xl border border-accent/20 flex items-center gap-4 shadow-sm">
+                <Gift className="w-10 h-10 text-accent flex-shrink-0" />
+                <div>
+                  <p className="text-accent font-black text-lg">HP予約限定特典</p>
+                  <p className="text-sm font-bold text-accent/80">
+                    当サイトからのご予約限定！「防カビ・抗菌コート」を無料で実施させていただきます。
+                  </p>
+                </div>
               </div>
+            </div>
+
+            {/* ご予約前のお願い */}
+            <div className="mb-16">
+              <Card className="border-none shadow-xl bg-white overflow-hidden">
+                <CardHeader className="bg-slate-900 text-white py-6">
+                  <div className="flex items-center gap-2">
+                    <AlertTriangle className="w-6 h-6 text-accent" />
+                    <CardTitle className="text-xl font-bold">ご予約前にお読みください</CardTitle>
+                  </div>
+                </CardHeader>
+                <CardContent className="p-8">
+                  <div className="grid md:grid-cols-2 gap-x-12 gap-y-4">
+                    {preCheckItems.map((item, index) => (
+                      <div key={index} className="flex items-start gap-3">
+                        <CheckCircle2 className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" />
+                        <p className="text-sm text-muted-foreground leading-relaxed">{item}</p>
+                      </div>
+                    ))}
+                  </div>
+                  <div className="mt-8 p-4 bg-muted rounded-xl flex items-start gap-3">
+                    <Info className="w-5 h-5 text-muted-foreground flex-shrink-0 mt-0.5" />
+                    <p className="text-xs text-muted-foreground leading-relaxed">
+                      ※当日の急な追加料金は発生しません。気になる点や特殊な設置状況などは、事前にフォームの備考欄またはLINEにてお知らせいただけますとスムーズです。
+                    </p>
+                  </div>
+                </CardContent>
+              </Card>
             </div>
 
             <div className="grid lg:grid-cols-3 gap-12">
@@ -105,7 +148,7 @@ export default function Booking() {
               {/* サイドバー */}
               <div className="space-y-6">
                 {/* 予約の流れ */}
-                <Card>
+                <Card className="shadow-md border-none">
                   <CardHeader>
                     <CardTitle className="flex items-center gap-2 text-lg">
                       <CheckCircle2 className="h-5 w-5 text-accent" />
@@ -135,7 +178,7 @@ export default function Booking() {
                 </Card>
 
                 {/* その他の連絡方法 */}
-                <Card>
+                <Card className="shadow-md border-none">
                   <CardHeader>
                     <CardTitle className="text-lg">お急ぎの方・その他の方法</CardTitle>
                   </CardHeader>
