@@ -99,7 +99,7 @@ export default function About() {
               {
                 icon: <Target className="w-8 h-8" />,
                 title: "確かな技術力",
-                description: "大手清掃店での修行経験。最新機種から古い機種まで、オーナー本人が責任を持って対応いたします。"
+                description: "大手清掃店での修行経験。最新機種から古い機種までオーナー本人が責任を持って対応いたします。"
               }
             ].map((item, i) => (
               <Card key={i} className="border-none shadow-md bg-white hover:shadow-lg transition-all">

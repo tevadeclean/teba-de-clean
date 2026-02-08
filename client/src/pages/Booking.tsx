@@ -20,7 +20,7 @@ export default function Booking() {
 
   const pricingData = [
     { name: "家庭用（お掃除機能なし）", desc: "一般的な壁掛けエアコンです。リモコンに「フィルター掃除」などのボタンがありません。", price: "8,000円", highlight: false },
-    { name: "家庭用（お掃除機能あり）", desc: "リモコンに「手動掃除」「フィルター掃除」などのボタンがある、または本体に厚みがある機種です。", price: "15,000円", highlight: true },
+    { name: "家庭用（お掃除機能あり）", desc: "リモコンに「手動掃除」「フィルター掃除」などのボタンがある、または本体に厚みがある機種です。", price: "15,000円", highlight: false },
     { name: "業務用エアコン", desc: "店舗・オフィス用の天井カセット型、吊り下げ型など。全機種対応いたします。", price: "25,000円〜", highlight: false },
     { name: "完全分解洗浄", desc: "ドレンパンまで外して洗う徹底コース。「カビの臭いが気になる」方に最適です。", price: "+3,000円", isOption: true },
     { name: "室外機洗浄", desc: "電気代の節約や故障予防に。エアコンの効きが悪いと感じる場合にもおすすめです。", price: "+3,000円", isOption: true },
