@@ -1,24 +1,17 @@
 import { Link } from "wouter";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { testimonials as testimonialsData, blogPosts as blogPostsData } from "@/data/siteData";
+import { testimonials as testimonialsData } from "@/data/siteData";
 import { 
   Sparkles, 
-  Shield, 
   Clock, 
-  ThumbsUp, 
-  CheckCircle2, 
-  Star,
   ArrowRight,
   Phone,
   UserCheck,
   Heart,
   Award,
   Gift,
-  Baby,
   ShieldCheck,
-  Info,
-  Users,
   Play,
   HelpCircle,
   MessageCircle
@@ -36,88 +29,80 @@ export default function Home() {
 
   const strengths = [
     {
-      icon: <Award className="h-8 w-8" />,
+      icon: <Award className="h-5 w-5" />,
       title: "累計900台以上の施工実績",
-      description: "豊富な経験に裏打ちされた確かな技術で、どんな汚れも逃しません。"
+      description: "確かな技術で、どんな汚れも逃しません。"
     },
     {
-      icon: <UserCheck className="h-8 w-8" />,
-      title: "オーナー自らが伺う安心対応",
-      description: "外注なし！責任を持ってオーナー本人が最初から最後まで丁寧に作業いたします。"
+      icon: <UserCheck className="h-5 w-5" />,
+      title: "オーナー自らが伺う安心",
+      description: "外注なし！責任を持って丁寧に作業いたします。"
     },
     {
-      icon: <Heart className="h-8 w-8" />,
-      title: "娘を持つパパだから女性も安心",
-      description: "小さなお子様がいるご家庭や女性の一人暮らしでも、安心してご依頼いただけます。"
+      icon: <Heart className="h-5 w-5" />,
+      title: "パパ店長だから女性も安心",
+      description: "子育て世帯や女性の一人暮らしでも安心です。"
     },
     {
-      icon: <Gift className="h-8 w-8" />,
-      title: "防カビ・抗菌コートがHP限定無料",
-      description: "公式サイトからご予約いただいた方全員に、通常有料の防カビコートを無料で施工します。"
+      icon: <Gift className="h-5 w-5" />,
+      title: "防カビコートがHP限定無料",
+      description: "公式サイト予約特典で無料で施工します。"
     },
     {
-      icon: <Sparkles className="h-8 w-8" />,
-      title: "大手洗浄店で修行した確かな技術",
-      description: "業界最大手での厳しい修行を経て習得した、最高水準の洗浄技術を提供します。"
+      icon: <Sparkles className="h-5 w-5" />,
+      title: "大手洗浄店で修行した技術",
+      description: "最高水準の洗浄技術を提供します。"
     }
   ];
 
   const faqs = [
     {
-      q: "追加料金がかかる場合はありますか？",
-      a: "当日の急な追加料金は発生しません。ご安心ください。正確な見積もりのため、お掃除機能の有無など、お客様の状況を事前にお知らせいただけますと幸いです。"
+      q: "追加料金はありますか？",
+      a: "当日の急な追加料金は発生しません。ご安心ください。"
     },
     {
-      q: "無料で駐車できる場所がない場合はどうしたらいいですか？",
-      a: "付近の有料パーキングを使用しますが、その場合のパーキング代は当店が全額負担いたします。お客様にご負担いただくことはございません。"
+      q: "駐車場がない場合は？",
+      a: "付近の有料パーキング代は当店が全額負担いたします。"
     },
     {
       q: "保険に加入されていますか？",
-      a: "はい、損害保険に加入しております。万が一のトラブルの際も、責任を持って誠実に対応させていただきます。"
+      a: "はい、損害保険に加入しております。"
     },
     {
-      q: "作業中はずっと立ち会う必要がありますか？",
-      a: "作業開始時の動作確認と、終了時の仕上がりチェックの際はお立ち会いをお願いしておりますが、作業中はお部屋でお休みいただいたり、外出していただいても構いません。"
+      q: "作業中の立ち会いは？",
+      a: "開始時と終了時のみでOKです。作業中は外出も可能です。"
     }
   ];
 
   return (
     <div className="min-h-screen bg-white">
-      {/* ヒーローセクション */}
+      {/* ヒーローセクション - スマホで高さを抑える */}
       <section className="relative bg-gradient-to-br from-primary via-primary/90 to-primary/80 text-primary-foreground overflow-hidden">
-        <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxnIGZpbGw9IiNmZmZmZmYiIGZpbGwtb3BhY2l0eT0iMC4wNSI+PHBhdGggZD0iTTM2IDE2YzAtNC40MTggMy41ODItOCA4LThzOCAzLjU4MiA4IDgtMy41ODIgOC04IDgtOC0zLjU4Mi04LTh6bS0yMCAwYzAtNC40MTggMy41ODItOCA4LThzOCAzLjU4MiA4IDgtMy41ODIgOC04IDgtOC0zLjU4Mi04LTh6Ii8+PC9nPjwvZz48L3N2Zz4=')] opacity-30"></div>
-        <div className="container relative py-24 md:py-40">
+        <div className="container relative py-12 md:py-32">
           <div className="max-w-4xl">
-            <div className="inline-flex flex-col mb-8">
-              <Badge className="bg-accent text-accent-foreground px-6 py-2 text-base font-black animate-pulse shadow-lg shadow-accent/20 mb-2">
-                <Sparkles className="w-5 h-5 mr-2 inline" />
-                公式サイトからの予約が一番おトクです！
+            <div className="inline-flex flex-col mb-4 md:mb-8">
+              <Badge className="bg-accent text-accent-foreground px-3 py-1 text-xs md:text-base font-black shadow-lg mb-1">
+                <Sparkles className="w-3 h-3 md:w-5 md:h-5 mr-1 inline" />
+                公式サイト予約が一番おトク！
               </Badge>
-              <p className="text-sm font-bold text-accent-foreground/80 ml-1">
-                ※他サイト経由より、安い料金でご案内しています。
-              </p>
             </div>
-            <h2 className="text-2xl md:text-3xl font-bold mb-6 text-accent-foreground/90 tracking-tight">
-              家族の元気を空気で守る！
-            </h2>
-            <h1 className="text-5xl md:text-7xl font-black mb-8 leading-[1.1] tracking-tighter">
+            <h1 className="text-3xl md:text-6xl font-black mb-4 leading-tight tracking-tighter">
               沖縄のエアコンを<br />
-              <span className="text-accent">プロの技術</span>で<br />
-              徹底クリーニング
+              <span className="text-accent">プロの技術</span>で徹底洗浄
             </h1>
-            <p className="text-xl md:text-2xl mb-12 opacity-95 leading-relaxed max-w-2xl">
+            <p className="text-base md:text-xl mb-8 opacity-95 leading-relaxed max-w-2xl">
               南大東島出身、一児のパパ店長が直接お伺い。世界一のダンサーとしてのこだわりを、あなたのエアコンに。
             </p>
-            <div className="flex flex-col sm:flex-row gap-6">
+            <div className="flex flex-col sm:flex-row gap-3 md:gap-6">
               <Link href="/booking">
-                <Button size="lg" className="bg-accent hover:bg-accent/90 text-accent-foreground text-xl px-12 py-8 font-black shadow-2xl shadow-accent/30">
+                <Button size="lg" className="bg-accent hover:bg-accent/90 text-accent-foreground text-lg md:text-xl px-8 py-6 md:px-12 md:py-8 font-black shadow-xl">
                   今すぐ予約する
-                  <ArrowRight className="ml-2 h-6 w-6" />
+                  <ArrowRight className="ml-2 h-5 w-5 md:h-6 md:w-6" />
                 </Button>
               </Link>
               <a href="tel:09059424412">
-                <Button size="lg" variant="outline" className="bg-primary-foreground/10 border-primary-foreground/30 hover:bg-primary-foreground/20 text-primary-foreground text-xl px-12 py-8">
-                  <Phone className="mr-2 h-6 w-6" />
+                <Button size="lg" variant="outline" className="bg-primary-foreground/10 border-primary-foreground/30 text-lg px-8 py-6 md:px-12 md:py-8">
+                  <Phone className="mr-2 h-5 w-5" />
                   電話で相談
                 </Button>
               </a>
@@ -126,29 +111,28 @@ export default function Home() {
         </div>
       </section>
 
-      {/* 5つの強み */}
-      <section className="section-padding bg-white">
+      {/* 5つの強み - スマホで2列またはコンパクトなリストに */}
+      <section className="py-12 md:py-20 bg-white">
         <div className="container">
-          <div className="text-center mb-20">
-            <h2 className="text-4xl md:text-5xl font-black text-foreground mb-6 tracking-tight">
-              テバdeクリーンが<span className="text-primary">選ばれる5つの理由</span>
+          <div className="text-center mb-10 md:mb-16">
+            <h2 className="text-2xl md:text-4xl font-black text-foreground mb-3">
+              選ばれる<span className="text-primary">5つの理由</span>
             </h2>
-            <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-              お客様に安心と満足をお届けするための、私たちのこだわりです
-            </p>
           </div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-10">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-8">
             {strengths.map((strength, index) => (
-              <Card key={index} className={`border-none shadow-xl transition-all duration-500 hover:-translate-y-2 ${index === 3 ? "bg-accent/5 ring-2 ring-accent/20" : "bg-muted/20"}`}>
-                <CardContent className="p-10">
-                  <div className={`w-16 h-16 rounded-2xl flex items-center justify-center mb-8 ${index === 3 ? "bg-accent text-accent-foreground shadow-lg shadow-accent/20" : "bg-primary text-primary-foreground shadow-lg shadow-primary/20"}`}>
+              <Card key={index} className={`border-none shadow-md transition-all ${index === 3 ? "bg-accent/5 ring-1 ring-accent/20" : "bg-muted/20"}`}>
+                <CardContent className="p-5 md:p-8 flex items-start gap-4">
+                  <div className={`flex-shrink-0 w-10 h-10 md:w-12 md:h-12 rounded-xl flex items-center justify-center ${index === 3 ? "bg-accent text-accent-foreground" : "bg-primary text-primary-foreground"}`}>
                     {strength.icon}
                   </div>
-                  <h3 className="text-2xl font-bold mb-4 tracking-tight">{strength.title}</h3>
-                  <p className="text-muted-foreground text-base leading-relaxed">
-                    {strength.description}
-                  </p>
+                  <div>
+                    <h3 className="text-base md:text-xl font-bold mb-1">{strength.title}</h3>
+                    <p className="text-xs md:text-sm text-muted-foreground leading-snug">
+                      {strength.description}
+                    </p>
+                  </div>
                 </CardContent>
               </Card>
             ))}
@@ -156,24 +140,17 @@ export default function Home() {
         </div>
       </section>
 
-      {/* 動画セクション */}
-      <section className="section-padding bg-muted/30">
+      {/* 動画セクション - コンパクト化 */}
+      <section className="py-12 md:py-20 bg-muted/30">
         <div className="container">
-          <div className="max-w-5xl mx-auto">
-            <div className="text-center mb-12">
-              <Badge className="mb-4 bg-primary/10 text-primary px-4 py-1 text-sm font-bold">
-                <Play className="w-4 h-4 mr-2 inline" />
-                作業風景を動画でチェック
-              </Badge>
-              <h2 className="text-3xl md:text-4xl font-black mb-6">
-                1分でわかる！テバdeクリーンの徹底洗浄
+          <div className="max-w-4xl mx-auto">
+            <div className="text-center mb-8">
+              <h2 className="text-2xl md:text-3xl font-black mb-4">
+                1分でわかる！徹底洗浄
               </h2>
-              <p className="text-muted-foreground text-lg">
-                プロの技術と、劇的なビフォーアフターを動画でご確認ください。
-              </p>
             </div>
             
-            <div className="relative aspect-[9/16] max-w-[350px] mx-auto rounded-[2rem] overflow-hidden shadow-2xl border-8 border-white">
+            <div className="relative aspect-[9/16] max-w-[280px] md:max-w-[320px] mx-auto rounded-2xl overflow-hidden shadow-xl border-4 border-white">
               <iframe 
                 className="absolute inset-0 w-full h-full"
                 src="https://www.youtube.com/embed/Sd_05JT5kuQ" 
@@ -183,53 +160,29 @@ export default function Home() {
                 allowFullScreen
               ></iframe>
             </div>
-            
-            <div className="mt-12 grid md:grid-cols-3 gap-6 text-center">
-              <div className="p-6 bg-white rounded-2xl shadow-sm">
-                <div className="text-primary font-black text-2xl mb-2">徹底分解</div>
-                <p className="text-sm text-muted-foreground">隅々までパーツを外し、隠れたカビも見逃しません。</p>
-              </div>
-              <div className="p-6 bg-white rounded-2xl shadow-sm">
-                <div className="text-primary font-black text-2xl mb-2">高圧洗浄</div>
-                <p className="text-sm text-muted-foreground">専用洗剤と高圧の水で、奥底の汚れを根こそぎ除去。</p>
-              </div>
-              <div className="p-6 bg-white rounded-2xl shadow-sm">
-                <div className="text-primary font-black text-2xl mb-2">劇的変化</div>
-                <p className="text-sm text-muted-foreground">真っ黒な汚水が、洗浄の証。空気が一瞬で変わります。</p>
-              </div>
-            </div>
           </div>
         </div>
       </section>
 
-      {/* 店長ストーリー要約 */}
-      <section className="section-padding bg-white">
+      {/* 店長ストーリー - コンパクト化 */}
+      <section className="py-12 md:py-20 bg-white">
         <div className="container">
-          <div className="max-w-6xl mx-auto bg-muted/20 rounded-[3rem] overflow-hidden shadow-xl flex flex-col lg:flex-row">
-            <div className="lg:w-1/2 aspect-square lg:aspect-auto bg-gradient-to-br from-primary/20 to-accent/20 flex items-center justify-center">
-              <Users className="h-32 w-32 text-muted-foreground/30" />
-            </div>
-            <div className="lg:w-1/2 p-12 md:p-20">
-              <Badge className="mb-6 bg-primary/10 text-primary px-4 py-1 text-sm font-bold">
-                店長ストーリー
-              </Badge>
-              <h2 className="text-3xl md:text-4xl font-black mb-8 leading-tight">
-                「ご家族の大切な空間を預かる」<br />
-                パパ店長としての想い
+          <div className="max-w-5xl mx-auto bg-muted/20 rounded-3xl overflow-hidden flex flex-col md:row">
+            <div className="p-8 md:p-12">
+              <Badge className="mb-4 bg-primary/10 text-primary">店長ストーリー</Badge>
+              <h2 className="text-2xl md:text-3xl font-black mb-6">
+                「ご家族の大切な空間を預かる」パパ店長の想い
               </h2>
-              <p className="text-lg text-muted-foreground leading-relaxed mb-6">
+              <p className="text-sm md:text-base text-muted-foreground leading-relaxed mb-4">
                 南大東島出身、3歳の娘を持つパパです。私自身も一人の親として、お客様のお宅を訪問する際は「ご家族の大切な空間を預かる」という責任と感謝の気持ちで作業に臨んでいます。
               </p>
-              <p className="text-lg text-muted-foreground leading-relaxed mb-6">
-                実はタヒチアンダンサー・ファイヤーナイフダンサーとしても活動しており、世界一のタイトルも獲得しています。ダンススタジオ経営の経験も活かし、お客様との円滑なコミュニケーションと、プロとしての細部へのこだわりを大切にしています。
-              </p>
-              <p className="text-lg text-muted-foreground leading-relaxed mb-10">
-                「きれいな空気で家族を元気にしたい」。その想いを胸に、大手清掃店での修行を経て培った確かな技術で、あなたのエアコンを新品のような輝きに仕上げます。
+              <p className="text-sm md:text-base text-muted-foreground leading-relaxed mb-6">
+                世界一のダンサーとしてのこだわりと、ダンススタジオ経営で培ったコミュニケーションを大切に、あなたのエアコンを新品のような輝きに仕上げます。
               </p>
               <Link href="/about">
-                <Button variant="outline" size="lg" className="font-bold px-8 py-6">
-                  店長プロフィールを詳しく見る
-                  <ArrowRight className="ml-2 h-5 w-5" />
+                <Button variant="outline" size="sm" className="font-bold">
+                  プロフィール詳細
+                  <ArrowRight className="ml-2 h-4 w-4" />
                 </Button>
               </Link>
             </div>
@@ -237,251 +190,101 @@ export default function Home() {
         </div>
       </section>
 
-      {/* よくある質問 */}
-      <section className="section-padding bg-muted/30">
+      {/* よくある質問 - コンパクト化 */}
+      <section className="py-12 md:py-20 bg-muted/30">
         <div className="container">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-black text-foreground mb-6 tracking-tight">
-              よくある<span className="text-primary">ご質問</span>
-            </h2>
-            <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-              お客様からよくいただく疑問にお答えします
-            </p>
+          <div className="text-center mb-8">
+            <h2 className="text-2xl md:text-3xl font-black">よくあるご質問</h2>
           </div>
 
-          <div className="max-w-3xl mx-auto">
-            <Accordion type="single" collapsible className="w-full space-y-4">
+          <div className="max-w-2xl mx-auto">
+            <Accordion type="single" collapsible className="space-y-2">
               {faqs.map((faq, index) => (
-                <AccordionItem key={index} value={`item-${index}`} className="bg-white rounded-2xl px-6 border-none shadow-sm">
-                  <AccordionTrigger className="text-left font-bold text-lg py-6 hover:no-underline">
-                    <div className="flex items-start gap-4">
-                      <HelpCircle className="w-6 h-6 text-primary flex-shrink-0 mt-0.5" />
+                <AccordionItem key={index} value={`item-${index}`} className="bg-white rounded-xl px-4 border-none shadow-sm">
+                  <AccordionTrigger className="text-left font-bold text-sm md:text-base py-4 hover:no-underline">
+                    <div className="flex items-start gap-3">
+                      <HelpCircle className="w-5 h-5 text-primary flex-shrink-0" />
                       <span>{faq.q}</span>
                     </div>
                   </AccordionTrigger>
-                  <AccordionContent className="text-muted-foreground text-base pb-6 leading-relaxed pl-10">
+                  <AccordionContent className="text-muted-foreground text-xs md:text-sm pb-4 pl-8">
                     {faq.a}
                   </AccordionContent>
                 </AccordionItem>
               ))}
             </Accordion>
-            
-            <div className="mt-12 text-center">
-              <p className="text-muted-foreground mb-6">その他のご質問はLINEや電話でも承っております</p>
-              <div className="flex justify-center gap-4">
-                <Link href="/line">
-                  <Button variant="outline" className="rounded-full px-8">
-                    <MessageCircle className="w-5 h-5 mr-2" />
-                    LINEで質問する
-                  </Button>
-                </Link>
-              </div>
-            </div>
           </div>
         </div>
       </section>
 
-      {/* サービス概要 */}
-      <section className="section-padding bg-white">
+      {/* サービスメニュー - コンパクト化 */}
+      <section className="py-12 md:py-20 bg-white">
         <div className="container">
-          <div className="text-center mb-20">
-            <h2 className="text-4xl md:text-5xl font-black text-foreground mb-6 tracking-tight">
-              <span className="text-primary">サービスメニュー</span>
-            </h2>
-            <div className="bg-accent/10 border border-accent/20 rounded-2xl p-6 max-w-2xl mx-auto">
-              <p className="text-accent font-black text-xl mb-1">公式サイト（このページ）からのご予約が一番おトクです！</p>
-              <p className="text-muted-foreground font-bold">他サイト経由より、安い料金でご案内しています。</p>
-            </div>
+          <div className="text-center mb-10">
+            <h2 className="text-2xl md:text-4xl font-black mb-4">サービスメニュー</h2>
+            <Badge className="bg-accent/10 text-accent border-none text-xs md:text-sm">公式サイト予約が最安値です</Badge>
           </div>
 
-          <div className="grid md:grid-cols-2 gap-12">
+          <div className="grid md:grid-cols-2 gap-6">
             <Link href="/residential">
-              <Card className="group hover:shadow-2xl transition-all duration-500 cursor-pointer border-none shadow-xl relative overflow-hidden bg-white">
-                <div className="absolute top-6 right-6">
-                  <Badge className="bg-accent text-accent-foreground font-black px-4 py-1 text-sm shadow-lg">公式サイト最安値</Badge>
-                </div>
-                <CardContent className="p-12">
-                  <div className="mb-8">
-                    <div className="w-20 h-20 rounded-3xl bg-secondary flex items-center justify-center mb-8 shadow-lg shadow-secondary/20">
-                      <Sparkles className="h-10 w-10 text-secondary-foreground" />
-                    </div>
-                    <h3 className="text-3xl font-black mb-4 group-hover:text-primary transition-colors tracking-tight">家庭用エアコン</h3>
-                    <p className="text-muted-foreground text-lg mb-8 leading-relaxed">
-                      ご家庭のエアコンを徹底的に分解洗浄。カビや汚れを根こそぎ除去し、清潔な空気を取り戻します。
-                    </p>
-                    <div className="flex items-baseline gap-2">
-                      <div className="text-primary font-black text-4xl">¥8,000〜</div>
-                      <div className="text-muted-foreground font-bold">/ 台</div>
-                    </div>
-                    <div className="text-accent text-lg font-black mt-2">
-                      2台目以降 ¥1,000引き！
-                    </div>
-                  </div>
-                  <div className="flex items-center text-primary font-black text-lg mt-10">
-                    詳しく見る
-                    <ArrowRight className="ml-2 h-6 w-6 group-hover:translate-x-2 transition-transform" />
+              <Card className="group hover:shadow-lg transition-all cursor-pointer border-none shadow-md bg-white">
+                <CardContent className="p-6 md:p-10">
+                  <h3 className="text-xl md:text-2xl font-black mb-2 group-hover:text-primary">家庭用エアコン</h3>
+                  <p className="text-xs md:text-sm text-muted-foreground mb-4">
+                    カビや汚れを根こそぎ除去し、清潔な空気を取り戻します。
+                  </p>
+                  <div className="flex items-baseline gap-2">
+                    <div className="text-primary font-black text-2xl md:text-3xl">¥8,000〜</div>
+                    <div className="text-xs text-muted-foreground">2台目以降割引あり</div>
                   </div>
                 </CardContent>
               </Card>
             </Link>
 
             <Link href="/commercial">
-              <Card className="group hover:shadow-2xl transition-all duration-500 cursor-pointer border-none shadow-xl relative overflow-hidden bg-white">
-                <div className="absolute top-6 right-6">
-                  <Badge className="bg-accent text-accent-foreground font-black px-4 py-1 text-sm shadow-lg">公式サイト最安値</Badge>
-                </div>
-                <CardContent className="p-12">
-                  <div className="mb-8">
-                    <div className="w-20 h-20 rounded-3xl bg-accent flex items-center justify-center mb-8 shadow-lg shadow-accent/20">
-                      <ShieldCheck className="h-10 w-10 text-accent-foreground" />
-                    </div>
-                    <h3 className="text-3xl font-black mb-4 group-hover:text-primary transition-colors tracking-tight">業務用エアコン</h3>
-                    <p className="text-muted-foreground text-lg mb-8 leading-relaxed">
-                      店舗・オフィス・施設の業務用エアコンに対応。複数台の同時施工も可能です。
-                    </p>
-                    <div className="flex items-baseline gap-2">
-                      <div className="text-primary font-black text-4xl">¥25,000〜</div>
-                      <div className="text-muted-foreground font-bold">/ 台</div>
-                    </div>
-                    <div className="text-accent text-lg font-black mt-2">
-                      2台目以降 10%引き！
-                    </div>
-                  </div>
-                  <div className="flex items-center text-primary font-black text-lg mt-10">
-                    詳しく見る
-                    <ArrowRight className="ml-2 h-6 w-6 group-hover:translate-x-2 transition-transform" />
-                  </div>
-                </CardContent>
-              </Card>
-            </Link>
-          </div>
-        </div>
-      </section>
-
-      {/* 作業の流れ（簡易版） */}
-      <section className="section-padding bg-muted/30">
-        <div className="container">
-          <div className="text-center mb-20">
-            <h2 className="text-4xl md:text-5xl font-black text-foreground mb-6 tracking-tight">
-              安心の<span className="text-primary">作業フロー</span>
-            </h2>
-            <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-              丁寧な説明と確かな技術で、安心してお任せいただけます
-            </p>
-          </div>
-
-          <div className="grid md:grid-cols-4 gap-8">
-            {[
-              { step: "01", title: "動作確認", desc: "作業前にしっかりチェック" },
-              { step: "02", title: "分解・養生", desc: "周囲を汚さない徹底保護" },
-              { step: "03", title: "高圧洗浄", desc: "カビ・汚れを根こそぎ除去" },
-              { step: "04", title: "仕上げ", desc: "防カビコートで清潔維持" }
-            ].map((item, index) => (
-              <div key={index} className="relative p-8 bg-white rounded-3xl text-center shadow-sm">
-                <div className="text-primary/10 font-black text-6xl absolute top-4 left-1/2 -translate-x-1/2">
-                  {item.step}
-                </div>
-                <div className="relative z-10">
-                  <h3 className="text-xl font-bold mb-2 mt-8">{item.title}</h3>
-                  <p className="text-sm text-muted-foreground">{item.desc}</p>
-                </div>
-              </div>
-            ))}
-          </div>
-          
-          <div className="text-center mt-12">
-            <Link href="/residential">
-              <Button variant="link" className="text-primary font-bold text-lg">
-                詳しい工程を写真で見る
-                <ArrowRight className="ml-2 h-5 w-5" />
-              </Button>
-            </Link>
-          </div>
-        </div>
-      </section>
-
-      {/* お客様の声 */}
-      <section className="section-padding bg-white">
-        <div className="container">
-          <div className="text-center mb-20">
-            <h2 className="text-4xl md:text-5xl font-black text-foreground mb-6 tracking-tight">
-              お客様からの<span className="text-primary">嬉しいお声</span>
-            </h2>
-            <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-              実際にサービスをご利用いただいたお客様の感想です
-            </p>
-          </div>
-
-          <div className="grid md:grid-cols-3 gap-8">
-            {recentTestimonials.map((testimonial, index) => (
-              <Card key={index} className="border-none shadow-xl bg-muted/20 rounded-[2rem]">
-                <CardContent className="p-10">
-                  <div className="flex gap-1 mb-6">
-                    {[...Array(5)].map((_, i) => (
-                      <Star key={i} className="h-5 w-5 fill-accent text-accent" />
-                    ))}
-                  </div>
-                  <p className="text-muted-foreground italic mb-8 leading-relaxed">
-                    "{testimonial.content}"
+              <Card className="group hover:shadow-lg transition-all cursor-pointer border-none shadow-md bg-white">
+                <CardContent className="p-6 md:p-10">
+                  <h3 className="text-xl md:text-2xl font-black mb-2 group-hover:text-primary">業務用エアコン</h3>
+                  <p className="text-xs md:text-sm text-muted-foreground mb-4">
+                    店舗・オフィスに対応。複数台の同時施工も可能です。
                   </p>
-                  <div className="flex items-center gap-4">
-                    <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center">
-                      <UserCheck className="h-6 w-6 text-primary" />
-                    </div>
-                    <div>
-                      <div className="font-bold">{testimonial.name} 様</div>
-                      <div className="text-xs text-muted-foreground">{testimonial.location}</div>
-                    </div>
+                  <div className="flex items-baseline gap-2">
+                    <div className="text-primary font-black text-2xl md:text-3xl">¥25,000〜</div>
+                    <div className="text-xs text-muted-foreground">2台目以降割引あり</div>
                   </div>
                 </CardContent>
               </Card>
-            ))}
-          </div>
-          
-          <div className="text-center mt-16">
-            <Link href="/testimonials">
-              <Button variant="outline" size="lg" className="font-bold px-10 py-6 rounded-full">
-                もっと見る
-              </Button>
             </Link>
           </div>
         </div>
       </section>
 
-      {/* CTAセクション */}
-      <section className="py-24 bg-primary text-primary-foreground relative overflow-hidden">
-        <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxnIGZpbGw9IiNmZmZmZmYiIGZpbGwtb3BhY2l0eT0iMC4wNSI+PHBhdGggZD0iTTM2IDE2YzAtNC40MTggMy41ODItOCA4LThzOCAzLjU4MiA4IDgtMy41ODIgOC04IDgtOC0zLjU4Mi04LTh6bS0yMCAwYzAtNC40MTggMy41ODItOCA4LThzOCAzLjU4MiA4IDgtMy41ODIgOC04IDgtOC0zLjU4Mi04LTh6Ii8+PC9nPjwvZz48L3N2Zz4=')] opacity-20"></div>
+      {/* CTAセクション - コンパクト化 */}
+      <section className="py-16 bg-primary text-primary-foreground relative overflow-hidden">
         <div className="container relative text-center">
-          <Badge className="mb-8 bg-accent text-accent-foreground px-6 py-2 text-lg font-black shadow-xl">
-            今なら防カビコート無料！
-          </Badge>
-          <h2 className="text-4xl md:text-6xl font-black mb-10 leading-tight tracking-tighter">
-            沖縄のエアコンを、<br />もっと綺麗に、もっと快適に。
+          <h2 className="text-2xl md:text-4xl font-black mb-6 tracking-tight">
+            沖縄のエアコンを、もっと快適に。
           </h2>
-          <p className="text-xl md:text-2xl mb-12 opacity-90 max-w-2xl mx-auto leading-relaxed">
-            プロの技術で、あなたの家族の健康を守ります。<br />
-            まずはお気軽にご相談ください。
-          </p>
-          <div className="flex flex-col sm:flex-row gap-6 justify-center">
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link href="/booking">
-              <Button size="lg" className="bg-accent hover:bg-accent/90 text-accent-foreground text-2xl px-16 py-10 font-black rounded-full shadow-2xl shadow-accent/40">
+              <Button size="lg" className="bg-accent hover:bg-accent/90 text-accent-foreground text-lg px-10 py-6 font-black rounded-full">
                 今すぐ予約する
               </Button>
             </Link>
             <Link href="/line">
-              <Button size="lg" variant="outline" className="bg-white/10 border-white/30 hover:bg-white/20 text-white text-2xl px-16 py-10 font-black rounded-full">
+              <Button size="lg" variant="outline" className="bg-white/10 border-white/30 text-lg px-10 py-6 font-black rounded-full">
                 LINEで相談
               </Button>
             </Link>
           </div>
-          <div className="mt-12 flex items-center justify-center gap-8 opacity-80">
-            <div className="flex items-center gap-2">
-              <ShieldCheck className="w-6 h-6" />
-              <span className="font-bold">安心の損害保険加入</span>
+          <div className="mt-8 flex flex-wrap items-center justify-center gap-4 opacity-80 text-xs md:text-sm">
+            <div className="flex items-center gap-1">
+              <ShieldCheck className="w-4 h-4" />
+              <span>損害保険加入</span>
             </div>
-            <div className="flex items-center gap-2">
-              <Clock className="w-6 h-6" />
-              <span className="font-bold">土日祝も対応可能</span>
+            <div className="flex items-center gap-1">
+              <Clock className="w-4 h-4" />
+              <span>土日祝も対応</span>
             </div>
           </div>
         </div>
