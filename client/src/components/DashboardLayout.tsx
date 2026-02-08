@@ -49,8 +49,9 @@ export default function DashboardLayout({
     const saved = localStorage.getItem(SIDEBAR_WIDTH_KEY);
     return saved ? parseInt(saved, 10) : DEFAULT_WIDTH;
   });
-  const { loading, user, refetch } = useAuth();
+  const { loading, user } = useAuth();
   const [password, setPassword] = useState("");
+  const [isLoggingIn, setIsLoggingIn] = useState(false);
   const loginMutation = trpc.auth.login.useMutation();
 
   useEffect(() => {
@@ -59,12 +60,21 @@ export default function DashboardLayout({
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (isLoggingIn) return;
+    
+    setIsLoggingIn(true);
     try {
-      await loginMutation.mutateAsync({ password });
-      toast.success("ログインしました");
-      refetch();
+      const result = await loginMutation.mutateAsync({ password });
+      if (result.success) {
+        toast.success("ログインしました。ページを移動します...");
+        // Force a full page reload to ensure session is picked up
+        setTimeout(() => {
+          window.location.reload();
+        }, 500);
+      }
     } catch (error: any) {
-      toast.error(error.message || "ログインに失敗しました");
+      setIsLoggingIn(false);
+      toast.error(error.message || "ログインに失敗しました。パスワードを確認してください。");
     }
   };
 
@@ -97,15 +107,16 @@ export default function DashboardLayout({
                 onChange={(e) => setPassword(e.target.value)}
                 className="h-12 text-center text-lg"
                 autoFocus
+                disabled={isLoggingIn}
               />
             </div>
             <Button
               type="submit"
               size="lg"
               className="w-full h-12 font-bold shadow-lg hover:shadow-xl transition-all"
-              disabled={loginMutation.isPending}
+              disabled={isLoggingIn}
             >
-              {loginMutation.isPending ? "ログイン中..." : "ログイン"}
+              {isLoggingIn ? "ログイン中..." : "ログイン"}
             </Button>
           </form>
         </div>
@@ -182,6 +193,11 @@ function DashboardLayoutContent({
     };
   }, [isResizing, setSidebarWidth]);
 
+  const handleLogout = async () => {
+    await logout();
+    window.location.href = "/";
+  };
+
   return (
     <>
       <div className="relative" ref={sidebarRef}>
@@ -238,7 +254,7 @@ function DashboardLayoutContent({
                 <button className="flex items-center gap-3 rounded-lg px-1 py-1 hover:bg-accent/50 transition-colors w-full text-left group-data-[collapsible=icon]:justify-center focus:outline-none focus-visible:ring-2 focus-visible:ring-ring">
                   <Avatar className="h-9 w-9 border shrink-0">
                     <AvatarFallback className="text-xs font-medium">
-                      {user?.name?.charAt(0).toUpperCase()}
+                      {user?.name?.charAt(0).toUpperCase() || "A"}
                     </AvatarFallback>
                   </Avatar>
                   <div className="flex-1 min-w-0 group-data-[collapsible=icon]:hidden">
@@ -253,7 +269,7 @@ function DashboardLayoutContent({
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end" className="w-48">
                 <DropdownMenuItem
-                  onClick={logout}
+                  onClick={handleLogout}
                   className="cursor-pointer text-destructive focus:text-destructive"
                 >
                   <LogOut className="mr-2 h-4 w-4" />

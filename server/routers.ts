@@ -14,29 +14,35 @@ export const appRouter = router({
     login: publicProcedure
       .input(z.object({ password: z.string() }))
       .mutation(async ({ input, ctx }) => {
-        const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || "teba2024";
-        
-        if (input.password !== ADMIN_PASSWORD) {
-          throw new Error("パスワードが正しくありません");
+        try {
+          const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || "teba2024";
+          
+          if (input.password !== ADMIN_PASSWORD) {
+            throw new Error("パスワードが正しくありません");
+          }
+
+          const adminOpenId = "admin-user-id";
+          
+          await db.upsertUser({
+            openId: adminOpenId,
+            name: "オーナー",
+            role: "admin",
+          });
+
+          const sessionToken = await sdk.createSessionToken(adminOpenId, { name: "オーナー" });
+          
+          const cookieOptions = getSessionCookieOptions(ctx.req);
+          ctx.res.cookie(COOKIE_NAME, sessionToken, cookieOptions);
+
+          // Return a clear success response
+          return {
+            success: true,
+            user: { name: "オーナー", role: "admin" }
+          };
+        } catch (error: any) {
+          console.error("[Login Error]", error);
+          throw error;
         }
-
-        const adminOpenId = "admin-user-id";
-        
-        await db.upsertUser({
-          openId: adminOpenId,
-          name: "オーナー",
-          role: "admin",
-        });
-
-        const sessionToken = await sdk.createSessionToken(adminOpenId, { name: "オーナー" });
-        
-        const cookieOptions = getSessionCookieOptions(ctx.req);
-        ctx.res.cookie(COOKIE_NAME, sessionToken, cookieOptions);
-
-        return {
-          success: true,
-          user: { name: "オーナー", role: "admin" }
-        };
       }),
     logout: publicProcedure.mutation(({ ctx }) => {
       const cookieOptions = getSessionCookieOptions(ctx.req);
@@ -51,7 +57,7 @@ export const appRouter = router({
     list: publicProcedure.query(async () => {
       return db.getPublishedTestimonials();
     }),
-    listAll: protectedProcedure.query(async ({ ctx }) => {
+    listAll: protectedProcedure.query(async () => {
       return db.getAllTestimonials();
     }),
     create: protectedProcedure
@@ -75,7 +81,7 @@ export const appRouter = router({
         customerName: z.string().optional(),
         rating: z.number().min(1).max(5).optional(),
         comment: z.string().optional(),
-        serviceType: z.enum(["residential", "commercial"]).optional(),
+        serviceType: z.enum(["residential", "commercial"]),
         imageUrl: z.string().optional(),
         source: z.enum(["curama", "google", "manual"]).optional(),
         sourceLabel: z.string().optional(),
