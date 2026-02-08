@@ -1,7 +1,7 @@
 import { Link } from "wouter";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { CheckCircle2, ArrowRight, Sparkles, Info, Gift } from "lucide-react";
+import { CheckCircle2, ArrowRight, Sparkles, Gift } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 
 export default function Residential() {
@@ -74,41 +74,41 @@ export default function Residential() {
 
   return (
     <div className="min-h-screen bg-white">
-      {/* ヒーロー - コンパクト化 */}
-      <section className="bg-gradient-to-br from-secondary via-secondary/90 to-secondary/80 text-secondary-foreground py-12 md:py-20">
-        <div className="container">
+      {/* ヒーロー - PCでも高さを抑える */}
+      <section className="bg-gradient-to-br from-secondary via-secondary/90 to-secondary/80 text-secondary-foreground py-10 md:py-16">
+        <div className="container max-w-5xl">
           <Badge className="mb-3 bg-accent text-accent-foreground px-3 py-0.5 text-xs font-bold">
             家族の元気を空気で守る！
           </Badge>
-          <h1 className="text-3xl md:text-5xl font-black mb-4">
+          <h1 className="text-3xl md:text-4xl font-black mb-4">
             家庭用エアコンクリーニング
           </h1>
-          <p className="text-sm md:text-xl max-w-2xl opacity-90 leading-relaxed">
+          <p className="text-sm md:text-lg max-w-2xl opacity-90 leading-relaxed">
             ご家庭のエアコンを徹底的に分解洗浄。カビや汚れを根こそぎ除去し、清潔で快適な空気を取り戻します。
           </p>
         </div>
       </section>
 
-      {/* 料金プラン - コンパクト化 */}
-      <section className="py-12 md:py-20">
-        <div className="container">
+      {/* 料金プラン - PCで幅を制限 */}
+      <section className="py-10 md:py-16">
+        <div className="container max-w-5xl">
           <div className="text-center mb-8">
             <Badge className="mb-3 bg-accent text-accent-foreground px-3 py-0.5 text-xs font-bold">
               <Sparkles className="w-3 h-3 mr-1 inline" />
               HP予約が一番安い！
             </Badge>
-            <h2 className="text-2xl md:text-4xl font-black text-foreground mb-2">
+            <h2 className="text-2xl md:text-3xl font-black text-foreground mb-2">
               料金プラン
             </h2>
           </div>
 
-          <div className="max-w-3xl mx-auto mb-12">
-            <Card className="border-primary border-2 relative overflow-hidden shadow-lg">
+          <div className="max-w-2xl mx-auto mb-10">
+            <Card className="border-primary border-2 relative overflow-hidden shadow-md">
               <div className="absolute top-0 right-0 bg-primary text-primary-foreground px-4 py-1 text-xs font-bold rounded-bl-lg">
                 おすすめ
               </div>
-              <CardHeader className="bg-primary/5 border-b border-primary/10 py-6">
-                <CardTitle className="text-2xl font-black text-primary mb-1">{mainPlan.name}</CardTitle>
+              <CardHeader className="bg-primary/5 border-b border-primary/10 py-5">
+                <CardTitle className="text-xl md:text-2xl font-black text-primary mb-1">{mainPlan.name}</CardTitle>
                 <p className="text-xs text-muted-foreground">{mainPlan.description}</p>
               </CardHeader>
               <CardContent className="pt-6">
@@ -118,7 +118,7 @@ export default function Residential() {
                       <CheckCircle2 className="w-4 h-4 text-primary" />
                       作業内容
                     </h4>
-                    <div className="space-y-2">
+                    <div className="space-y-1.5">
                       {mainPlan.features.map((feature, i) => (
                         <div key={i} className="flex items-start gap-2">
                           <CheckCircle2 className="h-3 w-3 text-primary/60 flex-shrink-0 mt-1" />
@@ -134,12 +134,12 @@ export default function Residential() {
                       <Sparkles className="w-4 h-4 text-accent" />
                       基本料金
                     </h4>
-                    <div className="grid grid-cols-1 gap-3">
+                    <div className="grid grid-cols-1 gap-2">
                       {mainPlan.prices.map((price, i) => (
                         <div key={i} className="bg-muted/50 p-3 rounded-xl border border-primary/10">
                           <div className="font-bold text-[10px] mb-1 text-muted-foreground">{price.type}</div>
                           <div className="flex items-baseline gap-1">
-                            <div className="text-2xl font-black text-primary">{price.single}</div>
+                            <div className="text-xl md:text-2xl font-black text-primary">{price.single}</div>
                             <div className="text-[10px] text-muted-foreground">/ 台</div>
                           </div>
                           <div className="text-[10px] font-bold text-accent bg-accent/10 px-2 py-0.5 rounded inline-block mt-1">
@@ -152,7 +152,7 @@ export default function Residential() {
                 </div>
 
                 <Link href="/booking">
-                  <Button className="w-full bg-primary hover:bg-primary/90 font-bold py-6 text-lg shadow-md">
+                  <Button className="w-full bg-primary hover:bg-primary/90 font-bold py-5 text-lg shadow-sm">
                     このプランで予約する
                     <ArrowRight className="ml-2 h-5 w-5" />
                   </Button>
@@ -161,11 +161,11 @@ export default function Residential() {
             </Card>
           </div>
 
-          {/* オプション - コンパクト化 */}
-          <div className="max-w-4xl mx-auto">
+          {/* オプション - PCで幅制限 */}
+          <div className="max-w-3xl mx-auto">
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
               {options.map((option, index) => (
-                <Card key={index} className={`transition-all ${option.highlight ? "border-accent border-2 bg-accent/5" : "shadow-sm"}`}>
+                <Card key={index} className={`transition-all ${option.highlight ? "border-accent border-2 bg-accent/5" : "shadow-sm border-muted"}`}>
                   <CardContent className="p-4">
                     <div className="flex justify-between items-center gap-4">
                       <div>
@@ -189,19 +189,19 @@ export default function Residential() {
         </div>
       </section>
 
-      {/* 掃除の工程 - コンパクト化 */}
-      <section className="py-12 md:py-20 bg-muted/30">
-        <div className="container">
-          <div className="text-center mb-10">
+      {/* 掃除の工程 - PCで幅制限、カードをさらにコンパクトに */}
+      <section className="py-10 md:py-16 bg-muted/30">
+        <div className="container max-w-4xl">
+          <div className="text-center mb-8">
             <h2 className="text-2xl md:text-3xl font-black text-foreground mb-2">掃除の工程</h2>
             <p className="text-xs text-muted-foreground">店長が丁寧に対応する、安心の作業フロー</p>
           </div>
 
-          <div className="max-w-4xl mx-auto space-y-4">
+          <div className="space-y-4">
             {processSteps.map((step, idx) => (
-              <Card key={idx} className="overflow-hidden border-none shadow-md">
+              <Card key={idx} className="overflow-hidden border-none shadow-sm bg-white">
                 <div className="flex flex-col md:flex-row">
-                  <div className="md:w-1/3 bg-muted relative min-h-[180px] md:min-h-full">
+                  <div className="md:w-1/4 bg-muted relative min-h-[160px] md:min-h-full">
                     <div className="flex h-full">
                       {step.images.map((img, imgIdx) => (
                         <img 
@@ -213,13 +213,13 @@ export default function Residential() {
                         />
                       ))}
                     </div>
-                    <div className="absolute top-3 left-3 bg-primary text-white w-7 h-7 rounded-full flex items-center justify-center font-bold text-sm shadow-md">
+                    <div className="absolute top-2 left-2 bg-primary text-white w-6 h-6 rounded-full flex items-center justify-center font-bold text-xs shadow-md">
                       {step.step}
                     </div>
                   </div>
-                  <div className="md:w-2/3 p-5 md:p-8">
+                  <div className="md:w-3/4 p-5 md:p-6">
                     <h3 className="text-lg font-bold mb-2">{step.title}</h3>
-                    <p className="text-xs text-muted-foreground leading-relaxed mb-4">
+                    <p className="text-xs text-muted-foreground leading-relaxed mb-3">
                       {step.description}
                     </p>
                     <div className="flex flex-wrap gap-2">
@@ -240,7 +240,7 @@ export default function Residential() {
 
       {/* CTA - コンパクト化 */}
       <section className="py-12 bg-primary text-primary-foreground">
-        <div className="container text-center">
+        <div className="container max-w-4xl text-center">
           <h2 className="text-2xl md:text-3xl font-black mb-6">
             沖縄のエアコンを、もっと快適に。
           </h2>

@@ -76,32 +76,32 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-white">
-      {/* ヒーローセクション - スマホで高さを抑える */}
+      {/* ヒーローセクション - PCでも高さを抑え、コンテンツ幅を制限 */}
       <section className="relative bg-gradient-to-br from-primary via-primary/90 to-primary/80 text-primary-foreground overflow-hidden">
-        <div className="container relative py-12 md:py-32">
-          <div className="max-w-4xl">
-            <div className="inline-flex flex-col mb-4 md:mb-8">
-              <Badge className="bg-accent text-accent-foreground px-3 py-1 text-xs md:text-base font-black shadow-lg mb-1">
-                <Sparkles className="w-3 h-3 md:w-5 md:h-5 mr-1 inline" />
+        <div className="container relative py-10 md:py-24 max-w-6xl">
+          <div className="max-w-3xl">
+            <div className="inline-flex flex-col mb-4 md:mb-6">
+              <Badge className="bg-accent text-accent-foreground px-3 py-1 text-xs md:text-sm font-black shadow-lg mb-1">
+                <Sparkles className="w-3 h-3 md:w-4 md:h-4 mr-1 inline" />
                 公式サイト予約が一番おトク！
               </Badge>
             </div>
-            <h1 className="text-3xl md:text-6xl font-black mb-4 leading-tight tracking-tighter">
+            <h1 className="text-3xl md:text-5xl font-black mb-4 leading-tight tracking-tighter">
               沖縄のエアコンを<br />
               <span className="text-accent">プロの技術</span>で徹底洗浄
             </h1>
-            <p className="text-base md:text-xl mb-8 opacity-95 leading-relaxed max-w-2xl">
+            <p className="text-base md:text-lg mb-6 md:mb-8 opacity-95 leading-relaxed max-w-xl">
               南大東島出身、一児のパパ店長が直接お伺い。世界一のダンサーとしてのこだわりを、あなたのエアコンに。
             </p>
-            <div className="flex flex-col sm:flex-row gap-3 md:gap-6">
+            <div className="flex flex-col sm:flex-row gap-3 md:gap-4">
               <Link href="/booking">
-                <Button size="lg" className="bg-accent hover:bg-accent/90 text-accent-foreground text-lg md:text-xl px-8 py-6 md:px-12 md:py-8 font-black shadow-xl">
+                <Button size="lg" className="bg-accent hover:bg-accent/90 text-accent-foreground text-lg px-8 py-6 font-black shadow-xl">
                   今すぐ予約する
-                  <ArrowRight className="ml-2 h-5 w-5 md:h-6 md:w-6" />
+                  <ArrowRight className="ml-2 h-5 w-5" />
                 </Button>
               </Link>
               <a href="tel:09059424412">
-                <Button size="lg" variant="outline" className="bg-primary-foreground/10 border-primary-foreground/30 text-lg px-8 py-6 md:px-12 md:py-8">
+                <Button size="lg" variant="outline" className="bg-primary-foreground/10 border-primary-foreground/30 text-lg px-8 py-6">
                   <Phone className="mr-2 h-5 w-5" />
                   電話で相談
                 </Button>
@@ -111,24 +111,24 @@ export default function Home() {
         </div>
       </section>
 
-      {/* 5つの強み - スマホで2列またはコンパクトなリストに */}
-      <section className="py-12 md:py-20 bg-white">
-        <div className="container">
-          <div className="text-center mb-10 md:mb-16">
-            <h2 className="text-2xl md:text-4xl font-black text-foreground mb-3">
+      {/* 5つの強み - PCで3列、スマホでコンパクトに */}
+      <section className="py-10 md:py-16 bg-white">
+        <div className="container max-w-6xl">
+          <div className="text-center mb-8 md:mb-12">
+            <h2 className="text-2xl md:text-3xl font-black text-foreground mb-2">
               選ばれる<span className="text-primary">5つの理由</span>
             </h2>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
             {strengths.map((strength, index) => (
-              <Card key={index} className={`border-none shadow-md transition-all ${index === 3 ? "bg-accent/5 ring-1 ring-accent/20" : "bg-muted/20"}`}>
-                <CardContent className="p-5 md:p-8 flex items-start gap-4">
-                  <div className={`flex-shrink-0 w-10 h-10 md:w-12 md:h-12 rounded-xl flex items-center justify-center ${index === 3 ? "bg-accent text-accent-foreground" : "bg-primary text-primary-foreground"}`}>
+              <Card key={index} className={`border-none shadow-sm transition-all ${index === 3 ? "bg-accent/5 ring-1 ring-accent/20" : "bg-muted/20"}`}>
+                <CardContent className="p-5 md:p-6 flex items-start gap-4">
+                  <div className={`flex-shrink-0 w-10 h-10 rounded-xl flex items-center justify-center ${index === 3 ? "bg-accent text-accent-foreground" : "bg-primary text-primary-foreground"}`}>
                     {strength.icon}
                   </div>
                   <div>
-                    <h3 className="text-base md:text-xl font-bold mb-1">{strength.title}</h3>
+                    <h3 className="text-base md:text-lg font-bold mb-1">{strength.title}</h3>
                     <p className="text-xs md:text-sm text-muted-foreground leading-snug">
                       {strength.description}
                     </p>
@@ -140,9 +140,9 @@ export default function Home() {
         </div>
       </section>
 
-      {/* 動画セクション - コンパクト化 */}
-      <section className="py-12 md:py-20 bg-muted/30">
-        <div className="container">
+      {/* 動画セクション - PCでもサイズを制限 */}
+      <section className="py-10 md:py-16 bg-muted/30">
+        <div className="container max-w-6xl">
           <div className="max-w-4xl mx-auto">
             <div className="text-center mb-8">
               <h2 className="text-2xl md:text-3xl font-black mb-4">
@@ -150,7 +150,7 @@ export default function Home() {
               </h2>
             </div>
             
-            <div className="relative aspect-[9/16] max-w-[280px] md:max-w-[320px] mx-auto rounded-2xl overflow-hidden shadow-xl border-4 border-white">
+            <div className="relative aspect-[9/16] max-w-[260px] md:max-w-[280px] mx-auto rounded-2xl overflow-hidden shadow-xl border-4 border-white">
               <iframe 
                 className="absolute inset-0 w-full h-full"
                 src="https://www.youtube.com/embed/Sd_05JT5kuQ" 
@@ -164,13 +164,13 @@ export default function Home() {
         </div>
       </section>
 
-      {/* 店長ストーリー - コンパクト化 */}
-      <section className="py-12 md:py-20 bg-white">
-        <div className="container">
-          <div className="max-w-5xl mx-auto bg-muted/20 rounded-3xl overflow-hidden flex flex-col md:row">
-            <div className="p-8 md:p-12">
+      {/* 店長ストーリー - PCで横並び、幅制限 */}
+      <section className="py-10 md:py-16 bg-white">
+        <div className="container max-w-5xl">
+          <div className="bg-muted/20 rounded-3xl overflow-hidden flex flex-col md:flex-row items-center">
+            <div className="p-8 md:p-12 md:w-full">
               <Badge className="mb-4 bg-primary/10 text-primary">店長ストーリー</Badge>
-              <h2 className="text-2xl md:text-3xl font-black mb-6">
+              <h2 className="text-2xl md:text-3xl font-black mb-4">
                 「ご家族の大切な空間を預かる」パパ店長の想い
               </h2>
               <p className="text-sm md:text-base text-muted-foreground leading-relaxed mb-4">
@@ -190,9 +190,9 @@ export default function Home() {
         </div>
       </section>
 
-      {/* よくある質問 - コンパクト化 */}
-      <section className="py-12 md:py-20 bg-muted/30">
-        <div className="container">
+      {/* よくある質問 - 幅制限 */}
+      <section className="py-10 md:py-16 bg-muted/30">
+        <div className="container max-w-4xl">
           <div className="text-center mb-8">
             <h2 className="text-2xl md:text-3xl font-black">よくあるご質問</h2>
           </div>
@@ -217,40 +217,40 @@ export default function Home() {
         </div>
       </section>
 
-      {/* サービスメニュー - コンパクト化 */}
-      <section className="py-12 md:py-20 bg-white">
-        <div className="container">
-          <div className="text-center mb-10">
-            <h2 className="text-2xl md:text-4xl font-black mb-4">サービスメニュー</h2>
-            <Badge className="bg-accent/10 text-accent border-none text-xs md:text-sm">公式サイト予約が最安値です</Badge>
+      {/* サービスメニュー - PCで2列、幅制限 */}
+      <section className="py-10 md:py-16 bg-white">
+        <div className="container max-w-5xl">
+          <div className="text-center mb-8">
+            <h2 className="text-2xl md:text-3xl font-black mb-2">サービスメニュー</h2>
+            <Badge className="bg-accent/10 text-accent border-none text-xs">公式サイト予約が最安値です</Badge>
           </div>
 
           <div className="grid md:grid-cols-2 gap-6">
             <Link href="/residential">
-              <Card className="group hover:shadow-lg transition-all cursor-pointer border-none shadow-md bg-white">
-                <CardContent className="p-6 md:p-10">
-                  <h3 className="text-xl md:text-2xl font-black mb-2 group-hover:text-primary">家庭用エアコン</h3>
+              <Card className="group hover:shadow-md transition-all cursor-pointer border-none shadow-sm bg-white ring-1 ring-muted">
+                <CardContent className="p-6 md:p-8">
+                  <h3 className="text-xl font-black mb-2 group-hover:text-primary">家庭用エアコン</h3>
                   <p className="text-xs md:text-sm text-muted-foreground mb-4">
                     カビや汚れを根こそぎ除去し、清潔な空気を取り戻します。
                   </p>
                   <div className="flex items-baseline gap-2">
-                    <div className="text-primary font-black text-2xl md:text-3xl">¥8,000〜</div>
-                    <div className="text-xs text-muted-foreground">2台目以降割引あり</div>
+                    <div className="text-primary font-black text-2xl">¥8,000〜</div>
+                    <div className="text-[10px] text-muted-foreground font-bold">2台目以降割引あり</div>
                   </div>
                 </CardContent>
               </Card>
             </Link>
 
             <Link href="/commercial">
-              <Card className="group hover:shadow-lg transition-all cursor-pointer border-none shadow-md bg-white">
-                <CardContent className="p-6 md:p-10">
-                  <h3 className="text-xl md:text-2xl font-black mb-2 group-hover:text-primary">業務用エアコン</h3>
+              <Card className="group hover:shadow-md transition-all cursor-pointer border-none shadow-sm bg-white ring-1 ring-muted">
+                <CardContent className="p-6 md:p-8">
+                  <h3 className="text-xl font-black mb-2 group-hover:text-primary">業務用エアコン</h3>
                   <p className="text-xs md:text-sm text-muted-foreground mb-4">
                     店舗・オフィスに対応。複数台の同時施工も可能です。
                   </p>
                   <div className="flex items-baseline gap-2">
-                    <div className="text-primary font-black text-2xl md:text-3xl">¥25,000〜</div>
-                    <div className="text-xs text-muted-foreground">2台目以降割引あり</div>
+                    <div className="text-primary font-black text-2xl">¥25,000〜</div>
+                    <div className="text-[10px] text-muted-foreground font-bold">2台目以降割引あり</div>
                   </div>
                 </CardContent>
               </Card>
@@ -260,12 +260,12 @@ export default function Home() {
       </section>
 
       {/* CTAセクション - コンパクト化 */}
-      <section className="py-16 bg-primary text-primary-foreground relative overflow-hidden">
-        <div className="container relative text-center">
-          <h2 className="text-2xl md:text-4xl font-black mb-6 tracking-tight">
+      <section className="py-12 md:py-16 bg-primary text-primary-foreground relative overflow-hidden">
+        <div className="container max-w-4xl relative text-center">
+          <h2 className="text-2xl md:text-3xl font-black mb-6 tracking-tight">
             沖縄のエアコンを、もっと快適に。
           </h2>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+          <div className="flex flex-col sm:flex-row gap-3 justify-center">
             <Link href="/booking">
               <Button size="lg" className="bg-accent hover:bg-accent/90 text-accent-foreground text-lg px-10 py-6 font-black rounded-full">
                 今すぐ予約する
@@ -277,7 +277,7 @@ export default function Home() {
               </Button>
             </Link>
           </div>
-          <div className="mt-8 flex flex-wrap items-center justify-center gap-4 opacity-80 text-xs md:text-sm">
+          <div className="mt-8 flex flex-wrap items-center justify-center gap-4 opacity-80 text-xs">
             <div className="flex items-center gap-1">
               <ShieldCheck className="w-4 h-4" />
               <span>損害保険加入</span>
