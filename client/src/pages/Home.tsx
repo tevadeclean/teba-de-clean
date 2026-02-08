@@ -217,6 +217,53 @@ export default function Home() {
         </div>
       </section>
 
+      {/* お客様の声 - スライダー形式またはグリッド */}
+      <section className="py-10 md:py-16 bg-muted/30">
+        <div className="container max-w-6xl">
+          <div className="text-center mb-8 md:mb-12">
+            <h2 className="text-2xl md:text-3xl font-black mb-2">お客様の声</h2>
+            <p className="text-xs text-muted-foreground">くらしのマーケットで高評価をいただいています</p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {recentTestimonials.map((testimonial, index) => (
+              <Card key={index} className="border-none shadow-sm bg-white">
+                <CardContent className="p-6">
+                  <div className="flex items-center justify-between mb-4">
+                    <div className="flex items-center gap-1">
+                      {[...Array(5)].map((_, i) => (
+                        <Star key={i} className={`w-3 h-3 md:w-4 md:h-4 ${i < testimonial.rating ? "text-yellow-400 fill-yellow-400" : "text-gray-200"}`} />
+                      ))}
+                    </div>
+                    <Badge variant="outline" className="text-[8px] md:text-[10px] text-muted-foreground border-muted-foreground/20">
+                      くらしのマーケットから引用
+                    </Badge>
+                  </div>
+                  <p className="text-xs md:text-sm text-muted-foreground leading-relaxed mb-4 line-clamp-4">
+                    {testimonial.comment}
+                  </p>
+                  <div className="flex items-center gap-2">
+                    <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center text-primary font-bold text-xs">
+                      {testimonial.customerName[0]}
+                    </div>
+                    <div className="text-[10px] md:text-xs font-bold">{testimonial.customerName}</div>
+                  </div>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+
+          <div className="text-center mt-8">
+            <Link href="/testimonials">
+              <Button variant="outline" className="font-bold">
+                もっと見る
+                <ArrowRight className="ml-2 h-4 w-4" />
+              </Button>
+            </Link>
+          </div>
+        </div>
+      </section>
+
       {/* サービスメニュー - PCで2列、幅制限 */}
       <section className="py-10 md:py-16 bg-white">
         <div className="container max-w-5xl">

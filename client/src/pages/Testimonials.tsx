@@ -6,21 +6,22 @@ import { testimonials as staticTestimonials } from "@/data/siteData";
 import { fetchTestimonialsFromSheet, Testimonial } from "@/lib/googleSheets";
 
 // 公開されたスプレッドシートのCSV URL（ユーザーから提供されたらここに差し替える）
-const SHEET_CSV_URL = ""; 
+const SHEET_CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vT7v_vYV_vYV_vYV_vYV_vYV_vYV_vYV_vYV_vYV_vYV_vYV_vYV_vYV_vYV_vYV_vYV_vYV_vYV_vYV/pub?output=csv"; 
+// 注: 上記はプレースホルダーです。ユーザーから提供されたIDを使用して正しいCSV URLを構築します。
+const ACTUAL_SHEET_CSV_URL = "https://docs.google.com/spreadsheets/d/1mkobJlasnMVNuxmAGntVntpz7ZSNv-rudq0-kQ2qLxw/gviz/tq?tqx=out:csv";
 
 export default function Testimonials() {
-  const [testimonials, setTestimonials] = useState<Testimonial[]>(staticTestimonials);
+  const [testimonials, setTestimonials] = useState<Testimonial[]>([]);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     async function loadSheetData() {
-      if (!SHEET_CSV_URL) return;
-      
       setLoading(true);
-      const sheetData = await fetchTestimonialsFromSheet(SHEET_CSV_URL);
+      const sheetData = await fetchTestimonialsFromSheet(ACTUAL_SHEET_CSV_URL);
       if (sheetData.length > 0) {
-        // 静的なデータと結合、または差し替え
-        setTestimonials([...sheetData, ...staticTestimonials]);
+        setTestimonials(sheetData);
+      } else {
+        setTestimonials(staticTestimonials);
       }
       setLoading(false);
     }
@@ -57,16 +58,21 @@ export default function Testimonials() {
                   <CardContent className="p-6 md:p-8 relative">
                     <Quote className="absolute top-4 right-4 w-12 h-12 text-primary/5 group-hover:text-primary/10 transition-colors" />
                     
-                    <div className="flex items-center gap-1 mb-4">
-                      {[...Array(5)].map((_, i) => (
-                        <Star
-                          key={i}
-                          className={`w-4 h-4 ${
-                            i < t.rating ? "text-yellow-400 fill-yellow-400" : "text-gray-200"
-                          }`}
-                        />
-                      ))}
-                      <span className="ml-2 text-sm font-bold text-foreground">{t.rating}.0</span>
+                    <div className="flex items-center justify-between mb-4">
+                      <div className="flex items-center gap-1">
+                        {[...Array(5)].map((_, i) => (
+                          <Star
+                            key={i}
+                            className={`w-4 h-4 ${
+                              i < t.rating ? "text-yellow-400 fill-yellow-400" : "text-gray-200"
+                            }`}
+                          />
+                        ))}
+                        <span className="ml-2 text-sm font-bold text-foreground">{t.rating}.0</span>
+                      </div>
+                      <Badge variant="outline" className="text-[10px] text-muted-foreground border-muted-foreground/20">
+                        くらしのマーケットから引用
+                      </Badge>
                     </div>
 
                     <p className="text-sm md:text-base text-muted-foreground leading-relaxed mb-6 relative z-10">
