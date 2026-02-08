@@ -26,43 +26,53 @@ function Router() {
     <Switch>
       {/* Admin Routes (No Header/Footer) */}
       <Route path="/admin">
-        <DashboardLayout>
-          <div className="flex flex-col items-center justify-center h-[60vh] text-center">
-            <h1 className="text-3xl font-black mb-4">管理者ダッシュボード</h1>
-            <p className="text-muted-foreground">左のメニューから管理項目を選択してください。</p>
-          </div>
-        </DashboardLayout>
+        {() => (
+          <DashboardLayout>
+            <div className="flex flex-col items-center justify-center h-[60vh] text-center">
+              <h1 className="text-3xl font-black mb-4">管理者ダッシュボード</h1>
+              <p className="text-muted-foreground">左のメニューから管理項目を選択してください。</p>
+            </div>
+          </DashboardLayout>
+        )}
       </Route>
       <Route path="/admin/testimonials">
-        <DashboardLayout>
-          <AdminTestimonials />
-        </DashboardLayout>
+        {() => (
+          <DashboardLayout>
+            <AdminTestimonials />
+          </DashboardLayout>
+        )}
       </Route>
       <Route path="/admin/blog">
-        <DashboardLayout>
-          <AdminBlog />
-        </DashboardLayout>
+        {() => (
+          <DashboardLayout>
+            <AdminBlog />
+          </DashboardLayout>
+        )}
       </Route>
 
       {/* Public Routes (With Header/Footer) */}
       <Route>
-        <Header />
-        <Switch>
-          <Route path={"/"} component={Home} />
-          <Route path={"/residential"} component={Residential} />
-          <Route path={"/commercial"} component={Commercial} />
-          <Route path={"/about"} component={About} />
-          <Route path={"/booking"} component={Booking} />
-          <Route path={"/line"} component={Line} />
-          <Route path={"/testimonials"} component={Testimonials} />
-          <Route path={"/faq"} component={FAQ} />
-          <Route path={"/contact"} component={Contact} />
-          <Route path={"/blog"} component={Blog} />
-          <Route path={"/blog/:id"} component={BlogDetail} />
-          <Route path={"/404"} component={NotFound} />
-          <Route component={NotFound} />
-        </Switch>
-        <Footer />
+        {() => (
+          <>
+            <Header />
+            <Switch>
+              <Route path={"/"} component={Home} />
+              <Route path={"/residential"} component={Residential} />
+              <Route path={"/commercial"} component={Commercial} />
+              <Route path={"/about"} component={About} />
+              <Route path={"/booking"} component={Booking} />
+              <Route path={"/line"} component={Line} />
+              <Route path={"/testimonials"} component={Testimonials} />
+              <Route path={"/faq"} component={FAQ} />
+              <Route path={"/contact"} component={Contact} />
+              <Route path={"/blog"} component={Blog} />
+              <Route path={"/blog/:id"} component={BlogDetail} />
+              <Route path={"/404"} component={NotFound} />
+              <Route component={NotFound} />
+            </Switch>
+            <Footer />
+          </>
+        )}
       </Route>
     </Switch>
   );
