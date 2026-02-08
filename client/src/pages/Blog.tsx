@@ -1,52 +1,66 @@
-import { useState, useMemo } from "react";
+import { useState, useEffect } from "react";
 import { Link } from "wouter";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { trpc } from "@/lib/trpc";
 import { Skeleton } from "@/components/ui/skeleton";
-import { format } from "date-fns";
-import { ja } from "date-fns/locale";
+import { fetchBlogPostsFromSheet, BlogPost } from "@/lib/googleSheets";
+import { BLOG_SHEET_CSV_URL } from "@/const";
 
 export default function Blog() {
   const [selectedCategory, setSelectedCategory] = useState<string | undefined>(undefined);
-  
-  const { data: blogPosts, isLoading } = trpc.blog.list.useQuery({ category: selectedCategory });
+  const [posts, setPosts] = useState<BlogPost[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    async function loadPosts() {
+      const data = await fetchBlogPostsFromSheet(BLOG_SHEET_CSV_URL);
+      setPosts(data);
+      setLoading(false);
+    }
+    loadPosts();
+  }, []);
 
   const categories = [
     { value: undefined, label: "すべて" },
-    { value: "residential_small", label: "家庭用小規模（〜20㎡）" },
-    { value: "residential_medium", label: "家庭用中規模（20〜40㎡）" },
-    { value: "residential_large", label: "家庭用大規模（40㎡〜）" },
-    { value: "commercial_small", label: "業務用小規模" },
-    { value: "commercial_medium", label: "業務用中規模" },
-    { value: "commercial_large", label: "業務用大規模" }
+    { value: "作業実績", label: "作業実績" },
+    { value: "お掃除のコツ", label: "お掃除のコツ" },
+    { value: "お知らせ", label: "お知らせ" },
+    { value: "店長の日常", label: "店長の日常" }
   ];
+
+  const filteredPosts = selectedCategory 
+    ? posts.filter(post => post.category === selectedCategory)
+    : posts;
 
   return (
     <div className="min-h-screen">
       {/* ヒーロー */}
-      <section className="bg-gradient-to-br from-primary via-primary/90 to-primary/80 text-primary-foreground py-16 md:py-24">
+      <section className="bg-gradient-to-br from-blue-600 via-blue-500 to-blue-400 text-white py-16 md:py-24">
         <div className="container">
           <h1 className="text-4xl md:text-5xl font-black mb-6">
-            作業実績
+            作業実績・ブログ
           </h1>
           <p className="text-lg md:text-xl max-w-3xl opacity-95">
-            これまでの施工事例をご紹介します。料金や作業内容の参考にしてください。
+            テバdeクリーンの日々の作業風景や、エアコン掃除のコツをお届けします。
           </p>
         </div>
       </section>
 
-      <section className="py-12 md:py-20">
+      <section className="py-12 md:py-20 bg-gray-50">
         <div className="container">
           {/* カテゴリフィルター */}
-          <div className="mb-8">
-            <div className="flex flex-wrap gap-2">
+          <div className="mb-12 overflow-x-auto pb-2">
+            <div className="flex flex-nowrap md:flex-wrap gap-3">
               {categories.map((category) => (
                 <Button
                   key={category.label}
                   variant={selectedCategory === category.value ? "default" : "outline"}
                   onClick={() => setSelectedCategory(category.value)}
-                  className={selectedCategory === category.value ? "bg-primary" : ""}
+                  className={`rounded-full px-6 font-bold transition-all ${
+                    selectedCategory === category.value 
+                      ? "bg-blue-600 hover:bg-blue-700 text-white border-none shadow-md" 
+                      : "bg-white hover:bg-blue-50 text-gray-600 border-gray-200"
+                  }`}
                 >
                   {category.label}
                 </Button>
@@ -55,10 +69,11 @@ export default function Blog() {
           </div>
 
           {/* ブログ一覧 */}
-          {isLoading ? (
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {loading ? (
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
               {[...Array(6)].map((_, i) => (
-                <Card key={i} className="h-full">
+                <Card key={i} className="h-full rounded-3xl overflow-hidden border-none shadow-sm">
+                  <Skeleton className="h-48 w-full" />
                   <CardContent className="p-6">
                     <Skeleton className="h-4 w-24 mb-4" />
                     <Skeleton className="h-6 w-full mb-3" />
@@ -71,35 +86,41 @@ export default function Blog() {
                 </Card>
               ))}
             </div>
-          ) : blogPosts && blogPosts.length > 0 ? (
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {blogPosts.map((post) => (
+          ) : filteredPosts.length > 0 ? (
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {filteredPosts.map((post) => (
                 <Link key={post.id} href={`/blog/${post.id}`}>
-                  <Card className="hover:shadow-lg transition-shadow cursor-pointer h-full border-none shadow-sm bg-muted/20">
+                  <Card className="group hover:shadow-xl transition-all duration-300 cursor-pointer h-full border-none shadow-sm bg-white rounded-3xl overflow-hidden">
+                    {post.images[0] && (
+                      <div className="h-48 overflow-hidden">
+                        <img 
+                          src={post.images[0]} 
+                          alt={post.title} 
+                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                        />
+                      </div>
+                    )}
                     <CardContent className="p-6">
                       <div className="flex justify-between items-start mb-4">
-                        <span className="inline-block px-3 py-1 bg-primary/10 text-primary text-[10px] font-bold rounded-full">
-                          {categories.find(c => c.value === post.category)?.label}
+                        <span className="inline-block px-3 py-1 bg-blue-50 text-blue-600 text-[10px] font-black rounded-full">
+                          {post.category}
                         </span>
-                        <span className="text-[10px] text-muted-foreground">
-                          {format(new Date(post.createdAt), "yyyy.MM.dd", { locale: ja })}
+                        <span className="text-[10px] text-gray-400 font-bold">
+                          {post.date}
                         </span>
                       </div>
-                      <h3 className="text-lg font-bold mb-3 line-clamp-2">
+                      <h3 className="text-xl font-black mb-3 line-clamp-2 group-hover:text-blue-600 transition-colors">
                         {post.title}
                       </h3>
-                      <p className="text-xs text-muted-foreground mb-4 line-clamp-3 leading-relaxed">
-                        {post.content}
+                      <p className="text-sm text-gray-500 mb-6 line-clamp-3 leading-relaxed">
+                        {post.content.replace(/\[画像\d+\]/g, "")}
                       </p>
-                      <div className="flex flex-wrap gap-3 text-[10px] text-muted-foreground font-bold">
+                      <div className="flex flex-wrap gap-4 text-[11px] text-gray-400 font-bold mt-auto pt-4 border-t border-gray-50">
                         {post.location && (
                           <span className="flex items-center gap-1">📍 {post.location}</span>
                         )}
-                        {post.area && (
-                          <span className="flex items-center gap-1">📐 {post.area}㎡</span>
-                        )}
                         {post.price && (
-                          <span className="flex items-center gap-1 text-primary">💰 ¥{post.price.toLocaleString()}</span>
+                          <span className="flex items-center gap-1 text-blue-600">💰 {post.price}</span>
                         )}
                       </div>
                     </CardContent>
@@ -108,8 +129,8 @@ export default function Blog() {
               ))}
             </div>
           ) : (
-            <div className="text-center py-20">
-              <p className="text-muted-foreground">該当する作業実績がありません</p>
+            <div className="text-center py-20 bg-white rounded-3xl shadow-sm border border-gray-100">
+              <p className="text-gray-400 font-bold">該当する記事がありません</p>
             </div>
           )}
         </div>

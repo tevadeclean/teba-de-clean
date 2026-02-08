@@ -23,3 +23,9 @@ export const getLoginUrl = () => {
     return `${oauthPortalUrl}/app-auth?appId=${appId}&redirectUri=${encodeURIComponent(redirectUri)}&state=${state}&type=signIn`;
   }
 };
+
+// 口コミ用スプレッドシートのCSV URL
+export const TESTIMONIALS_SHEET_CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vS_O_L_L_L_L_L_L_L_L_L_L_L_L_L_L_L_L_L_L_L_L_L_L_L_L_L_L_L_L_L_L_L_L_L_L_L_L_L_L_L_L_L/pub?output=csv";
+
+// ブログ用スプレッドシートのCSV URL（後ほどユーザーに作成してもらう）
+export const BLOG_SHEET_CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vT7_L_L_L_L_L_L_L_L_L_L_L_L_L_L_L_L_L_L_L_L_L_L_L_L_L_L_L_L_L_L_L_L_L_L_L_L_L_L_L_L_L/pub?output=csv";

@@ -1,5 +1,5 @@
 /**
- * Googleスプレッドシート（CSV公開形式）から口コミデータを取得するユーティリティ
+ * Googleスプレッドシート（CSV公開形式）から口コミデータおよびブログデータを取得するユーティリティ
  */
 
 export interface Testimonial {
@@ -9,6 +9,17 @@ export interface Testimonial {
   comment: string;
   serviceType?: 'residential' | 'commercial';
   createdAt: string;
+}
+
+export interface BlogPost {
+  id: string;
+  date: string;
+  title: string;
+  category: string;
+  location: string;
+  price: string;
+  content: string;
+  images: string[];
 }
 
 /**
@@ -36,7 +47,6 @@ function parseCSVLine(line: string): string[] {
 
 /**
  * 日付文字列を比較可能な数値に変換する
- * 例: "2025年11月29日" -> 20251129
  */
 function parseDateToNumber(dateStr: string): number {
   if (!dateStr) return 0;
@@ -47,7 +57,6 @@ function parseDateToNumber(dateStr: string): number {
     const day = match[3].padStart(2, '0');
     return parseInt(`${year}${month}${day}`, 10);
   }
-  // YYYY/MM/DD 形式などの場合
   const parts = dateStr.split(/[\/\-]/);
   if (parts.length === 3) {
     return parseInt(parts[0] + parts[1].padStart(2, '0') + parts[2].padStart(2, '0'), 10);
@@ -56,27 +65,32 @@ function parseDateToNumber(dateStr: string): number {
 }
 
 /**
- * スプレッドシートのCSV URLからデータを取得してパースする
+ * GoogleドライブのURLを直接表示可能なURLに変換する
+ */
+export const formatImageUrl = (url: string): string => {
+  if (!url) return "";
+  const trimmedUrl = url.trim();
+  if (trimmedUrl.includes("drive.google.com")) {
+    const idMatch = trimmedUrl.match(/[-\w]{25,}/);
+    if (idMatch) return `https://lh3.googleusercontent.com/d/${idMatch[0]}`;
+  }
+  return trimmedUrl;
+};
+
+/**
+ * 口コミデータを取得する
  */
 export async function fetchTestimonialsFromSheet(csvUrl: string): Promise<Testimonial[]> {
   try {
     const response = await fetch(csvUrl);
     const csvText = await response.text();
-    
     const lines = csvText.split('\n').filter(line => line.trim() !== '');
     if (lines.length < 2) return [];
 
-    // 実際のデータの並び順: 日付, 名前, 評価, サービス内容, コメント, (空)
-    // 0: 日付, 1: 名前, 2: 評価, 3: サービス内容, 4: コメント
-    
     const testimonials = lines.slice(1).map((line, index) => {
       const values = parseCSVLine(line);
-      
-      // 評価が空、または数値でない場合は5にする
       let rating = parseInt(values[2], 10);
       if (isNaN(rating)) rating = 5;
-
-      // サービス内容に「業務用」が含まれていれば commercial、そうでなければ residential
       const serviceContent = values[3] || '';
       const serviceType: 'residential' | 'commercial' = serviceContent.includes('業務用') ? 'commercial' : 'residential';
 
@@ -90,12 +104,50 @@ export async function fetchTestimonialsFromSheet(csvUrl: string): Promise<Testim
       };
     });
 
-    // 日付の新しい順にソート
-    return testimonials.sort((a, b) => {
-      return parseDateToNumber(b.createdAt) - parseDateToNumber(a.createdAt);
-    });
+    return testimonials.sort((a, b) => parseDateToNumber(b.createdAt) - parseDateToNumber(a.createdAt));
   } catch (error) {
-    console.error('Failed to fetch testimonials from Google Sheets:', error);
+    console.error('Failed to fetch testimonials:', error);
+    return [];
+  }
+}
+
+/**
+ * ブログデータを取得する
+ */
+export async function fetchBlogPostsFromSheet(csvUrl: string): Promise<BlogPost[]> {
+  if (!csvUrl) return [];
+  try {
+    const response = await fetch(csvUrl);
+    const csvText = await response.text();
+    const lines = csvText.split('\n').filter(line => line.trim() !== '');
+    if (lines.length < 2) return [];
+
+    const posts = lines.slice(1).map((line, index) => {
+      const values = parseCSVLine(line);
+      // 列構成: 0:日付, 1:タイトル, 2:カテゴリ, 3:場所, 4:料金, 5:本文, 6-10:画像URL
+      const images = [
+        formatImageUrl(values[6]),
+        formatImageUrl(values[7]),
+        formatImageUrl(values[8]),
+        formatImageUrl(values[9]),
+        formatImageUrl(values[10])
+      ].filter(url => url);
+
+      return {
+        id: (lines.length - index).toString(),
+        date: values[0] || '',
+        title: values[1] || '',
+        category: values[2] || '作業実績',
+        location: values[3] || '',
+        price: values[4] || '',
+        content: values[5] || '',
+        images: images
+      };
+    });
+
+    return posts.filter(p => p.title).sort((a, b) => parseDateToNumber(b.date) - parseDateToNumber(a.date));
+  } catch (error) {
+    console.error('Failed to fetch blog posts:', error);
     return [];
   }
 }
