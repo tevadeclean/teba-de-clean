@@ -2,6 +2,7 @@ import { Link } from "wouter";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Building2, Users, Clock, Shield, ArrowRight, Sparkles } from "lucide-react";
+import { contactInfo } from "@/data/siteData";
 import { Badge } from "@/components/ui/badge";
 
 export default function Commercial() {
@@ -183,10 +184,15 @@ export default function Commercial() {
             お気軽にお問い合わせください。
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link href="/booking">
-              <Button size="lg" className="bg-accent hover:bg-accent/90 text-accent-foreground font-bold px-10 py-6 text-xl">
-                予約・お見積もりフォームへ
+            <a href={contactInfo.lineUrl} target="_blank" rel="noopener noreferrer">
+              <Button size="lg" className="bg-[#00C300] hover:bg-[#00C300]/90 text-white font-bold px-10 py-6 text-xl">
+                LINEで相談・予約
                 <ArrowRight className="ml-2 h-5 w-5" />
+              </Button>
+            </a>
+            <Link href="/booking">
+              <Button size="lg" variant="outline" className="font-bold px-10 py-6 text-xl">
+                企業様向けフォームへ
               </Button>
             </Link>
           </div>

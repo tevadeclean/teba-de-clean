@@ -2,6 +2,7 @@ import { Link } from "wouter";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { CheckCircle2, ArrowRight, Sparkles } from "lucide-react";
+import { contactInfo } from "@/data/siteData";
 import { Badge } from "@/components/ui/badge";
 
 export default function Residential() {
@@ -249,11 +250,11 @@ export default function Residential() {
                 今すぐ予約する
               </Button>
             </Link>
-            <Link href="/line">
+            <a href={contactInfo.lineUrl} target="_blank" rel="noopener noreferrer">
               <Button size="lg" variant="outline" className="border-white text-white hover:bg-white/10 font-black px-10 py-6 text-lg rounded-full">
                 LINEで相談する
               </Button>
-            </Link>
+            </a>
           </div>
         </div>
       </section>

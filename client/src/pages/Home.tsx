@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Link } from "wouter";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { testimonials as staticTestimonials } from "@/data/siteData";
+import { testimonials as staticTestimonials, contactInfo } from "@/data/siteData";
 import { fetchTestimonialsFromSheet, Testimonial } from "@/lib/googleSheets";
 import { 
   Sparkles, 
@@ -331,11 +331,11 @@ export default function Home() {
                 今すぐ予約する
               </Button>
             </Link>
-            <Link href="/line">
+            <a href={contactInfo.lineUrl} target="_blank" rel="noopener noreferrer">
               <Button size="lg" variant="outline" className="bg-white/10 border-white/30 text-lg px-10 py-6 font-black rounded-full">
                 LINEで相談
               </Button>
-            </Link>
+            </a>
           </div>
           <div className="mt-8 flex flex-wrap items-center justify-center gap-4 opacity-80 text-xs">
             <div className="flex items-center gap-1">
