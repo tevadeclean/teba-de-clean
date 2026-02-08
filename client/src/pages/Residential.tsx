@@ -18,7 +18,7 @@ export default function Residential() {
     ],
     prices: [
       { type: "お掃除機能なし", single: "¥8,000", multiple: "2台目以降 ¥7,000/台" },
-      { type: "お掃除機能あり", single: "¥16,000", multiple: "2台目以降 ¥15,000/台" }
+      { type: "お掃除機能あり", single: "¥15,000", multiple: "2台目以降 ¥14,000/台" }
     ]
   };
 
