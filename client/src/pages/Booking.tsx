@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { contactInfo } from "@/data/siteData";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { CheckCircle2, Info, Sparkles } from "lucide-react";
@@ -140,13 +141,38 @@ export default function Booking() {
           </Card>
         </section>
 
-        {/* 3. Googleフォーム */}
-        <section className={`transition-opacity duration-500 ${agreed ? 'opacity-100' : 'opacity-30 pointer-events-none'}`}>
+        {/* 3. LINEで予約 */}
+        <section className="mb-10 md:mb-12">
           <div className="text-center mb-6">
-            <h2 className="text-xl md:text-2xl font-bold mb-2">予約・お見積もりフォーム</h2>
-            {!agreed && <p className="text-xs md:text-sm text-destructive font-bold">※上の確認事項に同意いただくと入力可能になります</p>}
+            <h2 className="text-xl md:text-2xl font-bold mb-2">LINEで簡単ご予約！</h2>
+            <p className="text-sm md:text-base text-muted-foreground mb-4">
+              テバdeクリーンでは、LINEからのご予約を推奨しております。
+              <br />
+              24時間いつでも、お気軽にお問い合わせ・ご予約ください！
+            </p>
+            <a href={contactInfo.lineUrl} target="_blank" rel="noopener noreferrer" className="inline-block mb-4">
+              <img src={contactInfo.lineQrCode} alt="LINE QRコード" className="w-40 h-40 mx-auto rounded-lg shadow-md" />
+            </a>
+            <p className="text-sm md:text-base text-muted-foreground mb-6">
+              上記のQRコードを読み取るか、以下のボタンから友だち追加してご予約ください。
+            </p>
+            <a href={contactInfo.lineUrl} target="_blank" rel="noopener noreferrer">
+              <Button size="lg" className="bg-[#00C300] hover:bg-[#00C300]/90 text-white text-lg px-8 py-6 rounded-full shadow-lg">
+                <img src="/images/line_icon.png" alt="LINE" className="w-6 h-6 mr-2" />
+                LINEで予約・お問い合わせ
+              </Button>
+            </a>
           </div>
-          
+        </section>
+
+        {/* 4. 企業様向けお問い合わせフォーム */}
+        <section className="mb-10 md:mb-12">
+          <div className="text-center mb-6">
+            <h2 className="text-xl md:text-2xl font-bold mb-2">企業様向けお問い合わせ</h2>
+            <p className="text-sm md:text-base text-muted-foreground mb-4">
+              法人のお客様、または複数台の業務用エアコンクリーニングをご検討の企業様は、以下のフォームよりお問い合わせください。
+            </p>
+          </div>
           <div className="bg-white rounded-xl shadow-lg overflow-hidden border-2 border-primary/20">
             <iframe 
               src="https://docs.google.com/forms/d/e/1FAIpQLSdCEzXE3dcVqFlIUqz_aH-bWxEazMx4TTkPcTMdycFnk0HSGw/viewform?embedded=true" 
@@ -161,6 +187,7 @@ export default function Booking() {
             </iframe>
           </div>
         </section>
+
       </div>
     </div>
   );

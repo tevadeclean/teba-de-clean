@@ -1,4 +1,5 @@
 import { Link } from "wouter";
+import { contactInfo } from "@/data/siteData";
 import { Button } from "@/components/ui/button";
 import { Menu, X, Phone } from "lucide-react";
 import { useState } from "react";
@@ -14,7 +15,7 @@ export default function Header() {
     { label: "お客様の声", href: "/testimonials" },
     { label: "店長挨拶", href: "/about" },
     { label: "よくある質問", href: "/faq" },
-    { label: "店舗情報", href: "/contact" },
+    { label: "お問い合わせ", href: "/contact" },
   ];
 
   return (
@@ -47,11 +48,11 @@ export default function Header() {
               <Phone className="h-4 w-4" />
               <span>090-5942-4412</span>
             </a>
-            <Link href="/booking">
-              <Button size="sm" className="bg-accent hover:bg-accent/90 text-accent-foreground">
-                予約する
+            <a href={contactInfo.lineUrl} target="_blank" rel="noopener noreferrer">
+              <Button size="sm" className="bg-[#00C300] hover:bg-[#00C300]/90 text-white">
+                LINEで予約
               </Button>
-            </Link>
+            </a>
           </div>
 
           {/* モバイルメニューボタン */}
@@ -83,9 +84,9 @@ export default function Header() {
                   <Phone className="h-4 w-4" />
                   <span>090-5942-4412</span>
                 </a>
-                <Link href="/booking">
-                  <Button className="w-full bg-accent hover:bg-accent/90 text-accent-foreground" onClick={() => setIsMenuOpen(false)}>
-                    予約する
+                <a href={contactInfo.lineUrl} target="_blank" rel="noopener noreferrer">
+                  <Button className="w-full bg-[#00C300] hover:bg-[#00C300]/90 text-white" onClick={() => setIsMenuOpen(false)}>
+                    LINEで予約
                   </Button>
                 </Link>
               </div>

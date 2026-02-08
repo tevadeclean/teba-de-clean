@@ -1,6 +1,8 @@
 // サイト全体で使用する静的データ
 
 export const contactInfo = {
+  lineUrl: 'https://lin.ee/H2AkpZP',
+  lineQrCode: '/images/line_qr_code.png',
   phone: "090-5942-4412",
   phoneRaw: "09059424412",
   email: "office@teva-de-clean.jp",
