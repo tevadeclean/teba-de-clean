@@ -110,7 +110,7 @@ export default function Commercial() {
                   <div>
                     <h3 className="text-base font-bold mb-1">複雑な構造にも対応</h3>
                     <p className="text-xs text-muted-foreground leading-relaxed">
-                      業務用エアコンは家庭用に比べ分解が難しく壊れやすいため、確かな知識と実績を持つプロにお任せください。
+                      業務用エアコンは家庭用に比べ構造が複雑で分解の難易度が高いため、確かな知識と実績を持つプロにお任せください。
                     </p>
                   </div>
                 </div>
