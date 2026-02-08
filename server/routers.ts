@@ -14,82 +14,44 @@ export const appRouter = router({
     login: publicProcedure
       .input(z.object({ password: z.string() }))
       .mutation(async ({ input, ctx }) => {
-        try {
-          const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || "teba2024";
-          
-          if (input.password !== ADMIN_PASSWORD) {
-            throw new Error("パスワードが正しくありません");
-          }
-
-          const adminOpenId = "admin-user-id";
-          
-          await db.upsertUser({
-            openId: adminOpenId,
-            name: "オーナー",
-            role: "admin",
-          });
-
-          const sessionToken = await sdk.createSessionToken(adminOpenId, { name: "オーナー" });
-          
-          const cookieOptions = getSessionCookieOptions(ctx.req);
-          ctx.res.cookie(COOKIE_NAME, sessionToken, cookieOptions);
-
-          // Return a clear success response
-          return {
-            success: true,
-            user: { name: "オーナー", role: "admin" }
-          };
-        } catch (error: any) {
-          console.error("[Login Error]", error);
-          throw error;
+        const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || "teba2024";
+        if (input.password !== ADMIN_PASSWORD) {
+          throw new Error("パスワードが正しくありません");
         }
+
+        const adminOpenId = "admin-user-id";
+        await db.upsertUser({
+          openId: adminOpenId,
+          name: "オーナー",
+          role: "admin",
+        });
+
+        const sessionToken = await sdk.createSessionToken(adminOpenId, { name: "オーナー" });
+        const cookieOptions = getSessionCookieOptions(ctx.req);
+        ctx.res.cookie(COOKIE_NAME, sessionToken, cookieOptions);
+
+        return { success: true, user: { name: "オーナー", role: "admin" } };
       }),
     logout: publicProcedure.mutation(({ ctx }) => {
       const cookieOptions = getSessionCookieOptions(ctx.req);
       ctx.res.clearCookie(COOKIE_NAME, { ...cookieOptions, maxAge: -1 });
-      return {
-        success: true,
-      } as const;
+      return { success: true };
     }),
   }),
 
   testimonials: router({
-    list: publicProcedure.query(async () => {
-      return db.getPublishedTestimonials();
-    }),
-    listAll: protectedProcedure.query(async () => {
-      return db.getAllTestimonials();
-    }),
+    list: publicProcedure.query(async () => db.getPublishedTestimonials()),
+    listAll: protectedProcedure.query(async () => db.getAllTestimonials()),
     create: protectedProcedure
       .input(z.object({
         customerName: z.string(),
-        rating: z.number().min(1).max(5),
+        rating: z.number(),
         comment: z.string(),
         serviceType: z.enum(["residential", "commercial"]),
-        imageUrl: z.string().optional(),
-        source: z.enum(["curama", "google", "manual"]).optional(),
         sourceLabel: z.string().optional(),
-        isPublished: z.number().optional(),
       }))
       .mutation(async ({ input }) => {
-        await db.createTestimonial(input);
-        return { success: true };
-      }),
-    update: protectedProcedure
-      .input(z.object({
-        id: z.number(),
-        customerName: z.string().optional(),
-        rating: z.number().min(1).max(5).optional(),
-        comment: z.string().optional(),
-        serviceType: z.enum(["residential", "commercial"]),
-        imageUrl: z.string().optional(),
-        source: z.enum(["curama", "google", "manual"]).optional(),
-        sourceLabel: z.string().optional(),
-        isPublished: z.number().optional(),
-      }))
-      .mutation(async ({ input }) => {
-        const { id, ...data } = input;
-        await db.updateTestimonial(id, data);
+        await db.createTestimonial({ ...input, isPublished: 1 });
         return { success: true };
       }),
     delete: protectedProcedure
@@ -102,40 +64,25 @@ export const appRouter = router({
 
   blog: router({
     list: publicProcedure
-      .input(z.object({
-        category: z.string().optional(),
-      }).optional())
-      .query(async ({ input }) => {
-        return db.getPublishedBlogPosts(input?.category);
-      }),
+      .input(z.object({ category: z.string().optional() }).optional())
+      .query(async ({ input }) => db.getPublishedBlogPosts(input?.category)),
     getById: publicProcedure
       .input(z.object({ id: z.number() }))
-      .query(async ({ input }) => {
-        return db.getBlogPostById(input.id);
-      }),
-    listAll: protectedProcedure.query(async () => {
-      return db.getAllBlogPosts();
-    }),
+      .query(async ({ input }) => db.getBlogPostById(input.id)),
+    listAll: protectedProcedure.query(async () => db.getAllBlogPosts()),
     create: protectedProcedure
       .input(z.object({
         title: z.string(),
         content: z.string(),
-        category: z.enum([
-          "residential_small",
-          "residential_medium",
-          "residential_large",
-          "commercial_small",
-          "commercial_medium",
-          "commercial_large",
-        ]),
+        category: z.string(),
         area: z.string().optional(),
         price: z.number().optional(),
         location: z.string().optional(),
         imageUrl: z.string().optional(),
-        isPublished: z.number().optional(),
+        images: z.array(z.string()).optional(), // 複数画像対応
       }))
       .mutation(async ({ input }) => {
-        await db.createBlogPost(input);
+        await db.createBlogPost({ ...input, isPublished: 1 });
         return { success: true };
       }),
     update: protectedProcedure
@@ -143,18 +90,12 @@ export const appRouter = router({
         id: z.number(),
         title: z.string().optional(),
         content: z.string().optional(),
-        category: z.enum([
-          "residential_small",
-          "residential_medium",
-          "residential_large",
-          "commercial_small",
-          "commercial_medium",
-          "commercial_large",
-        ]).optional(),
+        category: z.string().optional(),
         area: z.string().optional(),
         price: z.number().optional(),
         location: z.string().optional(),
         imageUrl: z.string().optional(),
+        images: z.array(z.string()).optional(),
         isPublished: z.number().optional(),
       }))
       .mutation(async ({ input }) => {
@@ -174,7 +115,6 @@ export const appRouter = router({
     create: publicProcedure
       .input(z.object({
         name: z.string(),
-        email: z.string().email().optional(),
         phone: z.string(),
         serviceType: z.enum(["residential", "commercial"]),
         preferredDate: z.string().optional(),
@@ -183,23 +123,12 @@ export const appRouter = router({
       .mutation(async ({ input }) => {
         await db.createBooking(input);
         await notifyOwner({
-          title: "新しい予約が入りました",
-          content: `お名前: ${input.name}\n電話番号: ${input.phone}\nサービス種別: ${input.serviceType === "residential" ? "家庭用" : "業務用"}\n希望日時: ${input.preferredDate || "未指定"}`,
+          title: "新しい予約",
+          content: `${input.name}様から予約が入りました。`,
         });
         return { success: true };
       }),
-    list: protectedProcedure.query(async () => {
-      return db.getAllBookings();
-    }),
-    updateStatus: protectedProcedure
-      .input(z.object({
-        id: z.number(),
-        status: z.enum(["pending", "confirmed", "completed", "cancelled"]),
-      }))
-      .mutation(async ({ input }) => {
-        await db.updateBookingStatus(input.id, input.status);
-        return { success: true };
-      }),
+    list: protectedProcedure.query(async () => db.getAllBookings()),
   }),
 });
 

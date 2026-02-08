@@ -1,343 +1,231 @@
 import { useState } from "react";
 import { trpc } from "@/lib/trpc";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
-import { Trash2, Edit2, Plus, FileText } from "lucide-react";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { toast } from "sonner";
-import { format } from "date-fns";
-import { ja } from "date-fns/locale";
+import { Plus, Trash2, Image as ImageIcon, Save, ArrowLeft, FileText } from "lucide-react";
+import DashboardLayout from "@/components/DashboardLayout";
 
 export default function AdminBlog() {
-  const [isOpen, setIsOpen] = useState(false);
-  const [editingId, setEditingId] = useState<number | null>(null);
-  const [formData, setFormData] = useState({
-    title: "",
-    content: "",
-    category: "residential_small" as any,
-    location: "",
-    area: "",
-    price: 0,
-    imageUrl: "",
-    isPublished: 1,
+  const [isEditing, setIsEditing] = useState(false);
+  const [selectedPost, setSelectedPost] = useState<any>(null);
+  
+  const utils = trpc.useUtils();
+  const { data: posts, isLoading } = trpc.blog.listAll.useQuery();
+  
+  const createMutation = trpc.blog.create.useMutation({
+    onSuccess: () => {
+      toast.success("記事を公開しました");
+      utils.blog.listAll.invalidate();
+      setIsEditing(false);
+    }
   });
 
-  const { data: blogPosts, refetch } = trpc.blog.listAll.useQuery();
-  const createMutation = trpc.blog.create.useMutation();
-  const updateMutation = trpc.blog.update.useMutation();
-  const deleteMutation = trpc.blog.delete.useMutation();
-
-  const categories = [
-    { value: "residential_small", label: "家庭用小規模（〜20㎡）" },
-    { value: "residential_medium", label: "家庭用中規模（20〜40㎡）" },
-    { value: "residential_large", label: "家庭用大規模（40㎡〜）" },
-    { value: "commercial_small", label: "業務用小規模" },
-    { value: "commercial_medium", label: "業務用中規模" },
-    { value: "commercial_large", label: "業務用大規模" }
-  ];
-
-  const handleSubmit = async () => {
-    if (!formData.title || !formData.content) {
-      toast.error("タイトルと内容は必須です");
-      return;
+  const updateMutation = trpc.blog.update.useMutation({
+    onSuccess: () => {
+      toast.success("記事を更新しました");
+      utils.blog.listAll.invalidate();
+      setIsEditing(false);
     }
+  });
 
-    try {
-      if (editingId) {
-        await updateMutation.mutateAsync({
-          id: editingId,
-          ...formData,
-        });
-        toast.success("記事を更新しました");
-      } else {
-        await createMutation.mutateAsync(formData);
-        toast.success("記事を公開しました");
-      }
-      setIsOpen(false);
-      setEditingId(null);
-      resetForm();
-      refetch();
-    } catch (error) {
-      toast.error("エラーが発生しました");
+  const deleteMutation = trpc.blog.delete.useMutation({
+    onSuccess: () => {
+      toast.success("記事を削除しました");
+      utils.blog.listAll.invalidate();
     }
-  };
-
-  const resetForm = () => {
-    setFormData({
-      title: "",
-      content: "",
-      category: "residential_small",
-      location: "",
-      area: "",
-      price: 0,
-      imageUrl: "",
-      isPublished: 1,
-    });
-  };
+  });
 
   const handleEdit = (post: any) => {
-    setFormData({
-      title: post.title,
-      content: post.content,
-      category: post.category,
-      location: post.location || "",
-      area: post.area || "",
-      price: post.price || 0,
-      imageUrl: post.imageUrl || "",
-      isPublished: post.isPublished,
-    });
-    setEditingId(post.id);
-    setIsOpen(true);
+    setSelectedPost(post);
+    setIsEditing(true);
   };
 
-  const handleDelete = async (id: number) => {
-    if (confirm("この記事を削除しますか？")) {
-      try {
-        await deleteMutation.mutateAsync({ id });
-        toast.success("記事を削除しました");
-        refetch();
-      } catch (error) {
-        toast.error("削除に失敗しました");
-      }
-    }
+  const handleCreate = () => {
+    setSelectedPost({
+      title: "",
+      content: "",
+      category: "residential_medium",
+      location: "",
+      price: 0,
+      imageUrl: "",
+      images: []
+    });
+    setIsEditing(true);
+  };
+
+  if (isLoading) return <DashboardLayout><div>読み込み中...</div></DashboardLayout>;
+
+  return (
+    <DashboardLayout>
+      <div className="max-w-5xl mx-auto space-y-6">
+        {!isEditing ? (
+          <>
+            <div className="flex justify-between items-center">
+              <h1 className="text-3xl font-black flex items-center gap-2">
+                <FileText className="h-8 w-8 text-primary" />
+                作業実績管理
+              </h1>
+              <Button onClick={handleCreate} className="font-bold">
+                <Plus className="w-4 h-4 mr-2" /> 新規記事作成
+              </Button>
+            </div>
+
+            <div className="grid gap-4">
+              {posts?.map((post: any) => (
+                <Card key={post.id} className="overflow-hidden hover:shadow-md transition-shadow border-none shadow-sm">
+                  <div className="flex items-center p-4 gap-4">
+                    <div className="w-20 h-20 bg-muted rounded-lg overflow-hidden flex items-center justify-center shrink-0">
+                      {post.imageUrl ? (
+                        <img src={post.imageUrl} className="w-full h-full object-cover" alt="" />
+                      ) : (
+                        <ImageIcon className="w-8 h-8 text-muted-foreground/30" />
+                      )}
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <h3 className="font-bold text-lg truncate">{post.title}</h3>
+                      <p className="text-sm text-muted-foreground">{new Date(post.createdAt).toLocaleDateString()}</p>
+                    </div>
+                    <div className="flex gap-2">
+                      <Button variant="outline" size="sm" onClick={() => handleEdit(post)}>編集</Button>
+                      <Button variant="outline" size="sm" className="text-destructive hover:text-destructive" onClick={() => {
+                        if(confirm("本当に削除しますか？")) deleteMutation.mutate({ id: post.id });
+                      }}>削除</Button>
+                    </div>
+                  </div>
+                </Card>
+              ))}
+              {posts?.length === 0 && (
+                <div className="text-center py-20 bg-muted/20 rounded-2xl">
+                  <p className="text-muted-foreground">まだ記事がありません。「新規記事作成」から投稿してください。</p>
+                </div>
+              )}
+            </div>
+          </>
+        ) : (
+          <BlogEditor 
+            post={selectedPost} 
+            onSave={(data) => {
+              if (selectedPost.id) {
+                updateMutation.mutate({ id: selectedPost.id, ...data });
+              } else {
+                createMutation.mutate(data);
+              }
+            }}
+            onCancel={() => setIsEditing(false)}
+          />
+        )}
+      </div>
+    </DashboardLayout>
+  );
+}
+
+function BlogEditor({ post, onSave, onCancel }: { post: any, onSave: (data: any) => void, onCancel: () => void }) {
+  const [formData, setFormData] = useState(post);
+  const [newImageUrl, setNewImageUrl] = useState("");
+
+  const addImage = () => {
+    if (!newImageUrl) return;
+    const currentImages = formData.images || [];
+    setFormData({ ...formData, images: [...currentImages, newImageUrl] });
+    setNewImageUrl("");
+  };
+
+  const removeImage = (index: number) => {
+    const newImages = [...(formData.images || [])];
+    newImages.splice(index, 1);
+    setFormData({ ...formData, images: newImages });
   };
 
   return (
     <div className="space-y-6">
-      <div className="flex justify-between items-center">
-        <h1 className="text-3xl font-black flex items-center gap-2">
-          <FileText className="h-8 w-8 text-primary" />
-          作業実績管理
-        </h1>
-        <Dialog open={isOpen} onOpenChange={setIsOpen}>
-          <DialogTrigger asChild>
-            <Button
-              onClick={() => {
-                setEditingId(null);
-                resetForm();
-              }}
-              className="gap-2 bg-primary font-bold"
-            >
-              <Plus className="h-4 w-4" />
-              新規記事作成
-            </Button>
-          </DialogTrigger>
-          <DialogContent className="max-w-3xl max-h-[90vh] overflow-y-auto">
-            <DialogHeader>
-              <DialogTitle className="text-xl font-black">
-                {editingId ? "記事を編集" : "新規記事作成"}
-              </DialogTitle>
-            </DialogHeader>
-            <div className="space-y-4 py-4">
-              <div className="grid gap-2">
-                <Label htmlFor="title" className="font-bold">タイトル</Label>
-                <Input
-                  id="title"
-                  value={formData.title}
-                  onChange={(e) =>
-                    setFormData({ ...formData, title: e.target.value })
-                  }
-                  placeholder="例：那覇市にて家庭用エアコン2台の分解洗浄を行いました"
-                />
-              </div>
-
-              <div className="grid grid-cols-2 gap-4">
-                <div className="grid gap-2">
-                  <Label htmlFor="category" className="font-bold">カテゴリ</Label>
-                  <Select
-                    value={formData.category}
-                    onValueChange={(value: any) =>
-                      setFormData({ ...formData, category: value })
-                    }
-                  >
-                    <SelectTrigger>
-                      <SelectValue />
-                    </SelectTrigger>
-                    <SelectContent>
-                      {categories.map((c) => (
-                        <SelectItem key={c.value} value={c.value}>
-                          {c.label}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                </div>
-                <div className="grid gap-2">
-                  <Label htmlFor="location" className="font-bold">施工場所</Label>
-                  <Input
-                    id="location"
-                    value={formData.location}
-                    onChange={(e) =>
-                      setFormData({ ...formData, location: e.target.value })
-                    }
-                    placeholder="例：那覇市"
-                  />
-                </div>
-              </div>
-
-              <div className="grid grid-cols-2 gap-4">
-                <div className="grid gap-2">
-                  <Label htmlFor="area" className="font-bold">作業面積 (㎡)</Label>
-                  <Input
-                    id="area"
-                    value={formData.area}
-                    onChange={(e) =>
-                      setFormData({ ...formData, area: e.target.value })
-                    }
-                    placeholder="例：25"
-                  />
-                </div>
-                <div className="grid gap-2">
-                  <Label htmlFor="price" className="font-bold">施工価格 (円)</Label>
-                  <Input
-                    id="price"
-                    type="number"
-                    value={formData.price}
-                    onChange={(e) =>
-                      setFormData({ ...formData, price: parseInt(e.target.value) || 0 })
-                    }
-                    placeholder="例：15000"
-                  />
-                </div>
-              </div>
-
-              <div className="grid gap-2">
-                <Label htmlFor="content" className="font-bold">内容</Label>
-                <Textarea
-                  id="content"
-                  value={formData.content}
-                  onChange={(e) =>
-                    setFormData({ ...formData, content: e.target.value })
-                  }
-                  placeholder="作業の詳細を入力してください"
-                  rows={8}
-                />
-              </div>
-
-              <div className="grid grid-cols-2 gap-4">
-                <div className="grid gap-2">
-                  <Label htmlFor="imageUrl" className="font-bold">画像URL</Label>
-                  <Input
-                    id="imageUrl"
-                    value={formData.imageUrl}
-                    onChange={(e) =>
-                      setFormData({ ...formData, imageUrl: e.target.value })
-                    }
-                    placeholder="https://example.com/image.jpg"
-                  />
-                </div>
-                <div className="grid gap-2">
-                  <Label htmlFor="isPublished" className="font-bold">公開状態</Label>
-                  <Select
-                    value={formData.isPublished.toString()}
-                    onValueChange={(value) =>
-                      setFormData({ ...formData, isPublished: parseInt(value) })
-                    }
-                  >
-                    <SelectTrigger>
-                      <SelectValue />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="1">公開</SelectItem>
-                      <SelectItem value="0">下書き</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-              </div>
-
-              <Button
-                onClick={handleSubmit}
-                className="w-full bg-primary font-bold py-6 text-lg mt-4"
-                disabled={createMutation.isPending || updateMutation.isPending}
-              >
-                {editingId ? "更新する" : "記事を公開する"}
-              </Button>
-            </div>
-          </DialogContent>
-        </Dialog>
+      <div className="flex items-center gap-4">
+        <Button variant="ghost" onClick={onCancel}><ArrowLeft className="w-4 h-4 mr-2" /> 戻る</Button>
+        <h2 className="text-2xl font-bold">{post.id ? "記事を編集" : "新規記事作成"}</h2>
       </div>
 
-      <div className="grid gap-4">
-        {blogPosts?.map((post) => (
-          <Card key={post.id} className="border-none shadow-sm bg-white overflow-hidden">
-            <div className="flex flex-col md:flex-row">
-              <div className="md:w-48 bg-muted flex items-center justify-center">
-                {post.imageUrl ? (
-                  <img src={post.imageUrl} alt="" className="w-full h-full object-cover" />
-                ) : (
-                  <FileText className="h-12 w-12 text-muted-foreground/30" />
-                )}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div className="md:col-span-2 space-y-4">
+          <Card className="border-none shadow-sm">
+            <CardHeader><CardTitle>基本情報</CardTitle></CardHeader>
+            <CardContent className="space-y-4">
+              <div className="space-y-2">
+                <label className="text-sm font-bold">タイトル</label>
+                <Input 
+                  value={formData.title} 
+                  onChange={e => setFormData({...formData, title: e.target.value})}
+                  placeholder="例：那覇市にてエアコン完全分解洗浄を行いました"
+                />
               </div>
-              <div className="flex-1 p-6">
-                <div className="flex justify-between items-start mb-2">
-                  <div>
-                    <div className="flex items-center gap-2 mb-1">
-                      <span className="text-[10px] font-bold px-2 py-0.5 bg-primary/10 text-primary rounded-full">
-                        {categories.find(c => c.value === post.category)?.label}
-                      </span>
-                      {post.isPublished === 0 && (
-                        <span className="text-[10px] font-bold px-2 py-0.5 bg-yellow-100 text-yellow-700 rounded-full">
-                          下書き
-                        </span>
-                      )}
-                      <span className="text-[10px] text-muted-foreground">
-                        {format(new Date(post.createdAt), "yyyy.MM.dd", { locale: ja })}
-                      </span>
-                    </div>
-                    <h3 className="text-lg font-bold">{post.title}</h3>
-                  </div>
-                  <div className="flex gap-2">
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      onClick={() => handleEdit(post)}
-                      className="h-8 w-8 p-0"
-                    >
-                      <Edit2 className="h-4 w-4" />
-                    </Button>
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      onClick={() => handleDelete(post.id)}
-                      className="h-8 w-8 p-0 text-destructive hover:text-destructive"
-                    >
-                      <Trash2 className="h-4 w-4" />
-                    </Button>
-                  </div>
-                </div>
-                <p className="text-sm text-muted-foreground line-clamp-2 mb-4">
-                  {post.content}
+              <div className="space-y-2">
+                <label className="text-sm font-bold">本文</label>
+                <p className="text-[10px] text-muted-foreground bg-primary/5 p-2 rounded">
+                  💡 <strong>画像の入れ方:</strong> 本文の中に <code>[画像1]</code> <code>[画像2]</code> と書くと、右側で追加した画像がその場所に表示されます。
                 </p>
-                <div className="flex gap-4 text-xs font-bold text-muted-foreground">
-                  {post.location && <span>📍 {post.location}</span>}
-                  {post.area && <span>📐 {post.area}㎡</span>}
-                  {post.price && <span className="text-primary">💰 ¥{post.price.toLocaleString()}</span>}
+                <Textarea 
+                  value={formData.content} 
+                  onChange={e => setFormData({...formData, content: e.target.value})}
+                  className="min-h-[400px] font-mono text-sm"
+                  placeholder="作業の内容を詳しく記入してください..."
+                />
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+
+        <div className="space-y-4">
+          <Card className="border-none shadow-sm">
+            <CardHeader><CardTitle>詳細設定</CardTitle></CardHeader>
+            <CardContent className="space-y-4">
+              <div className="space-y-2">
+                <label className="text-sm font-bold">施工場所</label>
+                <Input value={formData.location} onChange={e => setFormData({...formData, location: e.target.value})} placeholder="例：那覇市" />
+              </div>
+              <div className="space-y-2">
+                <label className="text-sm font-bold">料金（円）</label>
+                <Input type="number" value={formData.price} onChange={e => setFormData({...formData, price: Number(e.target.value)})} />
+              </div>
+            </CardContent>
+          </Card>
+
+          <Card className="border-none shadow-sm">
+            <CardHeader><CardTitle>画像管理</CardTitle></CardHeader>
+            <CardContent className="space-y-4">
+              <div className="space-y-2">
+                <label className="text-sm font-bold">メイン画像URL（一覧用）</label>
+                <Input value={formData.imageUrl} onChange={e => setFormData({...formData, imageUrl: e.target.value})} placeholder="https://..." />
+              </div>
+              
+              <div className="space-y-2">
+                <label className="text-sm font-bold">本文用画像を追加</label>
+                <div className="flex gap-2">
+                  <Input value={newImageUrl} onChange={e => setNewImageUrl(e.target.value)} placeholder="画像URLを入力" />
+                  <Button type="button" size="icon" onClick={addImage}><Plus className="w-4 h-4" /></Button>
+                </div>
+                <div className="grid grid-cols-2 gap-2 mt-2">
+                  {formData.images?.map((url: string, i: number) => (
+                    <div key={i} className="relative group">
+                      <img src={url} className="w-full h-20 object-cover rounded border" alt="" />
+                      <div className="absolute top-1 left-1 bg-black/70 text-white text-[10px] px-1.5 rounded font-bold">画像{i+1}</div>
+                      <button 
+                        onClick={() => removeImage(i)}
+                        className="absolute top-1 right-1 bg-destructive text-white p-1 rounded-full opacity-0 group-hover:opacity-100 transition-opacity"
+                      >
+                        <Trash2 className="w-3 h-3" />
+                      </button>
+                    </div>
+                  ))}
                 </div>
               </div>
-            </div>
+            </CardContent>
           </Card>
-        ))}
-        {blogPosts?.length === 0 && (
-          <div className="text-center py-20 bg-muted/20 rounded-2xl">
-            <p className="text-muted-foreground">まだ記事がありません。「新規記事作成」から投稿してください。</p>
-          </div>
-        )}
+
+          <Button className="w-full h-14 font-bold text-lg shadow-lg" onClick={() => onSave(formData)}>
+            <Save className="w-5 h-5 mr-2" /> 記事を保存する
+          </Button>
+        </div>
       </div>
     </div>
   );
