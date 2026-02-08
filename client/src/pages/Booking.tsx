@@ -2,8 +2,9 @@ import { Link } from "wouter";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { contactInfo } from "@/data/siteData";
-import { CheckCircle2, Phone, MessageCircle, Info, Sparkles, HelpCircle, AlertTriangle, Gift } from "lucide-react";
+import { CheckCircle2, Phone, MessageCircle, Info, HelpCircle, AlertTriangle, Gift, ArrowRight } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 
 export default function Booking() {
   const preCheckItems = [
@@ -36,55 +37,59 @@ export default function Booking() {
         <div className="container">
           <div className="max-w-5xl mx-auto">
             
-            {/* メニューの選び方ガイド */}
+            {/* メニュー・料金一覧表 */}
             <div className="mb-16">
               <div className="text-center mb-10">
                 <Badge className="mb-4 bg-accent text-accent-foreground px-4 py-1 text-sm font-bold">
                   <HelpCircle className="w-4 h-4 mr-2 inline" />
-                  メニューの選び方ガイド
+                  メニュー・料金一覧
                 </Badge>
                 <h2 className="text-3xl font-black">どのメニューを選べばいい？</h2>
-                <p className="text-muted-foreground mt-2">フォーム入力前にご確認ください</p>
+                <p className="text-muted-foreground mt-2">料金をご確認の上、フォームへお進みください</p>
               </div>
 
-              <div className="grid md:grid-cols-2 gap-6">
-                <Card className="border-primary/20 hover:border-primary/50 transition-colors shadow-sm">
-                  <CardHeader className="pb-2">
-                    <CardTitle className="flex items-center gap-2 text-xl">
-                      <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center text-primary">1</div>
-                      お掃除機能の有無
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent className="space-y-4">
-                    <div className="bg-muted/50 p-4 rounded-lg">
-                      <p className="font-bold text-sm mb-1">お掃除機能なし（通常機）</p>
-                      <p className="text-xs text-muted-foreground">一般的な壁掛けエアコンです。リモコンに「フィルター掃除」などのボタンがありません。</p>
-                    </div>
-                    <div className="bg-accent/5 p-4 rounded-lg border border-accent/10">
-                      <p className="font-bold text-sm mb-1 text-accent">お掃除機能あり</p>
-                      <p className="text-xs text-muted-foreground">リモコンに「手動掃除」「フィルター掃除」などのボタンがある、または本体に厚みがある機種です。</p>
-                    </div>
-                  </CardContent>
-                </Card>
-
-                <Card className="border-primary/20 hover:border-primary/50 transition-colors shadow-sm">
-                  <CardHeader className="pb-2">
-                    <CardTitle className="flex items-center gap-2 text-xl">
-                      <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center text-primary">2</div>
-                      おすすめオプション
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent className="space-y-4">
-                    <div className="bg-primary/5 p-4 rounded-lg border border-primary/10">
-                      <p className="font-bold text-sm mb-1">完全分解洗浄</p>
-                      <p className="text-xs text-muted-foreground">「カビの臭いが気になる」「数年洗っていない」方に最適。ドレンパンまで外して洗う徹底コースです。</p>
-                    </div>
-                    <div className="bg-muted/50 p-4 rounded-lg">
-                      <p className="font-bold text-sm mb-1">室外機洗浄</p>
-                      <p className="text-xs text-muted-foreground">電気代の節約や故障予防に。エアコンの効きが悪いと感じる場合にもおすすめです。</p>
-                    </div>
-                  </CardContent>
-                </Card>
+              <div className="bg-white rounded-2xl shadow-sm border border-muted overflow-hidden">
+                <Table>
+                  <TableHeader className="bg-muted/50">
+                    <TableRow>
+                      <TableHead className="w-[180px] font-bold text-foreground">メニュー名</TableHead>
+                      <TableHead className="font-bold text-foreground">特徴・選び方</TableHead>
+                      <TableHead className="w-[120px] text-right font-bold text-foreground">料金(税込)</TableHead>
+                    </TableRow>
+                  </TableHeader>
+                  <TableBody>
+                    <TableRow>
+                      <TableCell className="font-bold">お掃除機能なし</TableCell>
+                      <TableCell className="text-sm text-muted-foreground">
+                        一般的な壁掛けエアコンです。リモコンに「フィルター掃除」などのボタンがありません。
+                      </TableCell>
+                      <TableCell className="text-right font-black text-primary">9,000円</TableCell>
+                    </TableRow>
+                    <TableRow className="bg-accent/5">
+                      <TableCell className="font-bold text-accent">お掃除機能あり</TableCell>
+                      <TableCell className="text-sm text-muted-foreground">
+                        リモコンに「手動掃除」「フィルター掃除」などのボタンがある、または本体に厚みがある機種です。
+                      </TableCell>
+                      <TableCell className="text-right font-black text-accent">15,000円</TableCell>
+                    </TableRow>
+                    <TableRow>
+                      <TableCell className="font-bold">完全分解洗浄</TableCell>
+                      <TableCell className="text-sm text-muted-foreground">
+                        <Badge variant="outline" className="mr-2 text-[10px] h-5">オプション</Badge>
+                        ドレンパンまで外して洗う徹底コース。「カビの臭いが気になる」方に最適です。
+                      </TableCell>
+                      <TableCell className="text-right font-bold text-muted-foreground">+3,000円</TableCell>
+                    </TableRow>
+                    <TableRow>
+                      <TableCell className="font-bold">室外機洗浄</TableCell>
+                      <TableCell className="text-sm text-muted-foreground">
+                        <Badge variant="outline" className="mr-2 text-[10px] h-5">オプション</Badge>
+                        電気代の節約や故障予防に。エアコンの効きが悪いと感じる場合にもおすすめです。
+                      </TableCell>
+                      <TableCell className="text-right font-bold text-muted-foreground">+3,000円</TableCell>
+                    </TableRow>
+                  </TableBody>
+                </Table>
               </div>
               
               <div className="mt-8 bg-accent/10 p-6 rounded-xl border border-accent/20 flex items-center gap-4 shadow-sm">
