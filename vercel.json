@@ -1,9 +1,5 @@
 {
-  "version": 2,
-  "framework": "vite",
   "rewrites": [
-    { "source": "/assets/(.*)", "destination": "/client/dist/assets/$1" },
-    { "source": "/images/(.*)", "destination": "/client/public/images/$1" },
-    { "source": "/(.*)", "destination": "/client/dist/index.html" }
+    { "source": "/(.*)", "destination": "/index.html" }
   ]
 }
