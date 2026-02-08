@@ -31,10 +31,15 @@ class ErrorBoundary extends Component<Props, State> {
               className="text-destructive mb-6 flex-shrink-0"
             />
 
-            <h2 className="text-xl mb-4">An unexpected error occurred.</h2>
+            <h2 className="text-xl mb-4">システムエラーが発生しました</h2>
+            <p className="text-sm text-muted-foreground mb-4">
+              ご不便をおかけして申し訳ありません。以下のエラー情報を店長にお伝えください。
+            </p>
 
-            <div className="p-4 w-full rounded bg-muted overflow-auto mb-6">
-              <pre className="text-sm text-muted-foreground whitespace-break-spaces">
+            <div className="p-4 w-full rounded bg-red-50 border border-red-100 overflow-auto mb-6">
+              <pre className="text-xs text-red-600 whitespace-break-spaces font-mono">
+                {this.state.error?.name}: {this.state.error?.message}
+                {"\n\n"}
                 {this.state.error?.stack}
               </pre>
             </div>
