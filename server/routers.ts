@@ -14,18 +14,14 @@ export const appRouter = router({
     login: publicProcedure
       .input(z.object({ password: z.string() }))
       .mutation(async ({ input, ctx }) => {
-        // Simple password check (In a real app, use environment variables)
         const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || "teba2024";
         
         if (input.password !== ADMIN_PASSWORD) {
           throw new Error("パスワードが正しくありません");
         }
 
-        // Create a session for the admin user
-        // We use a fixed ID for the admin in this simple flow
         const adminOpenId = "admin-user-id";
         
-        // Ensure admin user exists in DB
         await db.upsertUser({
           openId: adminOpenId,
           name: "オーナー",
@@ -51,19 +47,13 @@ export const appRouter = router({
     }),
   }),
 
-  // お客様の声
   testimonials: router({
     list: publicProcedure.query(async () => {
       return db.getPublishedTestimonials();
     }),
-    
     listAll: protectedProcedure.query(async ({ ctx }) => {
-      if (ctx.user.role !== 'admin') {
-        throw new Error('Admin only');
-      }
       return db.getAllTestimonials();
     }),
-    
     create: protectedProcedure
       .input(z.object({
         customerName: z.string(),
@@ -75,14 +65,10 @@ export const appRouter = router({
         sourceLabel: z.string().optional(),
         isPublished: z.number().optional(),
       }))
-      .mutation(async ({ input, ctx }) => {
-        if (ctx.user.role !== 'admin') {
-          throw new Error('Admin only');
-        }
+      .mutation(async ({ input }) => {
         await db.createTestimonial(input);
         return { success: true };
       }),
-    
     update: protectedProcedure
       .input(z.object({
         id: z.number(),
@@ -95,27 +81,19 @@ export const appRouter = router({
         sourceLabel: z.string().optional(),
         isPublished: z.number().optional(),
       }))
-      .mutation(async ({ input, ctx }) => {
-        if (ctx.user.role !== 'admin') {
-          throw new Error('Admin only');
-        }
+      .mutation(async ({ input }) => {
         const { id, ...data } = input;
         await db.updateTestimonial(id, data);
         return { success: true };
       }),
-    
     delete: protectedProcedure
       .input(z.object({ id: z.number() }))
-      .mutation(async ({ input, ctx }) => {
-        if (ctx.user.role !== 'admin') {
-          throw new Error('Admin only');
-        }
+      .mutation(async ({ input }) => {
         await db.deleteTestimonial(input.id);
         return { success: true };
       }),
   }),
 
-  // 作業実績ブログ
   blog: router({
     list: publicProcedure
       .input(z.object({
@@ -124,20 +102,14 @@ export const appRouter = router({
       .query(async ({ input }) => {
         return db.getPublishedBlogPosts(input?.category);
       }),
-    
     getById: publicProcedure
       .input(z.object({ id: z.number() }))
       .query(async ({ input }) => {
         return db.getBlogPostById(input.id);
       }),
-    
-    listAll: protectedProcedure.query(async ({ ctx }) => {
-      if (ctx.user.role !== 'admin') {
-        throw new Error('Admin only');
-      }
+    listAll: protectedProcedure.query(async () => {
       return db.getAllBlogPosts();
     }),
-    
     create: protectedProcedure
       .input(z.object({
         title: z.string(),
@@ -156,14 +128,10 @@ export const appRouter = router({
         imageUrl: z.string().optional(),
         isPublished: z.number().optional(),
       }))
-      .mutation(async ({ input, ctx }) => {
-        if (ctx.user.role !== 'admin') {
-          throw new Error('Admin only');
-        }
+      .mutation(async ({ input }) => {
         await db.createBlogPost(input);
         return { success: true };
       }),
-    
     update: protectedProcedure
       .input(z.object({
         id: z.number(),
@@ -183,27 +151,19 @@ export const appRouter = router({
         imageUrl: z.string().optional(),
         isPublished: z.number().optional(),
       }))
-      .mutation(async ({ input, ctx }) => {
-        if (ctx.user.role !== 'admin') {
-          throw new Error('Admin only');
-        }
+      .mutation(async ({ input }) => {
         const { id, ...data } = input;
         await db.updateBlogPost(id, data);
         return { success: true };
       }),
-    
     delete: protectedProcedure
       .input(z.object({ id: z.number() }))
-      .mutation(async ({ input, ctx }) => {
-        if (ctx.user.role !== 'admin') {
-          throw new Error('Admin only');
-        }
+      .mutation(async ({ input }) => {
         await db.deleteBlogPost(input.id);
         return { success: true };
       }),
   }),
 
-  // 予約フォーム
   bookings: router({
     create: publicProcedure
       .input(z.object({
@@ -216,32 +176,21 @@ export const appRouter = router({
       }))
       .mutation(async ({ input }) => {
         await db.createBooking(input);
-        
-        // オーナーに通知
         await notifyOwner({
           title: "新しい予約が入りました",
           content: `お名前: ${input.name}\n電話番号: ${input.phone}\nサービス種別: ${input.serviceType === "residential" ? "家庭用" : "業務用"}\n希望日時: ${input.preferredDate || "未指定"}`,
         });
-        
         return { success: true };
       }),
-    
-    list: protectedProcedure.query(async ({ ctx }) => {
-      if (ctx.user.role !== 'admin') {
-        throw new Error('Admin only');
-      }
+    list: protectedProcedure.query(async () => {
       return db.getAllBookings();
     }),
-    
     updateStatus: protectedProcedure
       .input(z.object({
         id: z.number(),
         status: z.enum(["pending", "confirmed", "completed", "cancelled"]),
       }))
-      .mutation(async ({ input, ctx }) => {
-        if (ctx.user.role !== 'admin') {
-          throw new Error('Admin only');
-        }
+      .mutation(async ({ input }) => {
         await db.updateBookingStatus(input.id, input.status);
         return { success: true };
       }),
