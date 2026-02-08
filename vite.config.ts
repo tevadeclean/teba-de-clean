@@ -150,26 +150,20 @@ function vitePluginManusDebugCollector(): Plugin {
   };
 }
 
-const plugins = [react(), tailwindcss(), jsxLocPlugin(), vitePluginManusRuntime(), vitePluginManusDebugCollector()];
+const plugins = [react(), tailwindcss()];
 
 export default defineConfig({
-  base: "/",
   plugins,
   resolve: {
     alias: {
       "@": path.resolve(import.meta.dirname, "client", "src"),
       "@shared": path.resolve(import.meta.dirname, "shared"),
-      "@assets": path.resolve(import.meta.dirname, "attached_assets"),
     },
   },
-  envDir: path.resolve(import.meta.dirname),
   root: path.resolve(import.meta.dirname, "client"),
-  publicDir: path.resolve(import.meta.dirname, "client", "public"),
   build: {
-    outDir: "dist",
+    outDir: path.resolve(import.meta.dirname, "dist"),
     emptyOutDir: true,
-    assetsDir: "assets",
-    sourcemap: true,
   },
   server: {
     host: true,
