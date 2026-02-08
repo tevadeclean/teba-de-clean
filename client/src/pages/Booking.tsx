@@ -3,6 +3,7 @@ import { contactInfo } from "@/data/siteData";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { CheckCircle2, Info, Sparkles } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 export default function Booking() {
   const [agreed, setAgreed] = useState(false);
