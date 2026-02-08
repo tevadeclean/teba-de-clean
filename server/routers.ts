@@ -5,11 +5,43 @@ import { publicProcedure, protectedProcedure, router } from "./_core/trpc";
 import { z } from "zod";
 import * as db from "./db";
 import { notifyOwner } from "./_core/notification";
+import { sdk } from "./_core/sdk";
 
 export const appRouter = router({
   system: systemRouter,
   auth: router({
     me: publicProcedure.query(opts => opts.ctx.user),
+    login: publicProcedure
+      .input(z.object({ password: z.string() }))
+      .mutation(async ({ input, ctx }) => {
+        // Simple password check (In a real app, use environment variables)
+        const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || "teba2024";
+        
+        if (input.password !== ADMIN_PASSWORD) {
+          throw new Error("パスワードが正しくありません");
+        }
+
+        // Create a session for the admin user
+        // We use a fixed ID for the admin in this simple flow
+        const adminOpenId = "admin-user-id";
+        
+        // Ensure admin user exists in DB
+        await db.upsertUser({
+          openId: adminOpenId,
+          name: "オーナー",
+          role: "admin",
+        });
+
+        const sessionToken = await sdk.createSessionToken(adminOpenId, { name: "オーナー" });
+        
+        const cookieOptions = getSessionCookieOptions(ctx.req);
+        ctx.res.cookie(COOKIE_NAME, sessionToken, cookieOptions);
+
+        return {
+          success: true,
+          user: { name: "オーナー", role: "admin" }
+        };
+      }),
     logout: publicProcedure.mutation(({ ctx }) => {
       const cookieOptions = getSessionCookieOptions(ctx.req);
       ctx.res.clearCookie(COOKIE_NAME, { ...cookieOptions, maxAge: -1 });
