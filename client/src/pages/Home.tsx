@@ -10,7 +10,7 @@ import {
   CheckCircle2, 
   Star,
   ArrowRight,
-  Phone
+  MessageCircle
 } from "lucide-react";
 
 export default function Home() {
@@ -27,6 +27,10 @@ export default function Home() {
         <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxnIGZpbGw9IiNmZmZmZmYiIGZpbGwtb3BhY2l0eT0iMC4wNSI+PHBhdGggZD0iTTM2IDE2YzAtNC40MTggMy41ODItOCA4LThzOCAzLjU4MiA4IDgtMy41ODIgOC04IDgtOC0zLjU4Mi04LTh6bS0yMCAwYzAtNC40MTggMy41ODItOCA4LThzOCAzLjU4MiA4IDgtMy41ODIgOC04IDgtOC0zLjU4Mi04LTh6Ii8+PC9nPjwvZz48L3N2Zz4=')] opacity-30"></div>
         <div className="container relative py-20 md:py-32">
           <div className="max-w-3xl">
+            <div className="inline-flex items-center bg-accent text-accent-foreground px-4 py-2 rounded-full font-bold mb-6 animate-pulse">
+              <Sparkles className="mr-2 h-5 w-5" />
+              HP・LINE予約限定：防カビ・抗菌コート無料！
+            </div>
             <h1 className="text-4xl md:text-6xl font-black mb-6 leading-tight">
               沖縄のエアコンを<br />
               <span className="text-accent">プロの技術</span>で<br />
@@ -36,18 +40,18 @@ export default function Home() {
               家庭用から業務用まで、タヒチアンダンス世界王者の店長が率いるプロチームが、あなたのエアコンを新品同様に蘇らせます。
             </p>
             <div className="flex flex-col sm:flex-row gap-4">
+              <Link href="/line">
+                <Button size="lg" className="bg-[#06C755] hover:bg-[#05b34c] text-white text-lg px-8 py-7 shadow-lg">
+                  <MessageCircle className="mr-2 h-6 w-6" />
+                  LINEで予約・相談
+                </Button>
+              </Link>
               <Link href="/booking">
-                <Button size="lg" className="bg-accent hover:bg-accent/90 text-accent-foreground text-lg px-8">
-                  今すぐ予約する
+                <Button size="lg" variant="outline" className="bg-white/10 border-white/30 hover:bg-white/20 text-white text-lg px-8 py-7">
+                  予約フォームへ
                   <ArrowRight className="ml-2 h-5 w-5" />
                 </Button>
               </Link>
-              <a href="tel:098-XXX-XXXX">
-                <Button size="lg" variant="outline" className="bg-primary-foreground/10 border-primary-foreground/30 hover:bg-primary-foreground/20 text-primary-foreground text-lg px-8">
-                  <Phone className="mr-2 h-5 w-5" />
-                  電話で相談
-                </Button>
-              </a>
             </div>
           </div>
         </div>
@@ -77,8 +81,11 @@ export default function Home() {
                     <p className="text-muted-foreground mb-4">
                       ご家庭のエアコンを徹底的に分解洗浄。カビや汚れを根こそぎ除去し、清潔な空気を取り戻します。
                     </p>
-                    <div className="text-primary font-bold text-lg">
-                      1台 ¥11,000〜
+                    <div className="text-primary font-bold text-2xl">
+                      ¥8,000〜
+                    </div>
+                    <div className="text-sm text-primary font-bold mt-1">
+                      ※2台目から1,000円引き
                     </div>
                   </div>
                   <div className="flex items-center text-primary font-medium">
@@ -100,8 +107,11 @@ export default function Home() {
                     <p className="text-muted-foreground mb-4">
                       店舗・オフィス・施設の業務用エアコンに対応。複数台の同時施工も可能です。
                     </p>
-                    <div className="text-primary font-bold text-lg">
-                      1台 ¥22,000〜
+                    <div className="text-primary font-bold text-2xl">
+                      ¥25,000〜
+                    </div>
+                    <div className="text-sm text-primary font-bold mt-1">
+                      ※2台目から10％割引
                     </div>
                   </div>
                   <div className="flex items-center text-primary font-medium">
@@ -172,7 +182,7 @@ export default function Home() {
 
           <div className="max-w-4xl mx-auto">
             {[
-              { step: "1", title: "お問い合わせ", description: "お電話・LINE・予約フォームからお気軽にご連絡ください" },
+              { step: "1", title: "お問い合わせ", description: "LINEまたは予約フォームからお気軽にご連絡ください" },
               { step: "2", title: "日程調整", description: "ご希望の日時をお伺いし、訪問日を決定します" },
               { step: "3", title: "現地調査・見積もり", description: "エアコンの状態を確認し、正確なお見積もりを提示します" },
               { step: "4", title: "クリーニング作業", description: "プロの技術で徹底的に分解洗浄。約2〜3時間で完了します" },
@@ -239,80 +249,28 @@ export default function Home() {
         </section>
       )}
 
-      {/* 作業実績 */}
-      {!blogLoading && recentBlogPosts.length > 0 && (
-        <section className="section-padding">
-          <div className="container">
-            <div className="text-center mb-12">
-              <h2 className="text-3xl md:text-4xl font-black text-foreground mb-4">
-                <span className="text-accent">作業実績</span>
-              </h2>
-            </div>
-
-            <div className="grid md:grid-cols-3 gap-6 mb-8">
-              {recentBlogPosts.map((post) => (
-                <Link key={post.id} href={`/blog/${post.id}`}>
-                  <Card className="group hover:shadow-lg transition-all cursor-pointer h-full">
-                    <CardContent className="p-6">
-                      {post.imageUrl && (
-                        <div className="aspect-video bg-muted rounded-lg mb-4 overflow-hidden">
-                          <img 
-                            src={post.imageUrl} 
-                            alt={post.title}
-                            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                          />
-                        </div>
-                      )}
-                      <h3 className="text-lg font-bold mb-2 group-hover:text-primary transition-colors line-clamp-2">
-                        {post.title}
-                      </h3>
-                      {post.location && (
-                        <p className="text-sm text-muted-foreground mb-2">{post.location}</p>
-                      )}
-                      {post.price && (
-                        <p className="text-sm font-bold text-primary">施工価格: ¥{post.price.toLocaleString()}</p>
-                      )}
-                    </CardContent>
-                  </Card>
-                </Link>
-              ))}
-            </div>
-
-            <div className="text-center">
-              <Link href="/blog">
-                <Button variant="outline" size="lg">
-                  作業実績をもっと見る
-                  <ArrowRight className="ml-2 h-4 w-4" />
-                </Button>
-              </Link>
-            </div>
-          </div>
-        </section>
-      )}
-
       {/* CTA */}
-      <section className="section-padding bg-gradient-to-br from-primary to-primary/80 text-primary-foreground">
+      <section className="section-padding bg-primary text-primary-foreground">
         <div className="container text-center">
-          <h2 className="text-3xl md:text-4xl font-black mb-6">
-            エアコンクリーニングのご予約は<br />
-            <span className="text-accent">今すぐ</span>お気軽に
+          <h2 className="text-3xl md:text-5xl font-black mb-8">
+            まずはお気軽に<br />ご相談ください
           </h2>
-          <p className="text-lg mb-8 opacity-95 max-w-2xl mx-auto">
-            お電話、LINE、予約フォームからご予約いただけます。<br />
-            お見積もりは無料です。
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+          <div className="flex flex-col sm:flex-row gap-6 justify-center items-center">
+            <Link href="/line">
+              <Button size="lg" className="bg-[#06C755] hover:bg-[#05b34c] text-white text-xl px-12 py-8 shadow-2xl">
+                <MessageCircle className="mr-3 h-8 w-8" />
+                LINEで無料相談
+              </Button>
+            </Link>
             <Link href="/booking">
-              <Button size="lg" className="bg-accent hover:bg-accent/90 text-accent-foreground text-lg px-8">
+              <Button size="lg" variant="outline" className="bg-white/10 border-white/40 hover:bg-white/20 text-white text-xl px-12 py-8">
                 予約フォームへ
               </Button>
             </Link>
-            <Link href="/line">
-              <Button size="lg" variant="outline" className="bg-primary-foreground/10 border-primary-foreground/30 hover:bg-primary-foreground/20 text-primary-foreground text-lg px-8">
-                LINEで予約
-              </Button>
-            </Link>
           </div>
+          <p className="mt-8 text-primary-foreground/80 font-bold">
+            ✨ HP・LINE予約限定：防カビ・抗菌コート無料施工中！
+          </p>
         </div>
       </section>
     </div>

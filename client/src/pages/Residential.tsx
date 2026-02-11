@@ -1,63 +1,55 @@
 import { Link } from "wouter";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { CheckCircle2, ArrowRight } from "lucide-react";
+import { CheckCircle2, ArrowRight, Sparkles, Shield, Zap } from "lucide-react";
 
 export default function Residential() {
   const pricingPlans = [
     {
-      name: "スタンダードコース",
-      description: "通常分解洗浄",
+      name: "家庭用（お掃除機能なし）",
+      description: "一般的な壁掛けエアコン",
+      price: "8,000",
+      unit: "円",
       features: [
         "エアコン本体の分解洗浄",
         "熱交換器（フィン）の高圧洗浄",
         "送風ファンの洗浄",
         "ドレンパンの洗浄",
-        "防カビ抗菌コーティング（無料）",
-        "動作確認"
+        "動作確認",
+        "【特典】防カビ・抗菌コート無料"
       ],
-      prices: [
-        { type: "お掃除機能なし", single: "¥11,000", multiple: "¥10,000/台（2台以上）" },
-        { type: "お掃除機能あり", single: "¥17,000", multiple: "¥16,000/台（2台以上）" }
-      ]
+      discount: "2台目から1,000円引き"
     },
     {
-      name: "ハイクオリティーコース",
-      description: "送風ファン・ドレンパン取外し洗浄",
+      name: "家庭用（お掃除機能あり）",
+      description: "お掃除機能付きのタイプ",
+      price: "15,000",
+      unit: "円",
       features: [
-        "スタンダードコース全内容",
-        "送風ファン完全取外し洗浄",
-        "ドレンパン完全取外し洗浄",
-        "細部まで徹底洗浄",
-        "より長持ちする仕上がり"
+        "お掃除機能付きユニットの分解",
+        "内部の徹底高圧洗浄",
+        "熱交換器・ファンの洗浄",
+        "ダストボックス等の清掃",
+        "動作確認",
+        "【特典】防カビ・抗菌コート無料"
       ],
-      prices: [
-        { type: "お掃除機能なし", single: "¥14,300", multiple: "¥13,300/台（2台以上）" },
-        { type: "お掃除機能あり", single: "¥20,300", multiple: "¥19,300/台（2台以上）" }
-      ],
-      note: "※対象外メーカー：富士通、ダイキン、東芝、日立"
-    },
-    {
-      name: "プレミアムコース",
-      description: "背抜き完全分解洗浄",
-      features: [
-        "エアコンを壁から完全取外し",
-        "全パーツを分解して丸洗い",
-        "最も徹底的なクリーニング",
-        "新品同様の仕上がり",
-        "最長の効果持続"
-      ],
-      prices: [
-        { type: "お掃除機能なし", single: "¥22,000", multiple: "¥21,000/台（2台以上）" },
-        { type: "お掃除機能あり", single: "¥33,000", multiple: "¥32,000/台（2台以上）" }
-      ],
-      note: "※対象外メーカー：三菱、シャープ"
+      discount: "2台目から1,000円引き"
     }
   ];
 
   const options = [
-    { name: "室外機クリーニング", price: "¥3,300" },
-    { name: "ドレンホース内部洗浄", price: "¥3,300" }
+    { 
+      name: "完全分解洗浄", 
+      price: "+8,000円", 
+      description: "ドレンパンとファンを外して徹底洗浄！",
+      icon: <Zap className="h-5 w-5 text-primary" />
+    },
+    { 
+      name: "室外機洗浄", 
+      price: "+3,000円", 
+      description: "電気代節約や故障予防に。",
+      icon: <Shield className="h-5 w-5 text-primary" />
+    }
   ];
 
   return (
@@ -69,8 +61,12 @@ export default function Residential() {
             家庭用エアコンクリーニング
           </h1>
           <p className="text-lg md:text-xl max-w-3xl opacity-90">
-            ご家庭のエアコンを徹底的に分解洗浄。カビや汚れを根こそぎ除去し、清潔で快適な空気を取り戻します。お掃除機能付きエアコンにも対応しています。
+            ご家庭のエアコンを徹底的に分解洗浄。カビや汚れを根こそぎ除去し、清潔で快適な空気を取り戻します。
           </p>
+          <div className="mt-8 inline-flex items-center bg-accent text-accent-foreground px-4 py-2 rounded-full font-bold animate-bounce">
+            <Sparkles className="mr-2 h-5 w-5" />
+            公式HP・LINE予約限定：防カビ・抗菌コート無料！
+          </div>
         </div>
       </section>
 
@@ -82,44 +78,43 @@ export default function Residential() {
               <span className="text-primary">料金プラン</span>
             </h2>
             <p className="text-muted-foreground">
-              お客様のニーズに合わせて3つのコースをご用意しています
+              シンプルで分かりやすい料金体系をご用意しています
             </p>
           </div>
 
-          <div className="grid lg:grid-cols-3 gap-8 mb-12">
+          <div className="grid md:grid-cols-2 gap-8 mb-12 max-w-4xl mx-auto">
             {pricingPlans.map((plan, index) => (
-              <Card key={index} className={index === 1 ? "border-primary border-2" : ""}>
-                <CardHeader>
+              <Card key={index} className="border-2 hover:border-primary transition-all flex flex-col">
+                <CardHeader className="bg-muted/30">
                   <CardTitle className="text-2xl">{plan.name}</CardTitle>
                   <p className="text-muted-foreground">{plan.description}</p>
                 </CardHeader>
-                <CardContent>
-                  <div className="space-y-4 mb-6">
+                <CardContent className="p-6 flex-grow flex flex-col">
+                  <div className="mb-6">
+                    <div className="flex items-baseline gap-1">
+                      <span className="text-4xl font-black text-primary">{plan.price}</span>
+                      <span className="text-xl font-bold">{plan.unit}</span>
+                      <span className="text-sm text-muted-foreground ml-2">(税込)</span>
+                    </div>
+                    <div className="mt-2 inline-block bg-primary/10 text-primary text-sm font-bold px-3 py-1 rounded">
+                      {plan.discount}
+                    </div>
+                  </div>
+                  
+                  <div className="space-y-4 mb-8 flex-grow">
                     {plan.features.map((feature, i) => (
                       <div key={i} className="flex items-start gap-2">
                         <CheckCircle2 className="h-5 w-5 text-primary flex-shrink-0 mt-0.5" />
-                        <span className="text-sm">{feature}</span>
+                        <span className={feature.includes("特典") ? "text-primary font-bold" : "text-sm"}>
+                          {feature}
+                        </span>
                       </div>
                     ))}
                   </div>
-
-                  <div className="space-y-4 mb-4">
-                    {plan.prices.map((price, i) => (
-                      <div key={i} className="bg-muted/50 p-4 rounded-lg">
-                        <div className="font-medium mb-2">{price.type}</div>
-                        <div className="text-2xl font-bold text-primary mb-1">{price.single}</div>
-                        <div className="text-sm text-muted-foreground">{price.multiple}</div>
-                      </div>
-                    ))}
-                  </div>
-
-                  {plan.note && (
-                    <p className="text-xs text-muted-foreground mb-4">{plan.note}</p>
-                  )}
 
                   <Link href="/booking">
-                    <Button className="w-full bg-primary hover:bg-primary/90">
-                      このコースで予約する
+                    <Button className="w-full bg-primary hover:bg-primary/90 text-lg py-6">
+                      このプランで予約する
                     </Button>
                   </Link>
                 </CardContent>
@@ -127,17 +122,21 @@ export default function Residential() {
             ))}
           </div>
 
-          {/* オプション */}
-          <div className="max-w-2xl mx-auto">
-            <h3 className="text-2xl font-bold mb-6 text-center">オプションメニュー</h3>
-            <div className="grid md:grid-cols-2 gap-4">
+          {/* おすすめオプション */}
+          <div className="max-w-3xl mx-auto">
+            <h3 className="text-2xl font-bold mb-8 text-center">
+              <span className="border-b-4 border-accent">✨ おすすめオプション</span>
+            </h3>
+            <div className="grid md:grid-cols-2 gap-6">
               {options.map((option, index) => (
-                <Card key={index}>
+                <Card key={index} className="bg-muted/30 border-none">
                   <CardContent className="p-6">
-                    <div className="flex justify-between items-center">
-                      <span className="font-medium">{option.name}</span>
-                      <span className="text-xl font-bold text-primary">{option.price}</span>
+                    <div className="flex items-center gap-3 mb-2">
+                      {option.icon}
+                      <h4 className="font-bold text-lg">{option.name}</h4>
                     </div>
+                    <p className="text-sm text-muted-foreground mb-3">{option.description}</p>
+                    <div className="text-xl font-black text-primary">{option.price}</div>
                   </CardContent>
                 </Card>
               ))}
@@ -146,7 +145,7 @@ export default function Residential() {
         </div>
       </section>
 
-      {/* 作業内容 */}
+      {/* 作業の流れ */}
       <section className="section-padding bg-muted/30">
         <div className="container">
           <div className="text-center mb-12">
@@ -154,7 +153,6 @@ export default function Residential() {
               <span className="text-accent">作業内容</span>
             </h2>
           </div>
-
           <div className="max-w-4xl mx-auto grid md:grid-cols-2 gap-6">
             {[
               { title: "動作確認", description: "作業前にエアコンの動作を確認します" },
@@ -162,7 +160,7 @@ export default function Residential() {
               { title: "分解", description: "エアコンを丁寧に分解します" },
               { title: "パーツ洗浄", description: "取り外したパーツを個別に洗浄" },
               { title: "本体洗浄", description: "高圧洗浄機で徹底洗浄" },
-              { title: "防カビコーティング", description: "仕上げに防カビ抗菌コーティング" },
+              { title: "防カビコーティング", description: "仕上げに防カビ抗菌コーティング（無料特典）" },
               { title: "組み立て", description: "丁寧に組み立てます" },
               { title: "最終確認", description: "動作確認とお客様への説明" }
             ].map((item, index) => (
@@ -188,22 +186,22 @@ export default function Residential() {
       <section className="section-padding">
         <div className="container text-center">
           <h2 className="text-3xl md:text-4xl font-black mb-6">
-            家庭用エアコンクリーニングの<br />
+            エアコンクリーニングの<br />
             <span className="text-primary">ご予約はこちら</span>
           </h2>
           <p className="text-lg text-muted-foreground mb-8 max-w-2xl mx-auto">
-            お見積もりは無料です。お気軽にお問い合わせください。
+            お見積もりは無料です。LINEまたはフォームからお気軽にお問い合わせください。
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link href="/booking">
-              <Button size="lg" className="bg-accent hover:bg-accent/90 text-accent-foreground">
+              <Button size="lg" className="bg-accent hover:bg-accent/90 text-accent-foreground px-8">
                 予約フォームへ
                 <ArrowRight className="ml-2 h-4 w-4" />
               </Button>
             </Link>
-            <Link href="/">
-              <Button size="lg" variant="outline">
-                ホームに戻る
+            <Link href="/line">
+              <Button size="lg" variant="outline" className="border-primary text-primary hover:bg-primary/10 px-8">
+                LINEで予約する
               </Button>
             </Link>
           </div>

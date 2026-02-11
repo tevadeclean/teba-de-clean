@@ -1,98 +1,125 @@
-import { Link } from "wouter";
+import { useState, useEffect } from "react";
+import { Link, useLocation } from "wouter";
 import { Button } from "@/components/ui/button";
-import { Menu, X, Phone } from "lucide-react";
-import { useState } from "react";
+import { Menu, X, MessageCircle, Phone } from "lucide-react";
+import { cn } from "@/lib/utils";
 
 export default function Header() {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+  const [location] = useLocation();
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 20);
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   const navItems = [
-    { label: "ホーム", href: "/" },
-    { label: "家庭用エアコン", href: "/residential" },
-    { label: "業務用エアコン", href: "/commercial" },
-    { label: "作業実績", href: "/blog" },
-    { label: "お客様の声", href: "/testimonials" },
-    { label: "店長挨拶", href: "/about" },
-    { label: "よくある質問", href: "/faq" },
-    { label: "店舗情報", href: "/contact" },
+    { name: "ホーム", href: "/" },
+    { name: "家庭用", href: "/residential" },
+    { name: "業務用", href: "/commercial" },
+    { name: "店長挨拶", href: "/about" },
+    { name: "よくある質問", href: "/faq" },
+    { name: "作業実績", href: "/blog" },
   ];
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b bg-card/95 backdrop-blur supports-[backdrop-filter]:bg-card/80">
-      <div className="container">
-        <div className="flex h-16 items-center justify-between">
-          {/* ロゴ */}
-          <Link href="/">
-            <div className="flex items-center gap-2 cursor-pointer">
-              <div className="text-2xl font-black text-primary">
-                テバ<span className="text-accent">de</span>クリーン
-              </div>
-            </div>
-          </Link>
+    <header
+      className={cn(
+        "fixed top-0 left-0 right-0 z-50 transition-all duration-300",
+        scrolled ? "bg-white/95 backdrop-blur-md shadow-md py-2" : "bg-white/80 backdrop-blur-sm py-4"
+      )}
+    >
+      <div className="container flex items-center justify-between">
+        <Link href="/" className="flex items-center gap-2">
+          <div className="flex flex-col cursor-pointer">
+            <span className="text-2xl font-black leading-none tracking-tighter text-primary">
+              テバdeクリーン
+            </span>
+            <span className="text-[10px] font-bold text-muted-foreground">
+              沖縄のエアコンクリーニング専門店
+            </span>
+          </div>
+        </Link>
 
-          {/* デスクトップナビゲーション */}
-          <nav className="hidden lg:flex items-center gap-6">
-            {navItems.slice(0, 5).map((item) => (
-              <Link key={item.href} href={item.href}>
-                <span className="text-sm font-medium text-foreground hover:text-primary transition-colors cursor-pointer">
-                  {item.label}
-                </span>
-              </Link>
-            ))}
-          </nav>
-
-          {/* 電話番号とCTAボタン */}
-          <div className="hidden lg:flex items-center gap-4">
-            <a href="tel:098-XXX-XXXX" className="flex items-center gap-2 text-sm font-medium text-primary hover:text-primary/80 transition-colors">
-              <Phone className="h-4 w-4" />
-              <span>098-XXX-XXXX</span>
-            </a>
+        {/* Desktop Navigation */}
+        <nav className="hidden lg:flex items-center gap-8">
+          {navItems.map((item) => (
+            <Link
+              key={item.href}
+              href={item.href}
+            >
+              <span className={cn(
+                "text-sm font-bold transition-colors hover:text-accent cursor-pointer",
+                location === item.href ? "text-primary" : "text-foreground"
+              )}>
+                {item.name}
+              </span>
+            </Link>
+          ))}
+          <div className="flex items-center gap-3">
+            <Link href="/line">
+              <Button size="sm" className="bg-[#06C755] hover:bg-[#05b34c] text-white font-bold">
+                <MessageCircle className="mr-2 h-4 w-4" />
+                LINE予約
+              </Button>
+            </Link>
             <Link href="/booking">
-              <Button size="sm" className="bg-accent hover:bg-accent/90 text-accent-foreground">
-                予約する
+              <Button size="sm" variant="outline" className="font-bold border-primary text-primary">
+                予約フォーム
               </Button>
             </Link>
           </div>
+        </nav>
 
-          {/* モバイルメニューボタン */}
-          <button
-            className="lg:hidden p-2"
-            onClick={() => setIsMenuOpen(!isMenuOpen)}
-            aria-label="メニューを開く"
-          >
-            {isMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
-          </button>
-        </div>
-
-        {/* モバイルメニュー */}
-        {isMenuOpen && (
-          <div className="lg:hidden py-4 border-t">
-            <nav className="flex flex-col gap-4">
-              {navItems.map((item) => (
-                <Link key={item.href} href={item.href}>
-                  <span
-                    className="block py-2 text-sm font-medium text-foreground hover:text-primary transition-colors cursor-pointer"
-                    onClick={() => setIsMenuOpen(false)}
-                  >
-                    {item.label}
-                  </span>
-                </Link>
-              ))}
-              <div className="pt-4 border-t flex flex-col gap-3">
-                <a href="tel:098-XXX-XXXX" className="flex items-center gap-2 text-sm font-medium text-primary">
-                  <Phone className="h-4 w-4" />
-                  <span>098-XXX-XXXX</span>
-                </a>
-                <Link href="/booking">
-                  <Button className="w-full bg-accent hover:bg-accent/90 text-accent-foreground" onClick={() => setIsMenuOpen(false)}>
-                    予約する
-                  </Button>
-                </Link>
-              </div>
-            </nav>
-          </div>
-        )}
+        {/* Mobile Menu Button */}
+        <button
+          className="lg:hidden p-2 text-foreground"
+          onClick={() => setIsOpen(!isOpen)}
+        >
+          {isOpen ? <X /> : <Menu />}
+        </button>
       </div>
+
+      {/* Mobile Navigation */}
+      {isOpen && (
+        <div className="lg:hidden absolute top-full left-0 right-0 bg-white border-t shadow-xl animate-in slide-in-from-top duration-300">
+          <nav className="container py-6 flex flex-col gap-4">
+            {navItems.map((item) => (
+              <Link
+                key={item.href}
+                href={item.href}
+              >
+                <span 
+                  className={cn(
+                    "text-lg font-bold py-2 border-b border-muted last:border-0 block cursor-pointer",
+                    location === item.href ? "text-primary" : "text-foreground"
+                  )}
+                  onClick={() => setIsOpen(false)}
+                >
+                  {item.name}
+                </span>
+              </Link>
+            ))}
+            <div className="grid grid-cols-2 gap-4 mt-4">
+              <Link href="/line" onClick={() => setIsOpen(false)}>
+                <Button className="w-full bg-[#06C755] hover:bg-[#05b34c] text-white font-bold">
+                  <MessageCircle className="mr-2 h-4 w-4" />
+                  LINE予約
+                </Button>
+              </Link>
+              <Link href="/booking" onClick={() => setIsOpen(false)}>
+                <Button variant="outline" className="w-full border-primary text-primary font-bold">
+                  予約フォーム
+                </Button>
+              </Link>
+            </div>
+          </nav>
+        </div>
+      )}
     </header>
   );
 }

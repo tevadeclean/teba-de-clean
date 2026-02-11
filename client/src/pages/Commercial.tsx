@@ -1,12 +1,17 @@
 import { Link } from "wouter";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { Building2, Users, Clock, Shield, ArrowRight } from "lucide-react";
+import { Building2, Users, Clock, Shield, ArrowRight, Sparkles } from "lucide-react";
 
 export default function Commercial() {
   const pricing = [
-    { type: "壁掛けタイプ", price: "¥22,000〜" },
-    { type: "埋込・吊下げタイプ", price: "¥30,000〜" }
+    { 
+      type: "業務用エアコン", 
+      price: "25,000", 
+      unit: "円〜",
+      description: "店舗・オフィス用の天井カセット型など",
+      discount: "2台目から10％割引"
+    }
   ];
 
   const targetFacilities = [
@@ -23,8 +28,12 @@ export default function Commercial() {
             業務用エアコンクリーニング
           </h1>
           <p className="text-lg md:text-xl max-w-3xl opacity-95">
-            店舗・オフィス・施設の業務用エアコンに対応。複数台の同時施工も可能です。経験豊富なスタッフが、短時間で確実にクリーニングいたします。
+            店舗・オフィス・施設の業務用エアコンに対応。経験豊富なスタッフが、短時間で確実にクリーニングいたします。
           </p>
+          <div className="mt-8 inline-flex items-center bg-accent text-accent-foreground px-4 py-2 rounded-full font-bold">
+            <Sparkles className="mr-2 h-5 w-5" />
+            公式HP・LINE予約限定：防カビ・抗菌コート無料！
+          </div>
         </div>
       </section>
 
@@ -37,15 +46,20 @@ export default function Commercial() {
             </h2>
           </div>
 
-          <div className="max-w-2xl mx-auto grid md:grid-cols-2 gap-6 mb-8">
+          <div className="max-w-xl mx-auto mb-12">
             {pricing.map((item, index) => (
-              <Card key={index} className="border-2 hover:border-primary transition-colors">
+              <Card key={index} className="border-2 border-primary shadow-lg">
                 <CardContent className="p-8 text-center">
-                  <h3 className="text-xl font-bold mb-4">{item.type}</h3>
-                  <div className="text-4xl font-black text-primary mb-4">{item.price}</div>
-                  <p className="text-sm text-muted-foreground">
-                    ※機種・状態により変動します
-                  </p>
+                  <h3 className="text-2xl font-bold mb-2">{item.type}</h3>
+                  <p className="text-muted-foreground mb-6">{item.description}</p>
+                  <div className="flex items-baseline justify-center gap-1 mb-4">
+                    <span className="text-5xl font-black text-primary">{item.price}</span>
+                    <span className="text-2xl font-bold">{item.unit}</span>
+                    <span className="text-sm text-muted-foreground ml-2">(税込)</span>
+                  </div>
+                  <div className="inline-block bg-primary/10 text-primary text-sm font-bold px-4 py-2 rounded-full">
+                    {item.discount}
+                  </div>
                 </CardContent>
               </Card>
             ))}
@@ -56,8 +70,7 @@ export default function Commercial() {
             <ul className="space-y-2 text-sm text-muted-foreground">
               <li>• 高所取付の場合、追加料金が発生する場合があります</li>
               <li>• フィルターお掃除機能・自動昇降機能搭載の場合、金額が変動します</li>
-              <li>• 見積希望の場合、見積り料：¥3,300が発生いたします（施工時は無料）</li>
-              <li>• 複数台同時施工の場合、割引適用可能です</li>
+              <li>• 複数台同時施工の場合、大幅な割引適用が可能です。お気軽にご相談ください</li>
             </ul>
           </div>
         </div>
@@ -130,7 +143,7 @@ export default function Commercial() {
                   <div>
                     <h3 className="text-xl font-bold mb-2">安心のエコ洗剤使用</h3>
                     <p className="text-muted-foreground">
-                      身体に優しいエコ洗剤（Kirei）を利用して隅々まで洗浄します。飲食店や保育施設、介護施設でも安心してご利用いただけます。
+                      身体に優しいエコ洗剤を利用して隅々まで洗浄します。飲食店や保育施設、介護施設でも安心してご利用いただけます。
                     </p>
                   </div>
                 </div>
@@ -167,38 +180,6 @@ export default function Commercial() {
         </div>
       </section>
 
-      {/* 実績 */}
-      <section className="section-padding bg-muted/30">
-        <div className="container">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-black text-foreground mb-4">
-              <span className="text-accent">豊富な実績</span>
-            </h2>
-          </div>
-
-          <div className="max-w-3xl mx-auto">
-            <Card>
-              <CardContent className="p-8">
-                <div className="grid md:grid-cols-3 gap-8 text-center">
-                  <div>
-                    <div className="text-4xl font-black text-primary mb-2">1,000台+</div>
-                    <div className="text-sm text-muted-foreground">年間施工実績</div>
-                  </div>
-                  <div>
-                    <div className="text-4xl font-black text-accent mb-2">98%</div>
-                    <div className="text-sm text-muted-foreground">お客様満足度</div>
-                  </div>
-                  <div>
-                    <div className="text-4xl font-black text-primary mb-2">5年+</div>
-                    <div className="text-sm text-muted-foreground">平均経験年数</div>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-          </div>
-        </div>
-      </section>
-
       {/* CTA */}
       <section className="section-padding">
         <div className="container text-center">
@@ -207,20 +188,20 @@ export default function Commercial() {
             <span className="text-primary">お見積もり・ご予約</span>
           </h2>
           <p className="text-lg text-muted-foreground mb-8 max-w-2xl mx-auto">
-            まずは無料でお見積もりいたします。お気軽にお問い合わせください。
+            まずは無料でお見積もりいたします。LINEまたはフォームからお気軽にお問い合わせください。
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link href="/booking">
-              <Button size="lg" className="bg-accent hover:bg-accent/90 text-accent-foreground">
+              <Button size="lg" className="bg-accent hover:bg-accent/90 text-accent-foreground px-8">
                 予約・お見積もりフォームへ
                 <ArrowRight className="ml-2 h-4 w-4" />
               </Button>
             </Link>
-            <a href="tel:098-XXX-XXXX">
-              <Button size="lg" variant="outline">
-                電話で相談する
+            <Link href="/line">
+              <Button size="lg" variant="outline" className="border-primary text-primary hover:bg-primary/10 px-8">
+                LINEで相談する
               </Button>
-            </a>
+            </Link>
           </div>
         </div>
       </section>
