@@ -82,30 +82,30 @@ export default function Residential() {
             </p>
           </div>
 
-          <div className="grid md:grid-cols-2 gap-6 mb-12 max-w-4xl mx-auto">
+          <div className="grid md:grid-cols-2 gap-6 mb-12 max-w-5xl mx-auto">
             {pricingPlans.map((plan, index) => (
               <Card key={index} className="border hover:border-primary/30 transition-all flex flex-col shadow-sm overflow-hidden">
-                <CardHeader className="bg-muted/30 p-6">
-                  <CardTitle className="text-lg md:text-xl font-black mb-1">{plan.name}</CardTitle>
-                  <p className="text-muted-foreground text-sm">{plan.description}</p>
+                <CardHeader className="bg-muted/30 p-5 md:p-6">
+                  <CardTitle className="text-base md:text-lg font-black mb-1 leading-tight">{plan.name}</CardTitle>
+                  <p className="text-muted-foreground text-xs md:text-sm">{plan.description}</p>
                 </CardHeader>
-                <CardContent className="p-6 flex-grow flex flex-col">
+                <CardContent className="p-5 md:p-6 flex-grow flex flex-col">
                   <div className="mb-6">
                     <div className="flex items-baseline gap-1">
-                      <span className="text-3xl font-black text-primary">{plan.price}</span>
-                      <span className="text-lg font-bold">{plan.unit}</span>
+                      <span className="text-2xl md:text-3xl font-black text-primary">{plan.price}</span>
+                      <span className="text-base md:text-lg font-bold">{plan.unit}</span>
                       <span className="text-xs text-muted-foreground ml-1">(税込)</span>
                     </div>
-                    <div className="mt-2 inline-block bg-primary/10 text-primary text-xs font-bold px-3 py-1 rounded-md">
+                    <div className="mt-2 inline-block bg-primary/10 text-primary text-[10px] md:text-xs font-bold px-3 py-1 rounded-md">
                       {plan.discount}
                     </div>
                   </div>
                   
-                  <div className="space-y-3 mb-8 flex-grow">
+                  <div className="space-y-2.5 mb-8 flex-grow">
                     {plan.features.map((feature, i) => (
                       <div key={i} className="flex items-start gap-2">
-                        <CheckCircle2 className="h-4 w-4 text-primary flex-shrink-0 mt-0.5" />
-                        <span className={feature.includes("特典") ? "text-primary font-bold text-sm" : "text-[13px]"}>
+                        <CheckCircle2 className="h-3.5 w-3.5 text-primary flex-shrink-0 mt-0.5" />
+                        <span className={feature.includes("特典") ? "text-primary font-bold text-[12px] md:text-[13px]" : "text-[12px] md:text-[13px] text-foreground/90"}>
                           {feature}
                         </span>
                       </div>
@@ -113,7 +113,7 @@ export default function Residential() {
                   </div>
 
                   <Link href="/line">
-                    <Button className="w-full bg-[#06C755] hover:bg-[#05b34c] text-white text-sm font-bold py-6">
+                    <Button className="w-full bg-[#06C755] hover:bg-[#05b34c] text-white text-sm font-bold py-6 shadow-md">
                       <MessageCircle className="mr-2 h-5 w-5" />
                       LINEで予約する
                     </Button>
@@ -148,7 +148,7 @@ export default function Residential() {
         </div>
       </section>
 
-      {/* 作業の流れ */}
+      {/* 作業内容 */}
       <section className="py-12 md:py-20 bg-muted/30">
         <div className="container">
           <div className="text-center mb-10">
