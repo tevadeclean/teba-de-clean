@@ -1,7 +1,7 @@
 import { Link } from "wouter";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { Building2, Users, Clock, Shield, ArrowRight, Sparkles } from "lucide-react";
+import { Building2, Users, Clock, Shield, ArrowRight, Sparkles, MessageCircle, CheckCircle2, Zap } from "lucide-react";
 
 export default function Commercial() {
   const pricing = [
@@ -19,160 +19,135 @@ export default function Commercial() {
     "ホテル", "ショッピングセンター", "学校", "介護施設"
   ];
 
+  const features = [
+    "店舗・オフィス・病院・施設に対応",
+    "天井カセット型・吊り型・床置き型など全機種対応",
+    "複数台の同時施工・夜間作業も相談可能",
+    "定期的なメンテナンスプランのご提案",
+    "賠償責任保険加入済みで安心",
+    "【特典】防カビ・抗菌コート無料施工"
+  ];
+
   return (
-    <div className="min-h-screen">
+    <div className="w-full">
       {/* ヒーロー */}
-      <section className="bg-gradient-to-br from-primary via-primary/90 to-primary/80 text-primary-foreground py-16 md:py-24">
+      <section className="bg-primary text-primary-foreground py-20 md:py-32">
         <div className="container">
-          <h1 className="text-4xl md:text-5xl font-black mb-6">
-            業務用エアコンクリーニング
-          </h1>
-          <p className="text-lg md:text-xl max-w-3xl opacity-95">
-            店舗・オフィス・施設の業務用エアコンに対応。経験豊富なスタッフが、短時間で確実にクリーニングいたします。
-          </p>
-          <div className="mt-8 inline-flex items-center bg-accent text-accent-foreground px-4 py-2 rounded-full font-bold">
-            <Sparkles className="mr-2 h-5 w-5" />
-            公式HP・LINE予約限定：防カビ・抗菌コート無料！
+          <div className="flex flex-col md:flex-row items-center gap-12">
+            <div className="flex-1">
+              <h1 className="text-4xl md:text-6xl font-black mb-8 leading-tight">
+                業務用エアコン<br />クリーニング
+              </h1>
+              <p className="text-lg md:text-xl opacity-95 leading-relaxed mb-10">
+                店舗やオフィスのエアコンは、家庭用よりも汚れが溜まりやすく、電気代への影響も甚大です。プロの技術で効率を改善し、快適な空間を作ります。
+              </p>
+              <div className="inline-flex items-center bg-accent text-accent-foreground px-6 py-3 rounded-full font-bold text-lg shadow-lg">
+                <Sparkles className="mr-2 h-6 w-6" />
+                HP・LINE予約限定：防カビ・抗菌コート無料！
+              </div>
+            </div>
+            <div className="flex-shrink-0 hidden md:block">
+              <div className="w-64 h-64 rounded-3xl bg-white/10 flex items-center justify-center border-2 border-white/20">
+                <Building2 className="h-32 w-32 text-white" />
+              </div>
+            </div>
           </div>
         </div>
       </section>
 
-      {/* 料金 */}
-      <section className="section-padding">
+      {/* 料金・特徴 */}
+      <section className="py-20 md:py-32 bg-background">
         <div className="container">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-black text-foreground mb-4">
-              <span className="text-primary">料金</span>
-            </h2>
-          </div>
-
-          <div className="max-w-xl mx-auto mb-12">
-            {pricing.map((item, index) => (
-              <Card key={index} className="border-2 border-primary shadow-lg">
-                <CardContent className="p-8 text-center">
-                  <h3 className="text-2xl font-bold mb-2">{item.type}</h3>
-                  <p className="text-muted-foreground mb-6">{item.description}</p>
-                  <div className="flex items-baseline justify-center gap-1 mb-4">
-                    <span className="text-5xl font-black text-primary">{item.price}</span>
-                    <span className="text-2xl font-bold">{item.unit}</span>
+          <div className="grid lg:grid-cols-2 gap-16 items-start max-w-6xl mx-auto">
+            <div className="space-y-10">
+              <div>
+                <h2 className="text-3xl md:text-5xl font-black text-foreground mb-8">
+                  <span className="text-primary">業務用プラン</span>
+                </h2>
+                <div className="bg-muted/30 p-10 rounded-3xl border-2 border-primary/10">
+                  <div className="flex items-baseline gap-2 mb-6">
+                    <span className="text-sm font-bold text-muted-foreground">1台あたり</span>
+                    <span className="text-5xl font-black text-primary">25,000</span>
+                    <span className="text-2xl font-bold">円〜</span>
                     <span className="text-sm text-muted-foreground ml-2">(税込)</span>
                   </div>
-                  <div className="inline-block bg-primary/10 text-primary text-sm font-bold px-4 py-2 rounded-full">
-                    {item.discount}
+                  <div className="inline-block bg-primary text-primary-foreground text-lg font-bold px-6 py-3 rounded-xl mb-8 shadow-md">
+                    2台目から10％割引！
                   </div>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-
-          <div className="max-w-3xl mx-auto bg-muted/50 p-6 rounded-lg">
-            <h3 className="font-bold mb-3">料金に関する注意事項</h3>
-            <ul className="space-y-2 text-sm text-muted-foreground">
-              <li>• 高所取付の場合、追加料金が発生する場合があります</li>
-              <li>• フィルターお掃除機能・自動昇降機能搭載の場合、金額が変動します</li>
-              <li>• 複数台同時施工の場合、大幅な割引適用が可能です。お気軽にご相談ください</li>
-            </ul>
-          </div>
-        </div>
-      </section>
-
-      {/* 業務用エアコンの特徴 */}
-      <section className="section-padding bg-muted/30">
-        <div className="container">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-black text-foreground mb-4">
-              業務用エアコンクリーニングの<span className="text-accent">重要性</span>
-            </h2>
-          </div>
-
-          <div className="max-w-4xl mx-auto space-y-6">
-            <Card>
-              <CardContent className="p-6">
-                <div className="flex items-start gap-4">
-                  <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
-                    <Users className="h-6 w-6 text-primary" />
-                  </div>
-                  <div>
-                    <h3 className="text-xl font-bold mb-2">人の出入りが多い環境</h3>
-                    <p className="text-muted-foreground">
-                      店舗や事務所のエアコンは、人の出入りが激しいため、カビやハウスダスト、ホコリ、花粉などで汚れやすい環境にあります。定期的なクリーニングが必要です。
-                    </p>
-                  </div>
+                  <p className="text-muted-foreground leading-relaxed text-lg">
+                    ※機種（天井カセット型、吊り型、床置き型など）や汚れ具合、設置状況により料金が異なります。現地見積もり、またはお写真での概算見積もりを承ります。
+                  </p>
                 </div>
-              </CardContent>
-            </Card>
+              </div>
 
-            <Card>
-              <CardContent className="p-6">
-                <div className="flex items-start gap-4">
-                  <div className="w-12 h-12 rounded-full bg-accent/10 flex items-center justify-center flex-shrink-0">
-                    <Building2 className="h-6 w-6 text-accent" />
-                  </div>
-                  <div>
-                    <h3 className="text-xl font-bold mb-2">複雑な構造</h3>
-                    <p className="text-muted-foreground">
-                      業務用エアコンは家庭用に比べ分解が難しく壊れやすいため、知識と実績のある清掃業者に依頼することをおすすめします。
-                    </p>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
+              <div className="grid sm:grid-cols-2 gap-6">
+                <Card className="bg-accent/5 border-none shadow-sm">
+                  <CardContent className="p-8">
+                    <Zap className="h-10 w-10 text-accent mb-4" />
+                    <h4 className="font-black text-xl mb-2">電気代削減</h4>
+                    <p className="text-muted-foreground text-base">効率が改善し、大幅なコストカットが期待できます。</p>
+                  </CardContent>
+                </Card>
+                <Card className="bg-primary/5 border-none shadow-sm">
+                  <CardContent className="p-8">
+                    <Shield className="h-10 w-10 text-primary mb-4" />
+                    <h4 className="font-black text-xl mb-2">故障予防</h4>
+                    <p className="text-muted-foreground text-base">内部の負荷を減らし、エアコンの寿命を延ばします。</p>
+                  </CardContent>
+                </Card>
+              </div>
+            </div>
 
-            <Card>
-              <CardContent className="p-6">
-                <div className="flex items-start gap-4">
-                  <div className="w-12 h-12 rounded-full bg-secondary/10 flex items-center justify-center flex-shrink-0">
-                    <Clock className="h-6 w-6 text-secondary-foreground" />
+            <div className="bg-card border-2 rounded-3xl p-10 md:p-12 shadow-xl">
+              <h3 className="text-2xl md:text-3xl font-black mb-10 flex items-center gap-3">
+                <CheckCircle2 className="h-8 w-8 text-primary" />
+                サービスの特徴
+              </h3>
+              <div className="space-y-8">
+                {features.map((feature, index) => (
+                  <div key={index} className="flex items-start gap-4">
+                    <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0 mt-1">
+                      <CheckCircle2 className="h-5 w-5 text-primary" />
+                    </div>
+                    <span className={feature.includes("特典") ? "text-primary font-bold text-xl" : "text-lg text-foreground/90"}>
+                      {feature}
+                    </span>
                   </div>
-                  <div>
-                    <h3 className="text-xl font-bold mb-2">短時間での施工</h3>
-                    <p className="text-muted-foreground">
-                      当店では専門知識を持った経験豊富なスタッフが多数在籍しておりますので、複数の業務用エアコンのクリーニングも短時間で清掃可能です。
-                    </p>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-
-            <Card>
-              <CardContent className="p-6">
-                <div className="flex items-start gap-4">
-                  <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
-                    <Shield className="h-6 w-6 text-primary" />
-                  </div>
-                  <div>
-                    <h3 className="text-xl font-bold mb-2">安心のエコ洗剤使用</h3>
-                    <p className="text-muted-foreground">
-                      身体に優しいエコ洗剤を利用して隅々まで洗浄します。飲食店や保育施設、介護施設でも安心してご利用いただけます。
-                    </p>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
+                ))}
+              </div>
+              <div className="mt-12 pt-10 border-t">
+                <Link href="/line">
+                  <Button className="w-full bg-[#06C755] hover:bg-[#05b34c] text-white text-xl py-8 shadow-lg">
+                    <MessageCircle className="mr-3 h-8 w-8" />
+                    LINEで無料見積もり
+                  </Button>
+                </Link>
+              </div>
+            </div>
           </div>
         </div>
       </section>
 
       {/* 対応施設 */}
-      <section className="section-padding">
+      <section className="py-20 md:py-32 bg-muted/30">
         <div className="container">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-black text-foreground mb-4">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl md:text-5xl font-black text-foreground mb-6">
               <span className="text-primary">対応施設</span>
             </h2>
-            <p className="text-muted-foreground">
+            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
               さまざまな施設の業務用エアコンクリーニングに対応しています
             </p>
           </div>
 
-          <div className="max-w-4xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-4">
+          <div className="max-w-5xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-6">
             {targetFacilities.map((facility, index) => (
-              <Card key={index} className="text-center hover:border-primary transition-colors">
-                <CardContent className="p-6">
-                  <div className="w-12 h-12 rounded-full bg-accent/10 flex items-center justify-center mx-auto mb-3">
-                    <Building2 className="h-6 w-6 text-accent" />
+              <Card key={index} className="text-center hover:border-primary transition-all hover:shadow-md border-none">
+                <CardContent className="p-8">
+                  <div className="w-16 h-16 rounded-full bg-accent/10 flex items-center justify-center mx-auto mb-4">
+                    <Building2 className="h-8 w-8 text-accent" />
                   </div>
-                  <div className="font-medium">{facility}</div>
+                  <div className="font-black text-lg">{facility}</div>
                 </CardContent>
               </Card>
             ))}
@@ -181,25 +156,26 @@ export default function Commercial() {
       </section>
 
       {/* CTA */}
-      <section className="section-padding">
+      <section className="py-20 md:py-32 bg-background">
         <div className="container text-center">
-          <h2 className="text-3xl md:text-4xl font-black mb-6">
+          <h2 className="text-3xl md:text-5xl font-black mb-10 leading-tight">
             業務用エアコンクリーニングの<br />
             <span className="text-primary">お見積もり・ご予約</span>
           </h2>
-          <p className="text-lg text-muted-foreground mb-8 max-w-2xl mx-auto">
+          <p className="text-xl text-muted-foreground mb-12 max-w-3xl mx-auto leading-relaxed">
             まずは無料でお見積もりいたします。LINEまたはフォームからお気軽にお問い合わせください。
           </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link href="/booking">
-              <Button size="lg" className="bg-accent hover:bg-accent/90 text-accent-foreground px-8">
-                予約・お見積もりフォームへ
-                <ArrowRight className="ml-2 h-4 w-4" />
+          <div className="flex flex-col sm:flex-row gap-6 justify-center">
+            <Link href="/line">
+              <Button size="lg" className="bg-[#06C755] hover:bg-[#05b34c] text-white text-xl px-12 py-8 shadow-xl w-full sm:w-auto">
+                <MessageCircle className="mr-3 h-8 w-8" />
+                LINEで相談する
               </Button>
             </Link>
-            <Link href="/line">
-              <Button size="lg" variant="outline" className="border-primary text-primary hover:bg-primary/10 px-8">
-                LINEで相談する
+            <Link href="/booking">
+              <Button size="lg" variant="outline" className="border-primary text-primary text-xl px-12 py-8 w-full sm:w-auto">
+                予約・お問い合わせフォーム
+                <ArrowRight className="ml-2 h-5 w-5" />
               </Button>
             </Link>
           </div>
