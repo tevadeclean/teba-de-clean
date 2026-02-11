@@ -1,6 +1,6 @@
 import { Link } from "wouter";
 import { Button } from "@/components/ui/button";
-import { CheckCircle2, ArrowRight, Sparkles, Shield, Zap, MessageCircle } from "lucide-react";
+import { CheckCircle2, ArrowRight, Sparkles, Shield, Zap, MessageCircle, ClipboardList } from "lucide-react";
 
 export default function Residential() {
   const pricingPlans = [
@@ -40,14 +40,14 @@ export default function Residential() {
     { 
       name: "完全分解洗浄", 
       price: "+8,000円", 
-      description: "ドレンパンとファンを外して徹底洗浄！",
-      icon: <Zap className="h-5 w-5 text-primary" />
+      description: "ドレンパンと送風ファンを外して徹底洗浄！",
+      icon: <Zap className="h-6 w-6 text-primary" />
     },
     { 
       name: "室外機洗浄", 
       price: "+3,000円", 
       description: "電気代節約や故障予防に。",
-      icon: <Shield className="h-5 w-5 text-primary" />
+      icon: <Shield className="h-6 w-6 text-primary" />
     }
   ];
 
@@ -122,12 +122,20 @@ export default function Residential() {
                     ))}
                   </div>
 
-                  <Link href="/line">
-                    <Button className="w-full bg-[#06C755] hover:bg-[#05b34c] text-white text-base font-bold py-7 shadow-md">
-                      <MessageCircle className="mr-2 h-6 w-6" />
-                      LINEで予約する
-                    </Button>
-                  </Link>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    <Link href="/line">
+                      <Button className="w-full bg-[#06C755] hover:bg-[#05b34c] text-white text-sm font-bold py-6 shadow-md">
+                        <MessageCircle className="mr-1.5 h-5 w-5" />
+                        LINE予約
+                      </Button>
+                    </Link>
+                    <Link href="/booking">
+                      <Button variant="outline" className="w-full border-primary text-primary text-sm font-bold py-6 shadow-sm">
+                        <ClipboardList className="mr-1.5 h-5 w-5" />
+                        フォーム予約
+                      </Button>
+                    </Link>
+                  </div>
                 </div>
               </div>
             ))}
@@ -140,15 +148,15 @@ export default function Residential() {
             </h3>
             <div className="grid sm:grid-cols-2 gap-6">
               {options.map((option, index) => (
-                <div key={index} className="bg-muted/30 rounded-2xl p-6 border border-transparent hover:border-primary/10 transition-all">
-                  <div className="flex items-center gap-4 mb-4">
-                    <div className="bg-white p-3 rounded-xl shadow-sm text-primary">
+                <div key={index} className="bg-white rounded-2xl p-8 border-2 border-primary/10 shadow-xl hover:border-primary/30 transition-all group">
+                  <div className="flex items-center gap-4 mb-5">
+                    <div className="bg-primary/10 p-4 rounded-2xl text-primary group-hover:scale-110 transition-transform">
                       {option.icon}
                     </div>
-                    <h4 className="font-black text-lg">{option.name}</h4>
+                    <h4 className="font-black text-xl">{option.name}</h4>
                   </div>
-                  <p className="text-sm text-muted-foreground mb-4 leading-relaxed">{option.description}</p>
-                  <div className="text-2xl font-black text-primary">{option.price}</div>
+                  <p className="text-base text-muted-foreground mb-6 leading-relaxed">{option.description}</p>
+                  <div className="text-3xl font-black text-primary">{option.price}</div>
                 </div>
               ))}
             </div>
