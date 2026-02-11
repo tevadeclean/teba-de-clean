@@ -20,26 +20,28 @@ import BlogDetail from "./pages/BlogDetail";
 
 function Router() {
   return (
-    <>
+    <div className="flex flex-col min-h-screen">
       <Header />
-      <Switch>
-        <Route path={"/"} component={Home} />
-        <Route path={"/residential"} component={Residential} />
-        <Route path={"/commercial"} component={Commercial} />
-        <Route path={"/about"} component={About} />
-        <Route path={"/booking"} component={Booking} />
-        <Route path={"/line"} component={Line} />
-        <Route path={"/testimonials"} component={Testimonials} />
-        <Route path={"/faq"} component={FAQ} />
-        <Route path={"/contact"} component={Contact} />
-        <Route path={"/blog"} component={Blog} />
-        <Route path={"/blog/:id"} component={BlogDetail} />
-        <Route path={"/404"} component={NotFound} />
-        {/* Final fallback route */}
-        <Route component={NotFound} />
-      </Switch>
+      <main className="flex-grow">
+        <Switch>
+          <Route path={"/"} component={Home} />
+          <Route path={"/residential"} component={Residential} />
+          <Route path={"/commercial"} component={Commercial} />
+          <Route path={"/about"} component={About} />
+          <Route path={"/booking"} component={Booking} />
+          <Route path={"/line"} component={Line} />
+          <Route path={"/testimonials"} component={Testimonials} />
+          <Route path={"/faq"} component={FAQ} />
+          <Route path={"/contact"} component={Contact} />
+          <Route path={"/blog"} component={Blog} />
+          <Route path={"/blog/:id"} component={BlogDetail} />
+          <Route path={"/404"} component={NotFound} />
+          {/* Final fallback route */}
+          <Route component={NotFound} />
+        </Switch>
+      </main>
       <Footer />
-    </>
+    </div>
   );
 }
 

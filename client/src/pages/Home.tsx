@@ -15,19 +15,16 @@ import {
 
 export default function Home() {
   const { data: testimonials, isLoading: testimonialsLoading } = trpc.testimonials.list.useQuery();
-  const { data: blogPosts, isLoading: blogLoading } = trpc.blog.list.useQuery();
 
   const recentTestimonials = testimonials?.slice(0, 3) || [];
-  const recentBlogPosts = blogPosts?.slice(0, 3) || [];
 
   return (
-    <div className="min-h-screen">
+    <div className="w-full overflow-hidden">
       {/* ヒーローセクション */}
-      <section className="relative bg-gradient-to-br from-primary via-primary/90 to-primary/80 text-primary-foreground overflow-hidden">
-        <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxnIGZpbGw9IiNmZmZmZmYiIGZpbGwtb3BhY2l0eT0iMC4wNSI+PHBhdGggZD0iTTM2IDE2YzAtNC40MTggMy41ODItOCA4LThzOCAzLjU4MiA4IDgtMy41ODIgOC04IDgtOC0zLjU4Mi04LTh6bS0yMCAwYzAtNC40MTggMy41ODItOCA4LThzOCAzLjU4MiA4IDgtMy41ODIgOC04IDgtOC0zLjU4Mi04LTh6Ii8+PC9nPjwvZz48L3N2Zz4=')] opacity-30"></div>
-        <div className="container relative py-20 md:py-32">
+      <section className="relative bg-primary text-primary-foreground py-20 md:py-32">
+        <div className="container relative z-10">
           <div className="max-w-3xl">
-            <div className="inline-flex items-center bg-accent text-accent-foreground px-4 py-2 rounded-full font-bold mb-6 animate-pulse">
+            <div className="inline-flex items-center bg-accent text-accent-foreground px-4 py-2 rounded-full font-bold mb-6">
               <Sparkles className="mr-2 h-5 w-5" />
               HP・LINE予約限定：防カビ・抗菌コート無料！
             </div>
@@ -41,13 +38,13 @@ export default function Home() {
             </p>
             <div className="flex flex-col sm:flex-row gap-4">
               <Link href="/line">
-                <Button size="lg" className="bg-[#06C755] hover:bg-[#05b34c] text-white text-lg px-8 py-7 shadow-lg">
+                <Button size="lg" className="bg-[#06C755] hover:bg-[#05b34c] text-white text-lg px-8 py-7 shadow-lg w-full sm:w-auto">
                   <MessageCircle className="mr-2 h-6 w-6" />
                   LINEで予約・相談
                 </Button>
               </Link>
               <Link href="/booking">
-                <Button size="lg" variant="outline" className="bg-white/10 border-white/30 hover:bg-white/20 text-white text-lg px-8 py-7">
+                <Button size="lg" variant="outline" className="bg-white/10 border-white/30 hover:bg-white/20 text-white text-lg px-8 py-7 w-full sm:w-auto">
                   予約フォームへ
                   <ArrowRight className="ml-2 h-5 w-5" />
                 </Button>
@@ -58,7 +55,7 @@ export default function Home() {
       </section>
 
       {/* サービス概要 */}
-      <section className="section-padding">
+      <section className="section-padding bg-background">
         <div className="container">
           <div className="text-center mb-12">
             <h2 className="text-3xl md:text-4xl font-black text-foreground mb-4">
@@ -71,7 +68,7 @@ export default function Home() {
 
           <div className="grid md:grid-cols-2 gap-8">
             <Link href="/residential">
-              <Card className="group hover:shadow-xl transition-all duration-300 cursor-pointer border-2 hover:border-primary">
+              <Card className="group hover:shadow-xl transition-all duration-300 cursor-pointer border-2 hover:border-primary overflow-hidden">
                 <CardContent className="p-8">
                   <div className="mb-4">
                     <div className="w-16 h-16 rounded-full bg-secondary flex items-center justify-center mb-4">
@@ -97,7 +94,7 @@ export default function Home() {
             </Link>
 
             <Link href="/commercial">
-              <Card className="group hover:shadow-xl transition-all duration-300 cursor-pointer border-2 hover:border-primary">
+              <Card className="group hover:shadow-xl transition-all duration-300 cursor-pointer border-2 hover:border-primary overflow-hidden">
                 <CardContent className="p-8">
                   <div className="mb-4">
                     <div className="w-16 h-16 rounded-full bg-accent flex items-center justify-center mb-4">
@@ -157,7 +154,7 @@ export default function Home() {
                 description: "お客様満足度98%。多くのリピーター様にご利用いただいています"
               }
             ].map((item, index) => (
-              <Card key={index} className="text-center">
+              <Card key={index} className="text-center border-none shadow-sm">
                 <CardContent className="p-6">
                   <div className="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center mx-auto mb-4 text-primary">
                     {item.icon}
@@ -172,7 +169,7 @@ export default function Home() {
       </section>
 
       {/* 作業の流れ */}
-      <section className="section-padding">
+      <section className="section-padding bg-background">
         <div className="container">
           <div className="text-center mb-12">
             <h2 className="text-3xl md:text-4xl font-black text-foreground mb-4">
@@ -180,7 +177,7 @@ export default function Home() {
             </h2>
           </div>
 
-          <div className="max-w-4xl mx-auto">
+          <div className="max-w-4xl mx-auto space-y-8">
             {[
               { step: "1", title: "お問い合わせ", description: "LINEまたは予約フォームからお気軽にご連絡ください" },
               { step: "2", title: "日程調整", description: "ご希望の日時をお伺いし、訪問日を決定します" },
@@ -188,15 +185,15 @@ export default function Home() {
               { step: "4", title: "クリーニング作業", description: "プロの技術で徹底的に分解洗浄。約2〜3時間で完了します" },
               { step: "5", title: "動作確認・お引き渡し", description: "クリーニング後の動作確認を行い、作業完了です" }
             ].map((item, index) => (
-              <div key={index} className="flex gap-4 mb-8 last:mb-0">
+              <div key={index} className="flex gap-6 items-start">
                 <div className="flex-shrink-0">
-                  <div className="w-12 h-12 rounded-full bg-accent flex items-center justify-center text-accent-foreground font-black text-lg">
+                  <div className="w-12 h-12 rounded-full bg-accent flex items-center justify-center text-accent-foreground font-black text-xl shadow-sm">
                     {item.step}
                   </div>
                 </div>
-                <div className="flex-1 pt-1">
+                <div className="flex-1 pt-2">
                   <h3 className="text-xl font-bold mb-2">{item.title}</h3>
-                  <p className="text-muted-foreground">{item.description}</p>
+                  <p className="text-muted-foreground leading-relaxed">{item.description}</p>
                 </div>
               </div>
             ))}
@@ -214,9 +211,9 @@ export default function Home() {
               </h2>
             </div>
 
-            <div className="grid md:grid-cols-3 gap-6 mb-8">
+            <div className="grid md:grid-cols-3 gap-6 mb-12">
               {recentTestimonials.map((testimonial) => (
-                <Card key={testimonial.id}>
+                <Card key={testimonial.id} className="border-none shadow-sm">
                   <CardContent className="p-6">
                     <div className="flex items-center gap-1 mb-3">
                       {Array.from({ length: 5 }).map((_, i) => (
@@ -228,10 +225,10 @@ export default function Home() {
                         />
                       ))}
                     </div>
-                    <p className="text-sm text-muted-foreground mb-4 line-clamp-4">
+                    <p className="text-sm text-muted-foreground mb-4 leading-relaxed">
                       {testimonial.comment}
                     </p>
-                    <div className="text-sm font-medium">{testimonial.customerName}様</div>
+                    <div className="text-sm font-bold text-primary">{testimonial.customerName}様</div>
                   </CardContent>
                 </Card>
               ))}
@@ -239,7 +236,7 @@ export default function Home() {
 
             <div className="text-center">
               <Link href="/testimonials">
-                <Button variant="outline" size="lg">
+                <Button variant="outline" size="lg" className="border-primary text-primary hover:bg-primary/5">
                   お客様の声をもっと見る
                   <ArrowRight className="ml-2 h-4 w-4" />
                 </Button>
@@ -252,23 +249,23 @@ export default function Home() {
       {/* CTA */}
       <section className="section-padding bg-primary text-primary-foreground">
         <div className="container text-center">
-          <h2 className="text-3xl md:text-5xl font-black mb-8">
+          <h2 className="text-3xl md:text-5xl font-black mb-8 leading-tight">
             まずはお気軽に<br />ご相談ください
           </h2>
           <div className="flex flex-col sm:flex-row gap-6 justify-center items-center">
             <Link href="/line">
-              <Button size="lg" className="bg-[#06C755] hover:bg-[#05b34c] text-white text-xl px-12 py-8 shadow-2xl">
+              <Button size="lg" className="bg-[#06C755] hover:bg-[#05b34c] text-white text-xl px-12 py-8 shadow-2xl w-full sm:w-auto">
                 <MessageCircle className="mr-3 h-8 w-8" />
                 LINEで無料相談
               </Button>
             </Link>
             <Link href="/booking">
-              <Button size="lg" variant="outline" className="bg-white/10 border-white/40 hover:bg-white/20 text-white text-xl px-12 py-8">
+              <Button size="lg" variant="outline" className="bg-white/10 border-white/40 hover:bg-white/20 text-white text-xl px-12 py-8 w-full sm:w-auto">
                 予約フォームへ
               </Button>
             </Link>
           </div>
-          <p className="mt-8 text-primary-foreground/80 font-bold">
+          <p className="mt-8 text-primary-foreground/90 font-bold text-lg">
             ✨ HP・LINE予約限定：防カビ・抗菌コート無料施工中！
           </p>
         </div>
