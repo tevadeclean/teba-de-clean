@@ -1,6 +1,7 @@
 import { Link } from "wouter";
 import { Button } from "@/components/ui/button";
 import { Building2, Shield, ArrowRight, Sparkles, MessageCircle, CheckCircle2, Zap } from "lucide-react";
+import LogoText from "@/components/LogoText";
 
 export default function Commercial() {
   const targetFacilities = [

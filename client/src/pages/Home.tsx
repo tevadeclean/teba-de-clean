@@ -11,6 +11,7 @@ import {
   User,
   Heart
 } from "lucide-react";
+import LogoText from "@/components/LogoText";
 
 export default function Home() {
   const strengths = [
@@ -91,7 +92,7 @@ export default function Home() {
         <div className="container">
           <div className="text-center mb-10">
             <h2 className="text-xl md:text-2xl font-black text-foreground mb-3">
-              テバdeクリーンが<span className="text-primary">選ばれる5つの理由</span>
+              <LogoText />が<span className="text-primary">選ばれる5つの理由</span>
             </h2>
             <div className="w-12 h-1 bg-accent mx-auto rounded-full"></div>
           </div>

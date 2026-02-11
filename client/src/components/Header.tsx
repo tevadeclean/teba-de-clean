@@ -3,6 +3,7 @@ import { Link, useLocation } from "wouter";
 import { Button } from "@/components/ui/button";
 import { Menu, X, MessageCircle } from "lucide-react";
 import { cn } from "@/lib/utils";
+import LogoText from "./LogoText";
 
 export default function Header() {
   const [isOpen, setIsOpen] = useState(false);
@@ -36,9 +37,7 @@ export default function Header() {
       <div className="container flex items-center justify-between">
         <Link href="/" className="flex items-center gap-2">
           <div className="flex flex-col cursor-pointer">
-            <span className="text-xl md:text-2xl font-black leading-none tracking-tighter text-primary">
-              テバdeクリーン
-            </span>
+            <LogoText className="text-xl md:text-2xl leading-none tracking-tighter text-primary" />
             <span className="text-[9px] md:text-[10px] font-bold text-muted-foreground">
               沖縄のエアコンクリーニング専門店
             </span>

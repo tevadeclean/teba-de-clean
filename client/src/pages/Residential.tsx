@@ -1,6 +1,7 @@
 import { Link } from "wouter";
 import { Button } from "@/components/ui/button";
 import { CheckCircle2, ArrowRight, Sparkles, Shield, Zap, MessageCircle, ClipboardList, Gift } from "lucide-react";
+import LogoText from "@/components/LogoText";
 
 export default function Residential() {
   const pricingPlans = [
@@ -72,7 +73,7 @@ export default function Residential() {
             ご家庭のエアコンを徹底的に分解洗浄。カビや汚れを根こそぎ除去し、清潔で快適な空気を取り戻します。
           </p>
           
-          {/* 特典バッジをさらに強調 */}
+          {/* 特典バッジ */}
           <div className="inline-flex flex-col sm:flex-row items-center gap-3 bg-white/10 backdrop-blur-md border border-white/20 p-1 rounded-2xl sm:rounded-full shadow-2xl animate-in fade-in zoom-in duration-700">
             <div className="bg-accent text-accent-foreground px-6 py-2.5 rounded-full font-black text-sm md:text-base flex items-center shadow-lg">
               <Gift className="mr-2 h-5 w-5 animate-bounce" />
@@ -103,7 +104,7 @@ export default function Residential() {
           <div className="grid md:grid-cols-2 gap-8 mb-16 max-w-5xl mx-auto">
             {pricingPlans.map((plan, index) => (
               <div key={index} className="bg-white rounded-2xl border border-border shadow-sm overflow-hidden flex flex-col relative">
-                {/* 特典ラベルをカード上部に追加 */}
+                {/* 特典ラベル */}
                 <div className="absolute top-4 right-4 z-10">
                   <div className="bg-accent text-accent-foreground text-[10px] font-black px-2 py-1 rounded shadow-sm flex items-center gap-1">
                     <Sparkles className="h-3 w-3" />
@@ -136,7 +137,7 @@ export default function Residential() {
                     ))}
                   </div>
 
-                  {/* 特典セクションを独立させて強調 */}
+                  {/* 特典セクション */}
                   <div className="mt-auto bg-accent/5 border border-accent/20 rounded-xl p-4 flex items-center gap-3">
                     <div className="bg-accent text-accent-foreground p-2 rounded-lg">
                       <Sparkles className="h-5 w-5" />
@@ -170,7 +171,7 @@ export default function Residential() {
             </div>
           </div>
 
-          {/* 予約CTA - 特典を再強調 */}
+          {/* 予約CTA - 改行位置とブランド表記を修正 */}
           <div className="mt-16 max-w-2xl mx-auto">
             <div className="bg-white p-8 rounded-3xl border-2 border-accent shadow-xl text-center relative overflow-hidden">
               {/* 背景の装飾 */}
@@ -182,8 +183,9 @@ export default function Residential() {
                 今なら無料特典付き！
               </div>
               <h3 className="text-xl md:text-2xl font-black mb-2">ご予約・お問い合わせはこちら</h3>
-              <p className="text-sm font-bold text-primary mb-8">
-                公式HP・LINEからの予約で「防カビ・抗菌コート」を無料で施工いたします。
+              <p className="text-sm font-bold text-primary mb-8 leading-relaxed">
+                公式HP・LINEからの予約で<br className="hidden sm:block" />
+                「防カビ・抗菌コート」を無料で施工いたします。
               </p>
               
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 relative z-10">
@@ -237,7 +239,7 @@ export default function Residential() {
       <section className="py-16 md:py-24">
         <div className="container text-center">
           <h2 className="text-2xl md:text-4xl font-black mb-8 leading-tight">
-            エアコンクリーニングの<br />
+            <LogoText />の<br />
             <span className="text-primary">ご予約はこちら</span>
           </h2>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">

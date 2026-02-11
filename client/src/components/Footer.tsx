@@ -1,5 +1,6 @@
 import { Link } from "wouter";
-import { Phone, Mail, MapPin, Clock } from "lucide-react";
+import { Phone, Mail, MapPin } from "lucide-react";
+import LogoText from "./LogoText";
 
 export default function Footer() {
   return (
@@ -8,7 +9,7 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
           {/* 会社情報 */}
           <div className="space-y-6">
-            <h3 className="text-2xl font-black">テバdeクリーン</h3>
+            <LogoText className="text-2xl" />
             <p className="text-base opacity-90 leading-relaxed">
               沖縄県内のエアコンクリーニング専門店。家庭用から業務用まで、プロの技術で丁寧にクリーニングいたします。
             </p>
@@ -100,7 +101,7 @@ export default function Footer() {
         </div>
 
         <div className="mt-16 pt-8 border-t border-primary-foreground/20 text-center text-sm opacity-80">
-          <p>&copy; {new Date().getFullYear()} テバdeクリーン. All rights reserved.</p>
+          <p>&copy; {new Date().getFullYear()} <LogoText />. All rights reserved.</p>
         </div>
       </div>
     </footer>
