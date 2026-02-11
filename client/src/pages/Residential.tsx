@@ -1,6 +1,6 @@
 import { Link } from "wouter";
 import { Button } from "@/components/ui/button";
-import { CheckCircle2, ArrowRight, Sparkles, Shield, Zap, MessageCircle, ClipboardList } from "lucide-react";
+import { CheckCircle2, ArrowRight, Sparkles, Shield, Zap, MessageCircle, ClipboardList, Trash2 } from "lucide-react";
 
 export default function Residential() {
   const pricingPlans = [
@@ -28,7 +28,7 @@ export default function Residential() {
         "お掃除機能付きユニットの分解",
         "内部の徹底高圧洗浄",
         "熱交換器・ファンの洗浄",
-        "ダストボックス等の清掃",
+        "ドレンパンの洗浄",
         "動作確認",
         "【特典】防カビ・抗菌コート無料"
       ],
@@ -41,13 +41,19 @@ export default function Residential() {
       name: "完全分解洗浄", 
       price: "+8,000円", 
       description: "ドレンパンと送風ファンを外して徹底洗浄！",
-      icon: <Zap className="h-6 w-6 text-primary" />
+      icon: <Zap className="h-5 w-5 text-primary" />
     },
     { 
       name: "室外機洗浄", 
       price: "+3,000円", 
       description: "電気代節約や故障予防に。",
-      icon: <Shield className="h-6 w-6 text-primary" />
+      icon: <Shield className="h-5 w-5 text-primary" />
+    },
+    { 
+      name: "ダストボックス清掃", 
+      price: "+2,000円", 
+      description: "お掃除機能付きのゴミ箱を綺麗に。",
+      icon: <Trash2 className="h-5 w-5 text-primary" />
     }
   ];
 
@@ -111,7 +117,7 @@ export default function Residential() {
                     </div>
                   </div>
                   
-                  <div className="space-y-4 mb-10 flex-grow">
+                  <div className="space-y-4 flex-grow">
                     {plan.features.map((feature, i) => (
                       <div key={i} className="flex items-start gap-3">
                         <CheckCircle2 className="h-5 w-5 text-primary flex-shrink-0 mt-0.5" />
@@ -121,44 +127,51 @@ export default function Residential() {
                       </div>
                     ))}
                   </div>
-
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                    <Link href="/line">
-                      <Button className="w-full bg-[#06C755] hover:bg-[#05b34c] text-white text-sm font-bold py-6 shadow-md">
-                        <MessageCircle className="mr-1.5 h-5 w-5" />
-                        LINE予約
-                      </Button>
-                    </Link>
-                    <Link href="/booking">
-                      <Button variant="outline" className="w-full border-primary text-primary text-sm font-bold py-6 shadow-sm">
-                        <ClipboardList className="mr-1.5 h-5 w-5" />
-                        フォーム予約
-                      </Button>
-                    </Link>
-                  </div>
                 </div>
               </div>
             ))}
           </div>
 
           {/* オプション */}
-          <div className="max-w-4xl mx-auto">
+          <div className="max-w-5xl mx-auto">
             <h3 className="text-xl md:text-2xl font-black mb-10 text-center">
               ✨ おすすめオプション
             </h3>
-            <div className="grid sm:grid-cols-2 gap-6">
+            <div className="grid sm:grid-cols-3 gap-4">
               {options.map((option, index) => (
-                <div key={index} className="bg-white rounded-2xl p-8 border-2 border-primary/10 shadow-xl hover:border-primary/30 transition-all group">
-                  <div className="flex items-center gap-4 mb-5">
-                    <div className="bg-primary/10 p-4 rounded-2xl text-primary group-hover:scale-110 transition-transform">
-                      {option.icon}
-                    </div>
-                    <h4 className="font-black text-xl">{option.name}</h4>
+                <div key={index} className="bg-white rounded-xl p-5 border border-border shadow-sm hover:border-primary/20 transition-all flex flex-col items-center text-center">
+                  <div className="bg-primary/5 p-3 rounded-full text-primary mb-3">
+                    {option.icon}
                   </div>
-                  <p className="text-base text-muted-foreground mb-6 leading-relaxed">{option.description}</p>
-                  <div className="text-3xl font-black text-primary">{option.price}</div>
+                  <h4 className="font-black text-base mb-2">{option.name}</h4>
+                  <p className="text-xs text-muted-foreground mb-4 leading-relaxed">{option.description}</p>
+                  <div className="text-xl font-black text-primary mt-auto">{option.price}</div>
                 </div>
               ))}
+            </div>
+          </div>
+
+          {/* 予約CTA - オプションの直後に配置 */}
+          <div className="mt-16 max-w-2xl mx-auto">
+            <div className="bg-muted/30 p-8 rounded-3xl border border-dashed border-primary/20 text-center">
+              <h3 className="text-xl font-black mb-6">ご予約・お問い合わせはこちら</h3>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <Link href="/line">
+                  <Button className="w-full bg-[#06C755] hover:bg-[#05b34c] text-white text-base font-bold py-7 shadow-lg">
+                    <MessageCircle className="mr-2 h-6 w-6" />
+                    LINEで予約
+                  </Button>
+                </Link>
+                <Link href="/booking">
+                  <Button variant="outline" className="w-full border-primary text-primary text-base font-bold py-7 shadow-sm bg-white">
+                    <ClipboardList className="mr-2 h-6 w-6" />
+                    フォーム予約
+                  </Button>
+                </Link>
+              </div>
+              <p className="mt-4 text-xs text-muted-foreground">
+                ※お見積もりは無料です。お気軽にご相談ください。
+              </p>
             </div>
           </div>
         </div>
@@ -189,16 +202,13 @@ export default function Residential() {
         </div>
       </section>
 
-      {/* CTA */}
+      {/* 最終CTA */}
       <section className="py-16 md:py-24">
         <div className="container text-center">
           <h2 className="text-2xl md:text-4xl font-black mb-8 leading-tight">
             エアコンクリーニングの<br />
             <span className="text-primary">ご予約はこちら</span>
           </h2>
-          <p className="text-base text-muted-foreground mb-10 max-w-2xl mx-auto leading-relaxed">
-            お見積もりは無料です。LINEまたはフォームからお気軽にお問い合わせください。
-          </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link href="/line">
               <Button size="lg" className="bg-[#06C755] hover:bg-[#05b34c] text-white text-lg font-bold h-16 px-12 shadow-xl w-full sm:w-auto">
