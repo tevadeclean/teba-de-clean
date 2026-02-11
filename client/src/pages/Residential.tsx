@@ -1,6 +1,6 @@
 import { Link } from "wouter";
 import { Button } from "@/components/ui/button";
-import { CheckCircle2, ArrowRight, Sparkles, Shield, Zap, MessageCircle, ClipboardList } from "lucide-react";
+import { CheckCircle2, ArrowRight, Sparkles, Shield, Zap, MessageCircle, ClipboardList, Gift } from "lucide-react";
 
 export default function Residential() {
   const pricingPlans = [
@@ -14,8 +14,7 @@ export default function Residential() {
         "熱交換器（フィン）の高圧洗浄",
         "送風ファンの洗浄",
         "ドレンパンの洗浄",
-        "動作確認",
-        "【特典】防カビ・抗菌コート無料"
+        "動作確認"
       ],
       discount: "2台目から1,000円引き"
     },
@@ -29,8 +28,7 @@ export default function Residential() {
         "内部の徹底高圧洗浄",
         "熱交換器・ファンの洗浄",
         "ドレンパンの洗浄",
-        "動作確認",
-        "【特典】防カビ・抗菌コート無料"
+        "動作確認"
       ],
       discount: "2台目から1,000円引き"
     }
@@ -65,19 +63,29 @@ export default function Residential() {
   return (
     <div className="w-full bg-background">
       {/* ヒーローセクション */}
-      <section className="bg-primary text-primary-foreground py-12 md:py-20">
-        <div className="container">
+      <section className="bg-primary text-primary-foreground py-12 md:py-20 relative overflow-hidden">
+        <div className="container relative z-10">
           <h1 className="text-3xl md:text-5xl font-black mb-6 leading-tight">
             家庭用エアコンクリーニング
           </h1>
           <p className="text-base md:text-lg max-w-2xl opacity-90 leading-relaxed mb-8">
             ご家庭のエアコンを徹底的に分解洗浄。カビや汚れを根こそぎ除去し、清潔で快適な空気を取り戻します。
           </p>
-          <div className="inline-flex items-center bg-accent text-accent-foreground px-5 py-2 rounded-full font-bold text-sm md:text-base shadow-lg">
-            <Sparkles className="mr-2 h-5 w-5" />
-            公式HP・LINE予約限定：防カビ・抗菌コート無料！
+          
+          {/* 特典バッジをさらに強調 */}
+          <div className="inline-flex flex-col sm:flex-row items-center gap-3 bg-white/10 backdrop-blur-md border border-white/20 p-1 rounded-2xl sm:rounded-full shadow-2xl animate-in fade-in zoom-in duration-700">
+            <div className="bg-accent text-accent-foreground px-6 py-2.5 rounded-full font-black text-sm md:text-base flex items-center shadow-lg">
+              <Gift className="mr-2 h-5 w-5 animate-bounce" />
+              限定特典
+            </div>
+            <div className="px-4 py-2 text-white font-bold text-sm md:text-base">
+              公式HP・LINE予約で <span className="text-accent text-lg md:text-xl underline decoration-2 underline-offset-4">防カビ・抗菌コート無料！</span>
+            </div>
           </div>
         </div>
+        
+        {/* 装飾的な背景要素 */}
+        <div className="absolute top-0 right-0 -translate-y-1/4 translate-x-1/4 w-96 h-96 bg-accent/20 rounded-full blur-3xl"></div>
       </section>
 
       {/* 料金プラン */}
@@ -94,7 +102,15 @@ export default function Residential() {
 
           <div className="grid md:grid-cols-2 gap-8 mb-16 max-w-5xl mx-auto">
             {pricingPlans.map((plan, index) => (
-              <div key={index} className="bg-white rounded-2xl border border-border shadow-sm overflow-hidden flex flex-col">
+              <div key={index} className="bg-white rounded-2xl border border-border shadow-sm overflow-hidden flex flex-col relative">
+                {/* 特典ラベルをカード上部に追加 */}
+                <div className="absolute top-4 right-4 z-10">
+                  <div className="bg-accent text-accent-foreground text-[10px] font-black px-2 py-1 rounded shadow-sm flex items-center gap-1">
+                    <Sparkles className="h-3 w-3" />
+                    コート無料対象
+                  </div>
+                </div>
+
                 <div className="bg-muted/50 p-6 border-b border-border">
                   <h3 className="text-lg md:text-xl font-black mb-1">{plan.name}</h3>
                   <p className="text-muted-foreground text-sm">{plan.description}</p>
@@ -111,15 +127,24 @@ export default function Residential() {
                     </div>
                   </div>
                   
-                  <div className="space-y-4 flex-grow">
+                  <div className="space-y-4 mb-8">
                     {plan.features.map((feature, i) => (
                       <div key={i} className="flex items-start gap-3">
                         <CheckCircle2 className="h-5 w-5 text-primary flex-shrink-0 mt-0.5" />
-                        <span className={feature.includes("特典") ? "text-primary font-bold" : "text-foreground/90"}>
-                          {feature}
-                        </span>
+                        <span className="text-foreground/90">{feature}</span>
                       </div>
                     ))}
+                  </div>
+
+                  {/* 特典セクションを独立させて強調 */}
+                  <div className="mt-auto bg-accent/5 border border-accent/20 rounded-xl p-4 flex items-center gap-3">
+                    <div className="bg-accent text-accent-foreground p-2 rounded-lg">
+                      <Sparkles className="h-5 w-5" />
+                    </div>
+                    <div>
+                      <div className="text-[10px] font-bold text-accent-foreground/70 leading-none mb-1">公式HP・LINE予約限定</div>
+                      <div className="text-sm font-black text-primary">防カビ・抗菌コート無料！</div>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -145,11 +170,23 @@ export default function Residential() {
             </div>
           </div>
 
-          {/* 予約CTA - オプションの直後に配置 */}
+          {/* 予約CTA - 特典を再強調 */}
           <div className="mt-16 max-w-2xl mx-auto">
-            <div className="bg-muted/30 p-8 rounded-3xl border border-dashed border-primary/20 text-center">
-              <h3 className="text-xl font-black mb-6">ご予約・お問い合わせはこちら</h3>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div className="bg-white p-8 rounded-3xl border-2 border-accent shadow-xl text-center relative overflow-hidden">
+              {/* 背景の装飾 */}
+              <div className="absolute top-0 right-0 p-2">
+                <Sparkles className="h-12 w-12 text-accent/20" />
+              </div>
+              
+              <div className="inline-block bg-accent text-accent-foreground text-xs font-black px-4 py-1 rounded-full mb-4 shadow-sm">
+                今なら無料特典付き！
+              </div>
+              <h3 className="text-xl md:text-2xl font-black mb-2">ご予約・お問い合わせはこちら</h3>
+              <p className="text-sm font-bold text-primary mb-8">
+                公式HP・LINEからの予約で「防カビ・抗菌コート」を無料で施工いたします。
+              </p>
+              
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 relative z-10">
                 <Link href="/line">
                   <Button className="w-full bg-[#06C755] hover:bg-[#05b34c] text-white text-base font-bold py-7 shadow-lg">
                     <MessageCircle className="mr-2 h-6 w-6" />
@@ -163,7 +200,7 @@ export default function Residential() {
                   </Button>
                 </Link>
               </div>
-              <p className="mt-4 text-xs text-muted-foreground">
+              <p className="mt-6 text-xs text-muted-foreground">
                 ※お見積もりは無料です。お気軽にご相談ください。
               </p>
             </div>
