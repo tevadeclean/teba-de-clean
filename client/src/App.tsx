@@ -20,9 +20,10 @@ import BlogDetail from "./pages/BlogDetail";
 
 function Router() {
   return (
-    <div className="flex flex-col min-h-screen">
+    <div className="flex flex-col min-h-screen bg-background">
       <Header />
-      <main className="flex-grow">
+      {/* ヘッダーの高さ分（約80px）の余白を確保 */}
+      <main className="flex-grow pt-[80px]">
         <Switch>
           <Route path={"/"} component={Home} />
           <Route path={"/residential"} component={Residential} />
@@ -36,7 +37,6 @@ function Router() {
           <Route path={"/blog"} component={Blog} />
           <Route path={"/blog/:id"} component={BlogDetail} />
           <Route path={"/404"} component={NotFound} />
-          {/* Final fallback route */}
           <Route component={NotFound} />
         </Switch>
       </main>
