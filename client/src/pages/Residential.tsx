@@ -1,6 +1,6 @@
 import { Link } from "wouter";
 import { Button } from "@/components/ui/button";
-import { CheckCircle2, ArrowRight, Sparkles, Shield, Zap, MessageCircle, ClipboardList, Trash2 } from "lucide-react";
+import { CheckCircle2, ArrowRight, Sparkles, Shield, Zap, MessageCircle, ClipboardList } from "lucide-react";
 
 export default function Residential() {
   const pricingPlans = [
@@ -48,12 +48,6 @@ export default function Residential() {
       price: "+3,000円", 
       description: "電気代節約や故障予防に。",
       icon: <Shield className="h-5 w-5 text-primary" />
-    },
-    { 
-      name: "ダストボックス清掃", 
-      price: "+2,000円", 
-      description: "お掃除機能付きのゴミ箱を綺麗に。",
-      icon: <Trash2 className="h-5 w-5 text-primary" />
     }
   ];
 
@@ -133,13 +127,13 @@ export default function Residential() {
           </div>
 
           {/* オプション */}
-          <div className="max-w-5xl mx-auto">
+          <div className="max-w-4xl mx-auto">
             <h3 className="text-xl md:text-2xl font-black mb-10 text-center">
               ✨ おすすめオプション
             </h3>
-            <div className="grid sm:grid-cols-3 gap-4">
+            <div className="grid sm:grid-cols-2 gap-6">
               {options.map((option, index) => (
-                <div key={index} className="bg-white rounded-xl p-5 border border-border shadow-sm hover:border-primary/20 transition-all flex flex-col items-center text-center">
+                <div key={index} className="bg-white rounded-xl p-6 border border-border shadow-sm hover:border-primary/20 transition-all flex flex-col items-center text-center">
                   <div className="bg-primary/5 p-3 rounded-full text-primary mb-3">
                     {option.icon}
                   </div>
