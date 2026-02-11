@@ -4,6 +4,13 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Phone, Mail, MapPin, Clock, MessageCircle, ArrowRight, Sparkles } from "lucide-react";
 
 export default function Contact() {
+  const areas = [
+    "那覇市", "浦添市", "宜野湾市", "沖縄市", "うるま市", "糸満市", "豊見城市", "南城市",
+    "島尻郡南風原町", "島尻郡与那原町", "島尻郡八重瀬町",
+    "中頭郡北中城村", "中頭郡中城村", "中頭郡西原町", "中頭郡嘉手納町", "中頭郡読谷村", "中頭郡北谷町",
+    "国頭郡恩納村", "国頭郡宜野座村", "国頭郡金武町"
+  ];
+
   return (
     <div className="w-full">
       {/* ヒーロー */}
@@ -70,50 +77,6 @@ export default function Contact() {
                   </p>
                 </CardContent>
               </Card>
-
-              <Card className="border-2 hover:border-secondary transition-colors">
-                <CardContent className="p-10">
-                  <div className="flex items-start gap-5 mb-8">
-                    <div className="w-14 h-14 rounded-full bg-secondary/10 flex items-center justify-center flex-shrink-0">
-                      <Mail className="h-7 w-7 text-secondary-foreground" />
-                    </div>
-                    <div>
-                      <h3 className="text-xl font-bold mb-3">メール</h3>
-                      <a href="mailto:info@tebadeclean.com" className="text-primary font-bold hover:underline break-all text-lg">
-                        info@tebadeclean.com
-                      </a>
-                      <p className="text-sm text-muted-foreground mt-4">
-                        24時間受付<br />
-                        返信は営業時間内に行います
-                      </p>
-                    </div>
-                  </div>
-                  <p className="text-muted-foreground leading-relaxed">
-                    法人様や、詳細な内容をメールで送りたい方におすすめです。
-                  </p>
-                </CardContent>
-              </Card>
-
-              <Card className="border-2 hover:border-accent transition-colors">
-                <CardContent className="p-10">
-                  <div className="flex items-start gap-5 mb-8">
-                    <div className="w-14 h-14 rounded-full bg-accent/10 flex items-center justify-center flex-shrink-0">
-                      <ArrowRight className="h-7 w-7 text-accent" />
-                    </div>
-                    <div>
-                      <h3 className="text-xl font-bold mb-3">予約フォーム</h3>
-                      <Link href="/booking">
-                        <Button className="bg-accent hover:bg-accent/90 text-accent-foreground text-lg px-8 py-6 shadow-md">
-                          フォームへ進む
-                        </Button>
-                      </Link>
-                    </div>
-                  </div>
-                  <p className="text-muted-foreground leading-relaxed">
-                    必要事項を入力するだけで、24時間いつでも予約申し込みが可能です。
-                  </p>
-                </CardContent>
-              </Card>
             </div>
 
             {/* 店舗情報 */}
@@ -155,12 +118,32 @@ export default function Contact() {
                       <div>
                         <h3 className="font-bold text-lg mb-2">対応エリア</h3>
                         <p className="text-muted-foreground leading-relaxed">
-                          沖縄県内全域<br />
-                          ※離島については別途ご相談ください
+                          沖縄本島内（詳細は下記リスト参照）<br />
+                          ※離島についても団体様などは対応可能です。お気軽にご相談ください。
                         </p>
                       </div>
                     </div>
                   </div>
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* 対応エリア詳細 */}
+            <Card className="mb-16 border-2 border-primary/10">
+              <CardContent className="p-10 md:p-16">
+                <h2 className="text-2xl md:text-3xl font-black mb-10">主な対応エリア</h2>
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-y-6 gap-x-4">
+                  {areas.map((area, index) => (
+                    <div key={index} className="flex items-center gap-3 text-base">
+                      <div className="w-2 h-2 rounded-full bg-primary flex-shrink-0"></div>
+                      <span className="font-medium">{area}</span>
+                    </div>
+                  ))}
+                </div>
+                <div className="mt-12 pt-8 border-t border-dashed">
+                  <p className="text-muted-foreground leading-relaxed">
+                    ※上記以外のエリアや離島にお住まいの方も、団体様（複数台施工）などの場合は対応可能な場合がございます。まずはお気軽にお問い合わせください。
+                  </p>
                 </div>
               </CardContent>
             </Card>
