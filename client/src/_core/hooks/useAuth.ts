@@ -42,10 +42,17 @@ export function useAuth(options?: UseAuthOptions) {
   }, [logoutMutation, utils]);
 
   const state = useMemo(() => {
-    localStorage.setItem(
-      "manus-runtime-user-info",
-      JSON.stringify(meQuery.data)
-    );
+    try {
+      if (typeof window !== "undefined" && meQuery.data) {
+        localStorage.setItem(
+          "manus-runtime-user-info",
+          JSON.stringify(meQuery.data)
+        );
+      }
+    } catch (e) {
+      console.warn("Failed to save user info to localStorage", e);
+    }
+    
     return {
       user: meQuery.data ?? null,
       loading: meQuery.isLoading || logoutMutation.isPending,
@@ -65,9 +72,17 @@ export function useAuth(options?: UseAuthOptions) {
     if (meQuery.isLoading || logoutMutation.isPending) return;
     if (state.user) return;
     if (typeof window === "undefined") return;
-    if (window.location.pathname === redirectPath) return;
-
-    window.location.href = redirectPath
+    
+    // 既にリダイレクト先URLにいる場合は何もしない
+    try {
+      const currentPath = window.location.pathname;
+      const loginUrl = new URL(redirectPath, window.location.origin);
+      if (currentPath === loginUrl.pathname) return;
+      
+      window.location.href = redirectPath;
+    } catch (e) {
+      console.error("Auth redirect failed", e);
+    }
   }, [
     redirectOnUnauthenticated,
     redirectPath,
