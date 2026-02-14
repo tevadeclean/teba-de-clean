@@ -18,7 +18,9 @@ export default function Admin() {
   });
 
   const utils = trpc.useUtils();
-  const { data: blogPosts, isLoading: postsLoading } = trpc.blog.listAll.useQuery();
+  const { data: blogPosts, isLoading: postsLoading } = trpc.blog.listAll.useQuery(undefined, {
+    enabled: !!user && user.role === 'admin',
+  });
   
   const createMutation = trpc.blog.create.useMutation({
     onSuccess: () => {
