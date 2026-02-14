@@ -11,6 +11,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from 
 import { Loader2, Plus, Edit, Trash2, Eye, EyeOff, LogOut, LayoutDashboard, AlertCircle } from "lucide-react";
 import { toast } from "sonner";
 import { Link } from "wouter";
+import { getLoginUrl } from "@/const";
 
 export default function Admin() {
   // 自動リダイレクトを完全に無効化
@@ -126,7 +127,7 @@ export default function Admin() {
     );
   }
 
-  // 未認証または管理者でない場合：自動リダイレクトせず、この画面でボタンを出す
+  // 未認証または管理者でない場合
   if (!isAuthenticated || !isAdmin) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-muted/30 p-4">
@@ -142,10 +143,10 @@ export default function Admin() {
               管理画面にアクセスするには、管理者アカウントでのログインが必要です。
             </p>
             <div className="flex flex-col gap-3">
-              {/* URL生成を使わず、直接パスを指定する */}
-              <a href="/api/oauth/callback?code=auth&state=auth" className="w-full">
-                <Button className="w-full">ログイン画面へ</Button>
-              </a>
+              {/* 正しいログインURLを取得して遷移する */}
+              <Button onClick={() => window.location.href = getLoginUrl()} className="w-full">
+                ログイン画面へ
+              </Button>
               <Link href="/">
                 <Button variant="ghost" className="w-full">ホームに戻る</Button>
               </Link>
