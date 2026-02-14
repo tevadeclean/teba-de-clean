@@ -31,6 +31,7 @@ export const appRouter = router({
           email: "admin@teva-de-clean.jp",
           loginMethod: "password",
           lastSignedIn: new Date(),
+          role: 'admin', // 明示的に管理者権限を付与
         });
 
         // セッショントークンの作成
