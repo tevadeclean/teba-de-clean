@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useAuth } from "@/_core/hooks/useAuth";
 import { trpc } from "@/lib/trpc";
 import { Button } from "@/components/ui/button";
@@ -11,6 +11,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from 
 import { Loader2, Plus, Edit, Trash2, Eye, EyeOff, LogOut, LayoutDashboard, AlertCircle } from "lucide-react";
 import { toast } from "sonner";
 import { Link } from "wouter";
+import { getLoginUrl } from "@/const";
 
 export default function Admin() {
   // リダイレクトを一旦オフにして、コンポーネント内で安全に制御する
@@ -142,7 +143,7 @@ export default function Admin() {
               管理画面にアクセスするには、管理者アカウントでのログインが必要です。
             </p>
             <div className="flex flex-col gap-3">
-              <Button onClick={() => window.location.href = "/api/oauth/callback?code=dummy&state=dummy" /* 実際のリダイレクト先はuseAuthのデフォルトに任せるのが安全だが、ここでは明示的にボタンを用意 */ } className="w-full">
+              <Button onClick={() => window.location.href = getLoginUrl()} className="w-full">
                 ログイン画面へ
               </Button>
               <Link href="/">

@@ -73,11 +73,11 @@ export function useAuth(options?: UseAuthOptions) {
     if (state.user) return;
     if (typeof window === "undefined") return;
     
-    // 既にリダイレクト先URLにいる場合は何もしない
     try {
       const currentPath = window.location.pathname;
-      const loginUrl = new URL(redirectPath, window.location.origin);
-      if (currentPath === loginUrl.pathname) return;
+      
+      // URLオブジェクトを使わずに単純な文字列比較と代入を行う（URLエラー回避）
+      if (currentPath === redirectPath) return;
       
       window.location.href = redirectPath;
     } catch (e) {
