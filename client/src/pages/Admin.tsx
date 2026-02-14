@@ -19,14 +19,27 @@ export default function Admin() {
 
   const utils = trpc.useUtils();
   const [password, setPassword] = useState("");
+  const [isLoggingIn, setIsLoggingIn] = useState(false);
   
   // パスワードログイン用のミューテーション
   const loginMutation = trpc.auth.loginWithPassword.useMutation({
     onSuccess: () => {
       toast.success("ログインしました");
-      refresh(); // ユーザー情報を再取得
+      // 少し待ってからリフレッシュすることで、クッキーの反映を確実にする
+      setTimeout(() => {
+        refresh();
+        setIsLoggingIn(false);
+      }, 500);
     },
-    onError: (err) => toast.error(err.message),
+    onError: (err) => {
+      setIsLoggingIn(false);
+      // JSONエラーなどの通信エラーの場合、分かりやすいメッセージを表示
+      if (err.message.includes("Unexpected end of JSON input") || err.message.includes("failed to execute 'json'")) {
+        toast.error("サーバーが準備中です。1分ほど待ってから再度お試しください。");
+      } else {
+        toast.error(err.message);
+      }
+    },
   });
 
   // ユーザーが管理者であることを確認
@@ -128,6 +141,7 @@ export default function Admin() {
 
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
+    setIsLoggingIn(true);
     loginMutation.mutate({ password });
   };
 
@@ -164,8 +178,13 @@ export default function Admin() {
                   required
                 />
               </div>
-              <Button type="submit" className="w-full" disabled={loginMutation.isPending}>
-                {loginMutation.isPending ? "認証中..." : "ログイン"}
+              <Button type="submit" className="w-full" disabled={isLoggingIn}>
+                {isLoggingIn ? (
+                  <>
+                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                    認証中...
+                  </>
+                ) : "ログイン"}
               </Button>
             </form>
             <div className="text-center">
