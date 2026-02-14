@@ -1,7 +1,6 @@
-import { getLoginUrl } from "@/const";
 import { trpc } from "@/lib/trpc";
 import { TRPCClientError } from "@trpc/client";
-import { useCallback, useEffect, useMemo } from "react";
+import { useCallback, useMemo } from "react";
 
 type UseAuthOptions = {
   redirectOnUnauthenticated?: boolean;
@@ -9,8 +8,7 @@ type UseAuthOptions = {
 };
 
 export function useAuth(options?: UseAuthOptions) {
-  const { redirectOnUnauthenticated = false, redirectPath = getLoginUrl() } =
-    options ?? {};
+  // redirectOnUnauthenticated は将来のために残すが、現在は何もしない
   const utils = trpc.useUtils();
 
   const meQuery = trpc.auth.me.useQuery(undefined, {
@@ -50,7 +48,7 @@ export function useAuth(options?: UseAuthOptions) {
         );
       }
     } catch (e) {
-      console.warn("Failed to save user info to localStorage", e);
+      // Ignore localStorage errors
     }
     
     return {
@@ -67,29 +65,8 @@ export function useAuth(options?: UseAuthOptions) {
     logoutMutation.isPending,
   ]);
 
-  useEffect(() => {
-    if (!redirectOnUnauthenticated) return;
-    if (meQuery.isLoading || logoutMutation.isPending) return;
-    if (state.user) return;
-    if (typeof window === "undefined") return;
-    
-    try {
-      const currentPath = window.location.pathname;
-      
-      // URLオブジェクトを使わずに単純な文字列比較と代入を行う（URLエラー回避）
-      if (currentPath === redirectPath) return;
-      
-      window.location.href = redirectPath;
-    } catch (e) {
-      console.error("Auth redirect failed", e);
-    }
-  }, [
-    redirectOnUnauthenticated,
-    redirectPath,
-    logoutMutation.isPending,
-    meQuery.isLoading,
-    state.user,
-  ]);
+  // 自動リダイレクト処理を完全に削除
+  // useEffect(() => { ... }) を削除
 
   return {
     ...state,
