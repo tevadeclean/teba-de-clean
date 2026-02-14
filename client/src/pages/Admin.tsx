@@ -8,20 +8,28 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
-import { Loader2, Plus, Edit, Trash2, Eye, EyeOff, LogOut, LayoutDashboard, AlertCircle } from "lucide-react";
+import { Loader2, Plus, Edit, Trash2, Eye, EyeOff, LogOut, LayoutDashboard, Lock } from "lucide-react";
 import { toast } from "sonner";
 import { Link } from "wouter";
-import { getLoginUrl } from "@/const";
 
 export default function Admin() {
-  // 自動リダイレクトを完全に無効化
-  const { user, loading: authLoading, logout, isAuthenticated } = useAuth({
+  const { user, loading: authLoading, logout, isAuthenticated, refresh } = useAuth({
     redirectOnUnauthenticated: false,
   });
 
   const utils = trpc.useUtils();
+  const [password, setPassword] = useState("");
   
-  // ユーザーが管理者であることを確認してからクエリを有効にする
+  // パスワードログイン用のミューテーション
+  const loginMutation = trpc.auth.loginWithPassword.useMutation({
+    onSuccess: () => {
+      toast.success("ログインしました");
+      refresh(); // ユーザー情報を再取得
+    },
+    onError: (err) => toast.error(err.message),
+  });
+
+  // ユーザーが管理者であることを確認
   const isAdmin = !!user && user.role === 'admin';
   
   const { data: blogPosts, isLoading: postsLoading, error: postsError } = trpc.blog.listAll.useQuery(undefined, {
@@ -118,6 +126,11 @@ export default function Admin() {
     }
   };
 
+  const handleLogin = (e: React.FormEvent) => {
+    e.preventDefault();
+    loginMutation.mutate({ password });
+  };
+
   // 認証チェック中
   if (authLoading) {
     return (
@@ -127,31 +140,37 @@ export default function Admin() {
     );
   }
 
-  // 未認証または管理者でない場合
+  // 未認証または管理者でない場合：パスワード入力画面を表示
   if (!isAuthenticated || !isAdmin) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-muted/30 p-4">
         <Card className="max-w-md w-full">
           <CardHeader className="text-center">
             <div className="mx-auto w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mb-4">
-              <AlertCircle className="h-6 w-6 text-primary" />
+              <Lock className="h-6 w-6 text-primary" />
             </div>
-            <CardTitle className="text-xl">管理者認証が必要です</CardTitle>
+            <CardTitle className="text-xl">管理者ログイン</CardTitle>
           </CardHeader>
-          <CardContent className="text-center space-y-6">
-            <p className="text-muted-foreground">
-              管理画面にアクセスするには、管理者アカウントでのログインが必要です。
-            </p>
-            <div className="flex flex-col gap-3">
-              {/* 最も確実な <a> タグ形式に変更。JavaScriptのイベントを介さず直接遷移させる */}
-              <a 
-                href={getLoginUrl()} 
-                className="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2 w-full"
-              >
-                ログイン画面へ
-              </a>
+          <CardContent className="space-y-6">
+            <form onSubmit={handleLogin} className="space-y-4">
+              <div className="space-y-2">
+                <Label htmlFor="password">合言葉（パスワード）</Label>
+                <Input 
+                  id="password" 
+                  type="password" 
+                  value={password} 
+                  onChange={(e) => setPassword(e.target.value)}
+                  placeholder="パスワードを入力"
+                  required
+                />
+              </div>
+              <Button type="submit" className="w-full" disabled={loginMutation.isPending}>
+                {loginMutation.isPending ? "認証中..." : "ログイン"}
+              </Button>
+            </form>
+            <div className="text-center">
               <Link href="/">
-                <Button variant="ghost" className="w-full">ホームに戻る</Button>
+                <Button variant="ghost" className="text-sm">ホームに戻る</Button>
               </Link>
             </div>
           </CardContent>

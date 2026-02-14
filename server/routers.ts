@@ -1,15 +1,51 @@
-import { COOKIE_NAME } from "@shared/const";
+import { COOKIE_NAME, ONE_YEAR_MS } from "@shared/const";
 import { getSessionCookieOptions } from "./_core/cookies";
 import { systemRouter } from "./_core/systemRouter";
 import { publicProcedure, protectedProcedure, router } from "./_core/trpc";
 import { z } from "zod";
 import * as db from "./db";
 import { notifyOwner } from "./_core/notification";
+import { sdk } from "./_core/sdk";
 
 export const appRouter = router({
   system: systemRouter,
   auth: router({
     me: publicProcedure.query(opts => opts.ctx.user),
+    
+    // パスワード認証用のエンドポイント
+    loginWithPassword: publicProcedure
+      .input(z.object({ password: z.string() }))
+      .mutation(async ({ input, ctx }) => {
+        // パスワードチェック（環境変数から取得、デフォルトは teba2026）
+        const adminPassword = process.env.ADMIN_PASSWORD || "teba2026";
+        
+        if (input.password !== adminPassword) {
+          throw new Error("パスワードが正しくありません");
+        }
+
+        // 管理者ユーザーをDBで確保（または作成）
+        const adminOpenId = "admin_user_id";
+        await db.upsertUser({
+          openId: adminOpenId,
+          name: "管理者",
+          email: "admin@teva-de-clean.jp",
+          loginMethod: "password",
+          lastSignedIn: new Date(),
+        });
+
+        // セッショントークンの作成
+        const sessionToken = await sdk.createSessionToken(adminOpenId, {
+          name: "管理者",
+          expiresInMs: ONE_YEAR_MS,
+        });
+
+        // クッキーの設定
+        const cookieOptions = getSessionCookieOptions(ctx.req);
+        ctx.res.cookie(COOKIE_NAME, sessionToken, { ...cookieOptions, maxAge: ONE_YEAR_MS });
+
+        return { success: true };
+      }),
+
     logout: publicProcedure.mutation(({ ctx }) => {
       const cookieOptions = getSessionCookieOptions(ctx.req);
       ctx.res.clearCookie(COOKIE_NAME, { ...cookieOptions, maxAge: -1 });
