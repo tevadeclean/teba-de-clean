@@ -143,10 +143,13 @@ export default function Admin() {
               管理画面にアクセスするには、管理者アカウントでのログインが必要です。
             </p>
             <div className="flex flex-col gap-3">
-              {/* 正しいログインURLを取得して遷移する */}
-              <Button onClick={() => window.location.href = getLoginUrl()} className="w-full">
+              {/* 最も確実な <a> タグ形式に変更。JavaScriptのイベントを介さず直接遷移させる */}
+              <a 
+                href={getLoginUrl()} 
+                className="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2 w-full"
+              >
                 ログイン画面へ
-              </Button>
+              </a>
               <Link href="/">
                 <Button variant="ghost" className="w-full">ホームに戻る</Button>
               </Link>
