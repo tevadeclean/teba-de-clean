@@ -13,7 +13,7 @@ import { toast } from "sonner";
 import { Link } from "wouter";
 
 export default function Admin() {
-  const { user, loading: authLoading, logout, isAuthenticated, refresh } = useAuth({
+  const { user, loading: authLoading, logout, isAuthenticated } = useAuth({
     redirectOnUnauthenticated: false,
   });
 
@@ -25,15 +25,13 @@ export default function Admin() {
   const loginMutation = trpc.auth.loginWithPassword.useMutation({
     onSuccess: () => {
       toast.success("ログインしました");
-      // 少し待ってからリフレッシュすることで、クッキーの反映を確実にする
+      // DOMの衝突（removeChildエラー）を避けるため、最も確実な「ページ全体のリロード」を行う
       setTimeout(() => {
-        refresh();
-        setIsLoggingIn(false);
-      }, 500);
+        window.location.reload();
+      }, 300);
     },
     onError: (err) => {
       setIsLoggingIn(false);
-      // JSONエラーなどの通信エラーの場合、分かりやすいメッセージを表示
       if (err.message.includes("Unexpected end of JSON input") || err.message.includes("failed to execute 'json'")) {
         toast.error("サーバーが準備中です。1分ほど待ってから再度お試しください。");
       } else {
