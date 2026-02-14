@@ -66,6 +66,11 @@ export default function Footer() {
                   <span className="hover:text-accent transition-colors cursor-pointer">予約フォーム</span>
                 </Link>
               </li>
+              <li>
+                <Link href="/admin">
+                  <span className="hover:text-accent transition-colors cursor-pointer">管理画面</span>
+                </Link>
+              </li>
             </ul>
           </div>
 
