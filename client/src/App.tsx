@@ -18,7 +18,7 @@ import FAQ from "./pages/FAQ";
 import Contact from "./pages/Contact";
 import Blog from "./pages/Blog";
 import BlogDetail from "./pages/BlogDetail";
-import Admin from "./pages/Admin";
+
 
 function Router() {
   return (
@@ -39,7 +39,7 @@ function Router() {
           <Route path={"/contact"} component={Contact} />
           <Route path={"/blog"} component={Blog} />
           <Route path={"/blog/:id"} component={BlogDetail} />
-          <Route path={"/admin"} component={Admin} />
+
           <Route path={"/404"} component={NotFound} />
           <Route component={NotFound} />
         </Switch>
