@@ -6,6 +6,7 @@ import { z } from "zod";
 import * as db from "./db";
 import { notifyOwner } from "./_core/notification";
 import { sdk } from "./_core/sdk";
+import { getSortedPostsData, getPostData } from "./lib/posts";
 
 export const appRouter = router({
   system: systemRouter,
@@ -114,91 +115,16 @@ export const appRouter = router({
       }),
   }),
 
-  // 作業実績ブログ
+  // Markdownベースのブログ
   blog: router({
-    list: publicProcedure
-      .input(z.object({
-        category: z.string().optional(),
-      }).optional())
-      .query(async ({ input }) => {
-        return db.getPublishedBlogPosts(input?.category);
-      }),
-    
-    getById: publicProcedure
-      .input(z.object({ id: z.number() }))
-      .query(async ({ input }) => {
-        return db.getBlogPostById(input.id);
-      }),
-    
-    listAll: protectedProcedure.query(async ({ ctx }) => {
-      if (ctx.user.role !== 'admin') {
-        throw new Error('Admin only');
-      }
-      return db.getAllBlogPosts();
+    list: publicProcedure.query(async () => {
+      return getSortedPostsData();
     }),
     
-    create: protectedProcedure
-      .input(z.object({
-        title: z.string(),
-        content: z.string(),
-        category: z.enum([
-          "residential_small",
-          "residential_medium",
-          "residential_large",
-          "commercial_small",
-          "commercial_medium",
-          "commercial_large",
-        ]),
-        area: z.string().optional(),
-        price: z.number().optional(),
-        location: z.string().optional(),
-        imageUrl: z.string().optional(),
-        isPublished: z.number().optional(),
-      }))
-      .mutation(async ({ input, ctx }) => {
-        if (ctx.user.role !== 'admin') {
-          throw new Error('Admin only');
-        }
-        await db.createBlogPost(input);
-        return { success: true };
-      }),
-    
-    update: protectedProcedure
-      .input(z.object({
-        id: z.number(),
-        title: z.string().optional(),
-        content: z.string().optional(),
-        category: z.enum([
-          "residential_small",
-          "residential_medium",
-          "residential_large",
-          "commercial_small",
-          "commercial_medium",
-          "commercial_large",
-        ]).optional(),
-        area: z.string().optional(),
-        price: z.number().optional(),
-        location: z.string().optional(),
-        imageUrl: z.string().optional(),
-        isPublished: z.number().optional(),
-      }))
-      .mutation(async ({ input, ctx }) => {
-        if (ctx.user.role !== 'admin') {
-          throw new Error('Admin only');
-        }
-        const { id, ...data } = input;
-        await db.updateBlogPost(id, data);
-        return { success: true };
-      }),
-    
-    delete: protectedProcedure
-      .input(z.object({ id: z.number() }))
-      .mutation(async ({ input, ctx }) => {
-        if (ctx.user.role !== 'admin') {
-          throw new Error('Admin only');
-        }
-        await db.deleteBlogPost(input.id);
-        return { success: true };
+    get: publicProcedure
+      .input(z.object({ id: z.string() }))
+      .query(async ({ input }) => {
+        return await getPostData(input.id);
       }),
   }),
 
