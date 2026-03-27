@@ -6,9 +6,9 @@ import { Loader2, ArrowLeft, MapPin, Ruler, DollarSign } from "lucide-react";
 
 export default function BlogDetail() {
   const [, params] = useRoute("/blog/:id");
-  const postId = params?.id ? parseInt(params.id) : 0;
+  const postId = params?.id || "";
 
-  const { data: post, isLoading } = trpc.blog.getById.useQuery({ id: postId });
+  const { data: post, isLoading } = trpc.blog.get.useQuery({ id: postId });
 
   const categoryLabels: Record<string, string> = {
     residential_small: "家庭用小規模（〜20㎡）",

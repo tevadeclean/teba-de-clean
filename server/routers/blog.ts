@@ -1,13 +1,14 @@
 import { z } from "zod";
-import { t } from "../_core/trpc";
+import { publicProcedure, router } from "../_core/trpc";
 import { getSortedPostsData, getPostData } from "../lib/posts";
 
-export const blogRouter = t.router({
-  list: t.procedure
-    .query(() => {
-      return getSortedPostsData();
+export const blogRouter = router({
+  list: publicProcedure
+    .input(z.object({ category: z.string().optional() }))
+    .query(({ input }) => {
+      return getSortedPostsData(input.category);
     }),
-  get: t.procedure
+  get: publicProcedure
     .input(z.object({ id: z.string() }))
     .query(async ({ input }) => {
       return await getPostData(input.id);

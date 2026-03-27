@@ -3,7 +3,7 @@ import { trpc } from "@/lib/trpc";
 import { Star, Loader2 } from "lucide-react";
 
 export default function Testimonials() {
-  const { data: testimonials, isLoading } = trpc.testimonials.list.useQuery();
+  const { data: testimonials, isLoading } = trpc.testimonials.list.useQuery({});
 
   return (
     <div className="min-h-screen">
