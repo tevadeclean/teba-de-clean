@@ -4,14 +4,14 @@
   "compilerOptions": {
     "incremental": true,
     "tsBuildInfoFile": "./node_modules/typescript/tsbuildinfo",
-    "module": "es2022",
+    "module": "NodeNext",
     "strict": true,
     "lib": ["esnext", "dom", "dom.iterable"],
     "jsx": "preserve",
     "esModuleInterop": true,
     "skipLibCheck": true,
-    "outDir": "./dist",
-    "moduleResolution": "node",
+    
+    "moduleResolution": "NodeNext",
     "baseUrl": ".",
     "types": ["node", "vite/client"],
     "paths": {

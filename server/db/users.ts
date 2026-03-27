@@ -8,6 +8,6 @@ export const getUserByOpenId = async (openId: string): Promise<User | undefined>
   return result[0];
 };
 
-export const upsertUser = async (user: Partial<User>): Promise<void> => {
+export const upsertUser = async (user: InsertUser): Promise<void> => {
   await db.insert(users).values(user).onDuplicateKeyUpdate({ set: user });
 };

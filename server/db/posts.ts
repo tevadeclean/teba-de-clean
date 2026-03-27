@@ -1,14 +1,14 @@
 import { eq } from "drizzle-orm";
-import { posts } from "../../drizzle/schema";
+import { blogPosts } from "../../drizzle/schema";
 import { db } from "./index";
-import type { PostData } from "@shared/types";
+import type { BlogPost } from "../../drizzle/schema";
 
-export const getPostData = async (id: string): Promise<PostData | undefined> => {
-  const result = await db.select().from(posts).where(eq(posts.id, id)).limit(1);
+export const getPostData = async (id: string): Promise<BlogPost | undefined> => {
+  const result = await db.select().from(blogPosts).where(eq(blogPosts.id, id)).limit(1);
   return result[0];
 };
 
-export const getSortedPostsData = async (): Promise<PostData[]> => {
-  const result = await db.select().from(posts).orderBy(posts.date);
+export const getSortedPostsData = async (): Promise<BlogPost[]> => {
+  const result = await db.select().from(blogPosts).orderBy(blogPosts.createdAt);
   return result;
 };
