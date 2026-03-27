@@ -6,7 +6,7 @@ import { createExpressMiddleware } from "@trpc/server/adapters/express";
 
 import { appRouter } from "../routers/index.js";
 import { createContext } from "./context.js";
-import { serveStatic, setupVite } from "./vite";
+import { serveStatic, setupVite } from "./vite.js";
 
 function isPortAvailable(port: number): Promise<boolean> {
   return new Promise(resolve => {
