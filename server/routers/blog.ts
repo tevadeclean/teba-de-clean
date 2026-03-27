@@ -1,6 +1,6 @@
 import { z } from "zod";
-import { publicProcedure, router } from "../_core/trpc.js";
-import { getSortedPostsData, getPostData } from "../lib/posts.js";
+import { publicProcedure, router } from "../_core/trpc";
+import { getSortedPostsData, getPostData } from "../lib/posts";
 
 export const blogRouter = router({
   list: publicProcedure
