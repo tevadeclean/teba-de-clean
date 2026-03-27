@@ -113,7 +113,7 @@ export default function BlogDetail() {
                 <h2 className="text-2xl font-bold mb-6">作業内容</h2>
                 <div className="prose prose-lg max-w-none">
                   <div className="whitespace-pre-wrap text-muted-foreground leading-relaxed">
-                    {post.content}
+                    {post.contentHtml}
                   </div>
                 </div>
               </CardContent>
