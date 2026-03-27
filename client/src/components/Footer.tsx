@@ -13,6 +13,9 @@ export default function Footer() {
             <p className="text-base opacity-90 leading-relaxed">
               沖縄県内のエアコンクリーニング専門店。家庭用から業務用まで、プロの技術で丁寧にクリーニングいたします。
             </p>
+            <p className="text-base opacity-90 leading-relaxed">
+              店長: 儀間貴郁
+            </p>
           </div>
 
           {/* クイックリンク */}
@@ -81,8 +84,8 @@ export default function Footer() {
               <li className="flex items-start gap-3">
                 <Phone className="h-5 w-5 mt-1 flex-shrink-0" />
                 <div>
-                  <a href="tel:098-XXX-XXXX" className="hover:text-accent transition-colors font-bold">
-                    098-XXX-XXXX
+                  <a href="tel:050-1720-0053" className="hover:text-accent transition-colors font-bold">
+                    050-1720-0053
                   </a>
                   <div className="text-sm opacity-90 mt-2 space-y-1">
                     <p>平日: 9:00〜17:00</p>
@@ -93,8 +96,8 @@ export default function Footer() {
               </li>
               <li className="flex items-start gap-3">
                 <Mail className="h-5 w-5 mt-1 flex-shrink-0" />
-                <a href="mailto:info@tebadeclean.com" className="hover:text-accent transition-colors break-all">
-                  info@tebadeclean.com
+                <a href="mailto:office@teva-de-clean.jp" className="hover:text-accent transition-colors break-all">
+                  office@teva-de-clean.jp
                 </a>
               </li>
               <li className="flex items-start gap-3">
