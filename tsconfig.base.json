@@ -4,14 +4,14 @@
   "compilerOptions": {
     "incremental": true,
     "tsBuildInfoFile": "./node_modules/typescript/tsbuildinfo",
-    "module": "NodeNext",
+
     "strict": true,
     "lib": ["esnext", "dom", "dom.iterable"],
-    "jsx": "preserve",
+    "jsx": "react-jsx",
     "esModuleInterop": true,
     "skipLibCheck": true,
     
-    "moduleResolution": "bundler",
+
     "baseUrl": ".",
     "types": ["node", "vite/client"],
     "paths": {
