@@ -65,10 +65,10 @@ export default function Blog() {
                 <Link key={post.id} href={`/blog/${post.id}`}>
                   <Card className="group hover:shadow-xl transition-all cursor-pointer h-full">
                     <CardContent className="p-0">
-                      {post.imageUrl && (
+                      {post.thumbnail && (
                         <div className="aspect-video bg-muted overflow-hidden">
                           <img 
-                            src={post.imageUrl} 
+                            src={post.thumbnail} 
                             alt={post.title}
                             className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                           />

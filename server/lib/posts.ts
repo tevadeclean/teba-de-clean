@@ -34,8 +34,11 @@ const posts: PostData[] = [
   }
 ];
 
-export function getSortedPostsData(): Omit<PostData, 'contentHtml'>[] {
-  return posts.map(({ contentHtml, ...rest }) => rest).sort((a, b) => (a.date < b.date ? 1 : -1));
+export function getSortedPostsData(category?: string): Omit<PostData, 'contentHtml'>[] {
+  const filteredPosts = category
+    ? posts.filter(post => post.category === category)
+    : posts;
+  return filteredPosts.map(({ contentHtml, ...rest }) => rest).sort((a, b) => (a.date < b.date ? 1 : -1));
 }
 
 export async function getPostData(id: string): Promise<PostData> {

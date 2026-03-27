@@ -59,7 +59,9 @@ export const appRouter = router({
 
   // お客様の声
   testimonials: router({
-    list: publicProcedure.query(async () => {
+    list: publicProcedure
+      .input(z.object({ category: z.string().optional() }))
+      .query(async ({ input }) => {
       return db.getPublishedTestimonials();
     }),
     
@@ -117,8 +119,10 @@ export const appRouter = router({
 
   // Markdownベースのブログ
   blog: router({
-    list: publicProcedure.query(async () => {
-      return getSortedPostsData();
+    list: publicProcedure
+      .input(z.object({ category: z.string().optional() }))
+      .query(async ({ input }) => {
+      return getSortedPostsData(input.category);
     }),
     
     get: publicProcedure
