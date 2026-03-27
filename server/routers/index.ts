@@ -1,4 +1,4 @@
-import { router } from "../_core/trpc";
+import { router } from "../_core/trpc.js";
 import { blogRouter } from "./blog";
 
 export const appRouter = router({
