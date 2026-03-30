@@ -5,7 +5,7 @@
   "license": "MIT",
   "scripts": {
     "dev": "NODE_ENV=development tsx watch server/_core/index.ts",
-    "build": "vite build && tsc --project server/tsconfig.json && tsc-alias -p server/tsconfig.json && node dist/server/_core/index.js",
+    "build": "vite build && tsc --project server/tsconfig.json --outDir dist/server && tsc-alias -p server/tsconfig.json && node dist/server/_core/index.js",
     "start": "NODE_ENV=production node dist/index.js",
     "check": "tsc --noEmit",
     "format": "prettier --write .",
