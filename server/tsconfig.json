@@ -5,7 +5,7 @@
     "moduleResolution": "bundler",
     "outDir": "../dist/server",
     "jsx": "react-jsx",
-    "lib": ["esnext"],
+    "lib": ["esnext", "dom"],
     "types": ["node"]
   },
   "include": ["**/*"],

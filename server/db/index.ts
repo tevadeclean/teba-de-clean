@@ -3,9 +3,7 @@ import mysql from "mysql2/promise";
 import * as schema from "../../drizzle/schema";
 import { ENV } from "../_core/env";
 
-const poolConnection = mysql.createPool({
-  connectionString: ENV.databaseUrl,
-});
+const poolConnection = mysql.createPool(ENV.databaseUrl);
 
 export const db = drizzle(poolConnection, { mode: "default", schema });
 

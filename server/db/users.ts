@@ -1,7 +1,7 @@
 import { eq } from "drizzle-orm";
 import { users } from "../../drizzle/schema";
 import { db } from "./index";
-import type { User } from "../../drizzle/schema";
+import type { User, InsertUser } from "../../drizzle/schema";
 
 export const getUserByOpenId = async (openId: string): Promise<User | undefined> => {
   const result = await db.select().from(users).where(eq(users.openId, openId)).limit(1);
