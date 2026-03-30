@@ -11,6 +11,12 @@ if (!ENV.databaseUrl) {
 const client = postgres(ENV.databaseUrl);
 export const db = drizzle(client, { schema });
 
+export async function getUserByOpenId(openId: string) {
+  return await db.query.users.findFirst({
+    where: eq(schema.users.openId, openId),
+  });
+}
+
 // ユーザー関連
 export async function upsertUser(user: any) {
   return await db.insert(schema.users).values(user).onConflictDoUpdate({
