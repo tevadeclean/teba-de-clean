@@ -1,12 +1,66 @@
-import { drizzle } from "drizzle-orm/mysql2";
-import mysql from "mysql2/promise";
+import { drizzle } from "drizzle-orm/postgres-js";
+import postgres from "postgres";
 import * as schema from "../../drizzle/schema";
 import { ENV } from "../_core/env";
+import { eq } from "drizzle-orm";
 
-const poolConnection = mysql.createPool(ENV.databaseUrl);
+if (!ENV.databaseUrl) {
+  throw new Error("DATABASE_URL is not set");
+}
 
-export const db = drizzle(poolConnection, { mode: "default", schema });
+const client = postgres(ENV.databaseUrl);
+export const db = drizzle(client, { schema });
 
-export * from "./users";
-export * from "./posts";
-export * from "./testimonials";
+// ユーザー関連
+export async function upsertUser(user: any) {
+  return await db.insert(schema.users).values(user).onConflictDoUpdate({
+    target: schema.users.openId,
+    set: {
+      name: user.name,
+      email: user.email,
+      lastSignedIn: new Date(),
+      role: user.role,
+    },
+  }).returning();
+}
+
+// お客様の声関連
+export async function getPublishedTestimonials() {
+  return await db.query.testimonials.findMany({
+    where: eq(schema.testimonials.isPublished, 1),
+    orderBy: (testimonials, { desc }) => [desc(testimonials.createdAt)],
+  });
+}
+
+export async function getAllTestimonials() {
+  return await db.query.testimonials.findMany({
+    orderBy: (testimonials, { desc }) => [desc(testimonials.createdAt)],
+  });
+}
+
+export async function createTestimonial(testimonial: any) {
+  return await db.insert(schema.testimonials).values(testimonial).returning();
+}
+
+export async function updateTestimonial(id: number, data: any) {
+  return await db.update(schema.testimonials).set(data).where(eq(schema.testimonials.id, id)).returning();
+}
+
+export async function deleteTestimonial(id: number) {
+  return await db.delete(schema.testimonials).where(eq(schema.testimonials.id, id)).returning();
+}
+
+// 予約関連
+export async function createBooking(booking: any) {
+  return await db.insert(schema.bookings).values(booking).returning();
+}
+
+export async function getAllBookings() {
+  return await db.query.bookings.findMany({
+    orderBy: (bookings, { desc }) => [desc(bookings.createdAt)],
+  });
+}
+
+export async function updateBookingStatus(id: number, status: "pending" | "confirmed" | "completed" | "cancelled") {
+  return await db.update(schema.bookings).set({ status }).where(eq(schema.bookings.id, id)).returning();
+}
