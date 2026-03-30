@@ -6,6 +6,8 @@ import { z } from "zod";
 import * as db from "./db";
 import { notifyOwner } from "./_core/notification";
 import { sdk } from "./_core/sdk";
+import nodemailer from "nodemailer";
+import { ENV } from "./_core/env";
 import { getSortedPostsData, getPostData } from "./lib/posts";
 
 export const appRouter = router({
@@ -146,11 +148,57 @@ export const appRouter = router({
       .mutation(async ({ input }) => {
         await db.createBooking(input);
         
-        // オーナーに通知
+        // オーナーに通知（システム通知）
         await notifyOwner({
           title: "新しい予約が入りました",
           content: `お名前: ${input.name}\n電話番号: ${input.phone}\nサービス種別: ${input.serviceType === "residential" ? "家庭用" : "業務用"}\n希望日時: ${input.preferredDate || "未指定"}`,
         });
+
+        // メール送信処理
+        if (ENV.smtpPass) {
+          try {
+            const transporter = nodemailer.createTransport({
+              host: ENV.smtpHost,
+              port: ENV.smtpPort,
+              secure: ENV.smtpPort === 465,
+              auth: {
+                user: ENV.smtpUser,
+                pass: ENV.smtpPass,
+              },
+            });
+
+            const mailOptions = {
+              from: `"テバdeクリーン 予約システム" <${ENV.smtpUser}>`,
+              to: ENV.smtpUser, // 管理者宛て
+              replyTo: input.email || undefined, // お客様のメールアドレスを返信先に設定
+              subject: `【新規予約】${input.name}様より予約が入りました`,
+              text: `
+テバdeクリーン 予約システムよりお知らせです。
+新しい予約の申し込みがありました。
+
+■お客様情報
+お名前: ${input.name}
+電話番号: ${input.phone}
+メールアドレス: ${input.email || "未入力"}
+
+■予約内容
+サービス種別: ${input.serviceType === "residential" ? "家庭用エアコンクリーニング" : "業務用エアコンクリーニング"}
+希望日時: ${input.preferredDate || "未指定"}
+
+■その他ご要望・ご質問
+${input.message || "なし"}
+
+---
+このメールにそのまま返信すると、お客様（${input.email || "メールアドレス未入力"}）に返信できます。
+              `,
+            };
+
+            await transporter.sendMail(mailOptions);
+            console.log("予約通知メールを送信しました");
+          } catch (error) {
+            console.error("メール送信エラー:", error);
+          }
+        }
         
         return { success: true };
       }),
