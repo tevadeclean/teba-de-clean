@@ -3,7 +3,6 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Phone, Mail } from "lucide-react";
 import { Link } from "wouter";
 import { Button } from "@/components/ui/button";
-import { CheckCircle2 } from "lucide-react";
 
 export default function Booking() {
   useEffect(() => {
@@ -32,11 +31,8 @@ export default function Booking() {
       <section className="bg-gradient-to-br from-primary via-primary/90 to-primary/80 text-primary-foreground py-16 md:py-24">
         <div className="container">
           <h1 className="text-4xl md:text-5xl font-black mb-6">
-            予約フォーム
+            ご予約＆お問合せフォーム
           </h1>
-          <p className="text-lg md:text-xl max-w-3xl opacity-95">
-            エアコンクリーニングのご予約は、こちらのフォームからお申し込みください。お見積もりは無料です。
-          </p>
         </div>
       </section>
 
@@ -47,10 +43,7 @@ export default function Booking() {
               {/* Jotformフォーム */}
               <div className="lg:col-span-2">
                 <Card>
-                  <CardHeader>
-                    <CardTitle className="text-2xl">予約情報を入力</CardTitle>
-                  </CardHeader>
-                  <CardContent>
+                  <CardContent className="pt-6">
                     <iframe
                       id="JotFormIFrame-260891459121055"
                       title="テバdeクリーン ご予約＆お問合せフォーム"
@@ -79,35 +72,41 @@ export default function Booking() {
                     <CardTitle className="text-lg">その他のお問い合わせ方法</CardTitle>
                   </CardHeader>
                   <CardContent className="space-y-4">
+                    {/* LINE */}
                     <div>
+                      <Link href="/line">
+                        <Button className="w-full bg-[#00B900] hover:bg-[#00A000] text-white">
+                          LINEで予約
+                        </Button>
+                      </Link>
+                      <p className="text-xs text-muted-foreground mt-2">
+                        推奨：24時間いつでもご予約可能
+                      </p>
+                    </div>
+
+                    {/* 電話 */}
+                    <div className="border-t pt-4">
                       <div className="flex items-center gap-2 font-medium mb-2">
                         <Phone className="h-4 w-4 text-primary" />
                         <span>お電話</span>
                       </div>
-                      <a href="tel:098-XXX-XXXX" className="text-primary hover:underline">
-                        098-XXX-XXXX
+                      <a href="tel:050-1720-0053" className="text-primary hover:underline font-semibold">
+                        050-1720-0053
                       </a>
                       <p className="text-xs text-muted-foreground mt-1">
                         受付時間: 9:00〜18:00（日曜定休）
                       </p>
                     </div>
 
-                    <div>
+                    {/* メール */}
+                    <div className="border-t pt-4">
                       <div className="flex items-center gap-2 font-medium mb-2">
                         <Mail className="h-4 w-4 text-primary" />
                         <span>メール</span>
                       </div>
-                      <a href="mailto:info@tebadeclean.com" className="text-primary hover:underline text-sm">
-                        info@tebadeclean.com
+                      <a href="mailto:office@teva-de-clean.jp" className="text-primary hover:underline text-sm">
+                        office@teva-de-clean.jp
                       </a>
-                    </div>
-
-                    <div>
-                      <Link href="/line">
-                        <Button variant="outline" className="w-full">
-                          LINEで予約
-                        </Button>
-                      </Link>
                     </div>
                   </CardContent>
                 </Card>
@@ -121,7 +120,7 @@ export default function Booking() {
                     {[
                       "フォーム送信",
                       "担当者から連絡",
-                      "日程調整・見積もり",
+                      "日程調整・お見積り",
                       "クリーニング実施"
                     ].map((step, index) => (
                       <div key={index} className="flex items-start gap-3">
@@ -131,29 +130,6 @@ export default function Booking() {
                         <span className="text-sm">{step}</span>
                       </div>
                     ))}
-                  </CardContent>
-                </Card>
-
-                {/* 注意事項 */}
-                <Card>
-                  <CardHeader>
-                    <CardTitle className="text-lg">ご注意</CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <ul className="text-xs text-muted-foreground space-y-2">
-                      <li className="flex items-start gap-2">
-                        <CheckCircle2 className="h-3 w-3 mt-0.5 flex-shrink-0" />
-                        <span>お見積もりは無料です</span>
-                      </li>
-                      <li className="flex items-start gap-2">
-                        <CheckCircle2 className="h-3 w-3 mt-0.5 flex-shrink-0" />
-                        <span>繁忙期は予約が取りにくい場合があります</span>
-                      </li>
-                      <li className="flex items-start gap-2">
-                        <CheckCircle2 className="h-3 w-3 mt-0.5 flex-shrink-0" />
-                        <span>キャンセルは前日までにご連絡ください</span>
-                      </li>
-                    </ul>
                   </CardContent>
                 </Card>
               </div>
