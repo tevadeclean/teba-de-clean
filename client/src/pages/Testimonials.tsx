@@ -12,7 +12,7 @@ export default function Testimonials() {
     const fetchTestimonials = async () => {
       try {
         console.log("Fetching testimonials from direct API...");
-        const response = await fetch('/api/testimonials-direct');
+        const response = await fetch('/api/testimonials');
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
         }
