@@ -1,3 +1,5 @@
+console.log("Serverless function started.");
+//
 import "dotenv/config";
 import express from "express";
 import { createServer } from "http";
