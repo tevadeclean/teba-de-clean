@@ -33,7 +33,6 @@ export async function upsertUser(user: any) {
 
 // お客様の声関連
 export async function getPublishedTestimonials() {
-  // 実際のDBには isPublished カラムが存在しないため、全件取得するように修正
   return await db.query.testimonials.findMany({
     orderBy: (testimonials, { desc }) => [desc(testimonials.createdAt)],
   });

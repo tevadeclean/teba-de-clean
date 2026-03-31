@@ -41,15 +41,15 @@ export default function Testimonials() {
                       ))}
                     </div>
                     <p className="text-muted-foreground mb-4 leading-relaxed whitespace-pre-wrap">
-                      {(testimonial as any).content || testimonial.comment}
+                      {(testimonial as any).content}
                     </p>
                     <div className="flex items-center justify-between pt-4 border-t">
-                      <div className="font-medium">{(testimonial as any).author_name || testimonial.customerName}様</div>
+                      <div className="font-medium">{(testimonial as any).author_name || "ゲストユーザー"}様</div>
                       <div className="text-xs text-muted-foreground flex flex-col items-end gap-1">
-                        <span>{testimonial.serviceType === "residential" ? "家庭用" : "業務用"}</span>
-                        {((testimonial as any).source || testimonial.source) && (
+                        <span>{testimonial.serviceType === "commercial" ? "業務用" : "家庭用"}</span>
+                        {(testimonial as any).source && (
                           <span className="bg-accent/10 text-accent px-2 py-0.5 rounded-full text-[10px] font-bold">
-                            {(testimonial as any).source || testimonial.source}から引用
+                            {(testimonial as any).source}から引用
                           </span>
                         )}
                       </div>

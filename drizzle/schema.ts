@@ -27,15 +27,14 @@ export const serviceTypeEnum = pgEnum("service_type", ["residential", "commercia
 
 export const testimonials = pgTable("testimonials", {
   id: serial("id").primaryKey(),
-  customerName: varchar("customerName", { length: 100 }).notNull(),
-  rating: integer("rating").notNull(), // 1-5の評価
-  comment: text("comment").notNull(),
-  serviceType: serviceTypeEnum("serviceType").notNull(), // 家庭用 or 業務用
-  imageUrl: varchar("imageUrl", { length: 500 }), // 画像URL（オプション）
-  source: varchar("source", { length: 100 }).default("くらしのマーケット").notNull(), // レビュー出典
-  isPublished: integer("isPublished").default(1).notNull(), // 1: 公開, 0: 非公開
-  createdAt: timestamp("createdAt").defaultNow().notNull(),
-  updatedAt: timestamp("updatedAt").defaultNow().notNull(),
+  author_name: varchar("author_name", { length: 100 }),
+  rating: integer("rating"),
+  content: text("content"),
+  serviceType: serviceTypeEnum("serviceType"),
+  imageUrl: varchar("imageUrl", { length: 500 }),
+  source: varchar("source", { length: 100 }).default("くらしのマーケット"),
+  createdAt: timestamp("created_at").defaultNow(),
+  updatedAt: timestamp("updatedAt").defaultNow(),
 });
 
 export type Testimonial = typeof testimonials.$inferSelect;
