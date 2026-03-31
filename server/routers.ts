@@ -148,13 +148,16 @@ export const appRouter = router({
       .mutation(async ({ input }) => {
         await db.createBooking(input);
         
-        // オーナーに通知（システム通知）
+        // オーナーに通知（システム通知）- 環境変数が未設定のため一時的に無効化
+        /*
         await notifyOwner({
           title: "新しい予約が入りました",
           content: `お名前: ${input.name}\n電話番号: ${input.phone}\nサービス種別: ${input.serviceType === "residential" ? "家庭用" : "業務用"}\n希望日時: ${input.preferredDate || "未指定"}`,
         });
+        */
 
-        // メール送信処理
+        // メール送信処理 - 環境変数が未設定のため一時的に無効化
+        /*
         if (ENV.smtpPass) {
           try {
             const transporter = nodemailer.createTransport({
@@ -199,6 +202,7 @@ ${input.message || "なし"}
             console.error("メール送信エラー:", error);
           }
         }
+        */
         
         return { success: true };
       }),
