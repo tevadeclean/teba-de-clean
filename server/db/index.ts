@@ -33,9 +33,18 @@ export async function upsertUser(user: any) {
 
 // お客様の声関連
 export async function getPublishedTestimonials() {
-  return await db.query.testimonials.findMany({
-    orderBy: (testimonials, { desc }) => [desc(testimonials.createdAt)],
-  });
+  try {
+    console.log("Fetching testimonials from DB...");
+    const results = await db.query.testimonials.findMany({
+      orderBy: (testimonials, { desc }) => [desc(testimonials.createdAt)],
+    });
+    console.log(`Successfully fetched ${results.length} testimonials.`);
+    return results;
+  } catch (error) {
+    console.error("Error in getPublishedTestimonials:", error);
+    // エラーが発生した場合は空配列を返すのではなく、エラーを投げて上位でキャッチさせる
+    throw error;
+  }
 }
 
 export async function getAllTestimonials() {
