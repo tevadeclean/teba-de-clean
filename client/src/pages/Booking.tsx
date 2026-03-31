@@ -1,57 +1,26 @@
-import { useState } from "react";
+import { useEffect } from "react";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Phone, Mail } from "lucide-react";
 import { Link } from "wouter";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import { trpc } from "@/lib/trpc";
-import { toast } from "sonner";
-import { CheckCircle2, Phone, Mail } from "lucide-react";
+import { CheckCircle2 } from "lucide-react";
 
 export default function Booking() {
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    phone: "",
-    serviceType: "residential" as "residential" | "commercial",
-    preferredDate: "",
-    message: ""
-  });
+  useEffect(() => {
+    // Jotformスクリプトを動的に読み込む
+    const script = document.createElement("script");
+    script.src = "https://form.jotform.com/jsform/260891459121055";
+    script.type = "text/javascript";
+    script.async = true;
+    document.body.appendChild(script);
 
-  const createBooking = trpc.bookings.create.useMutation({
-    onSuccess: () => {
-      toast.success("予約を受け付けました", {
-        description: "担当者より折り返しご連絡いたします。"
-      });
-      // フォームをリセット
-      setFormData({
-        name: "",
-        email: "",
-        phone: "",
-        serviceType: "residential",
-        preferredDate: "",
-        message: ""
-      });
-    },
-    onError: (error) => {
-      toast.error("予約の送信に失敗しました", {
-        description: error.message
-      });
-    }
-  });
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    
-    if (!formData.name || !formData.phone) {
-      toast.error("必須項目を入力してください");
-      return;
-    }
-
-    createBooking.mutate(formData);
-  };
+    return () => {
+      // クリーンアップ時にスクリプトを削除
+      if (script.parentNode) {
+        script.parentNode.removeChild(script);
+      }
+    };
+  }, []);
 
   return (
     <div className="min-h-screen">
@@ -71,117 +40,16 @@ export default function Booking() {
         <div className="container">
           <div className="max-w-4xl mx-auto">
             <div className="grid lg:grid-cols-3 gap-8">
-              {/* フォーム */}
+              {/* Jotformフォーム */}
               <div className="lg:col-span-2">
                 <Card>
                   <CardHeader>
                     <CardTitle className="text-2xl">予約情報を入力</CardTitle>
                   </CardHeader>
                   <CardContent>
-                    <form onSubmit={handleSubmit} className="space-y-6">
-                      {/* お名前 */}
-                      <div>
-                        <Label htmlFor="name">
-                          お名前 <span className="text-destructive">*</span>
-                        </Label>
-                        <Input
-                          id="name"
-                          value={formData.name}
-                          onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                          placeholder="山田 太郎"
-                          required
-                        />
-                      </div>
-
-                      {/* 電話番号 */}
-                      <div>
-                        <Label htmlFor="phone">
-                          電話番号 <span className="text-destructive">*</span>
-                        </Label>
-                        <Input
-                          id="phone"
-                          type="tel"
-                          value={formData.phone}
-                          onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                          placeholder="098-XXX-XXXX"
-                          required
-                        />
-                      </div>
-
-                      {/* メールアドレス */}
-                      <div>
-                        <Label htmlFor="email">メールアドレス</Label>
-                        <Input
-                          id="email"
-                          type="email"
-                          value={formData.email}
-                          onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                          placeholder="example@email.com"
-                        />
-                      </div>
-
-                      {/* サービス種別 */}
-                      <div>
-                        <Label>
-                          サービス種別 <span className="text-destructive">*</span>
-                        </Label>
-                        <RadioGroup
-                          value={formData.serviceType}
-                          onValueChange={(value: "residential" | "commercial") => 
-                            setFormData({ ...formData, serviceType: value })
-                          }
-                          className="mt-2"
-                        >
-                          <div className="flex items-center space-x-2">
-                            <RadioGroupItem value="residential" id="residential" />
-                            <Label htmlFor="residential" className="font-normal cursor-pointer">
-                              家庭用エアコンクリーニング
-                            </Label>
-                          </div>
-                          <div className="flex items-center space-x-2">
-                            <RadioGroupItem value="commercial" id="commercial" />
-                            <Label htmlFor="commercial" className="font-normal cursor-pointer">
-                              業務用エアコンクリーニング
-                            </Label>
-                          </div>
-                        </RadioGroup>
-                      </div>
-
-                      {/* 希望日時 */}
-                      <div>
-                        <Label htmlFor="preferredDate">希望日時</Label>
-                        <Input
-                          id="preferredDate"
-                          value={formData.preferredDate}
-                          onChange={(e) => setFormData({ ...formData, preferredDate: e.target.value })}
-                          placeholder="例：2026年2月10日 午前中"
-                        />
-                        <p className="text-xs text-muted-foreground mt-1">
-                          具体的な日時が決まっていない場合は、「平日午前中希望」などとご記入ください
-                        </p>
-                      </div>
-
-                      {/* その他要望 */}
-                      <div>
-                        <Label htmlFor="message">その他ご要望・ご質問</Label>
-                        <Textarea
-                          id="message"
-                          value={formData.message}
-                          onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                          placeholder="エアコンの台数、設置場所、気になる点などをご記入ください"
-                          rows={5}
-                        />
-                      </div>
-
-                      <Button 
-                        type="submit" 
-                        size="lg" 
-                        className="w-full bg-accent hover:bg-accent/90 text-accent-foreground"
-                        disabled={createBooking.isPending}
-                      >
-                        {createBooking.isPending ? "送信中..." : "予約を申し込む"}
-                      </Button>
-                    </form>
+                    <div id="jotform-container">
+                      {/* Jotformスクリプトがここにフォームを挿入します */}
+                    </div>
                   </CardContent>
                 </Card>
               </div>
