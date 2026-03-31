@@ -58,7 +58,16 @@ async function startServer() {
       res.json(data);
     } catch (error) {
       console.error("Direct API Error:", error);
-      res.status(500).json({ error: (error as Error).message });
+      // エラー詳細をJSONで返す（HTMLエラー画面を回避）
+      res.status(200).json([{
+        id: -1,
+        author_name: "システムエラー詳細",
+        content: `データベース接続またはクエリでエラーが発生しました: ${(error as Error).message}`,
+        rating: 0,
+        serviceType: "error",
+        source: "DEBUG",
+        createdAt: new Date()
+      }]);
     }
   });
   // development mode uses Vite, production mode uses static files
