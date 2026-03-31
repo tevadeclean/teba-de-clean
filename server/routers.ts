@@ -47,6 +47,7 @@ export const appRouter = router({
         const cookieOptions = getSessionCookieOptions(ctx.req);
         ctx.res.cookie(COOKIE_NAME, sessionToken, { ...cookieOptions, maxAge: ONE_YEAR_MS });
 
+        console.log("Returning success response for booking creation.");
         return { success: true };
       }),
 
@@ -87,6 +88,7 @@ export const appRouter = router({
           throw new Error('Admin only');
         }
         await db.createTestimonial(input);
+        console.log("Returning success response for booking creation.");
         return { success: true };
       }),
     
@@ -105,6 +107,7 @@ export const appRouter = router({
         }
         const { id, ...data } = input;
         await db.updateTestimonial(id, data);
+        console.log("Returning success response for booking creation.");
         return { success: true };
       }),
     
@@ -115,6 +118,7 @@ export const appRouter = router({
           throw new Error('Admin only');
         }
         await db.deleteTestimonial(input.id);
+        console.log("Returning success response for booking creation.");
         return { success: true };
       }),
   }),
@@ -146,7 +150,9 @@ export const appRouter = router({
         message: z.string().optional(),
       }))
       .mutation(async ({ input }) => {
-        await db.createBooking(input);
+        console.log("Attempting to create booking in DB with input:", input);
+        const newBooking = await db.createBooking(input);
+        console.log("Booking created successfully:", newBooking);
         
         // オーナーに通知（システム通知）- 環境変数が未設定のため一時的に無効化
         /*
@@ -204,6 +210,7 @@ ${input.message || "なし"}
         }
         */
         
+        console.log("Returning success response for booking creation.");
         return { success: true };
       }),
     
@@ -224,6 +231,7 @@ ${input.message || "なし"}
           throw new Error('Admin only');
         }
         await db.updateBookingStatus(input.id, input.status);
+        console.log("Returning success response for booking creation.");
         return { success: true };
       }),
   }),
