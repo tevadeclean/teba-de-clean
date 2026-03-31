@@ -1,6 +1,9 @@
 {
   "rewrites": [
-
+    {
+      "source": "/api/testimonials",
+      "destination": "/api/testimonials.ts"
+    },
     {
       "source": "/(.*)",
       "destination": "/index.html"
