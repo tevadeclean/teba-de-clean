@@ -4,7 +4,7 @@ import superjson from "superjson";
 import type { TrpcContext } from "./context";
 
 const t = initTRPC.context<TrpcContext>().create({
-  transformer: superjson,
+  // transformer: superjson, // 一時的に無効化
 });
 
 export const router = t.router;
