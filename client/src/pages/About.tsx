@@ -43,7 +43,7 @@ export default function About() {
                 </div>
                 <p className="text-sm md:text-base text-muted-foreground leading-relaxed">
                   この度は、テバdeクリーンのホームページをご覧いただき、誠にありがとうございます。
-                  オーナーの比嘉 健太と申します。
+                  オーナーの儀間貴郁と申します。
                 </p>
               </div>
             </div>
