@@ -25,12 +25,12 @@ export type InsertUser = typeof users.$inferInsert;
  */
 export const serviceTypeEnum = pgEnum("service_type", ["residential", "commercial"]);
 
-export const testimonials = pgTable("testimonials", {
+export const testimonials = pgTable("Testimonial", {
   id: serial("id").primaryKey(),
   author_name: varchar("author_name", { length: 100 }),
   rating: integer("rating"),
   content: text("content"),
-  serviceType: serviceTypeEnum("serviceType"),
+  serviceType: varchar("serviceType", { length: 50 }),
   imageUrl: varchar("imageUrl", { length: 500 }),
   source: varchar("source", { length: 100 }).default("くらしのマーケット"),
   createdAt: timestamp("created_at").defaultNow(),
