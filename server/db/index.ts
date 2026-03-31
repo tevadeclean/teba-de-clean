@@ -4,6 +4,7 @@ import * as schema from "../../drizzle/schema";
 import { ENV } from "../_core/env";
 import { eq } from "drizzle-orm";
 
+console.log("DATABASE_URL value:", ENV.databaseUrl);
 if (!ENV.databaseUrl) {
   throw new Error("DATABASE_URL is not set");
 }
