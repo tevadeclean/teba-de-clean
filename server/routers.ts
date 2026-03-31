@@ -63,9 +63,17 @@ export const appRouter = router({
   // お客様の声
   testimonials: router({
     list: publicProcedure
-      .input(z.object({ category: z.string().optional() }))
+      .input(z.any()) // バリデーションを一時的に緩和
       .query(async ({ input }) => {
-      return db.getPublishedTestimonials();
+        try {
+          console.log("tRPC: testimonials.list called");
+          const data = await db.getPublishedTestimonials();
+          console.log(`tRPC: returning ${data.length} items`);
+          return data;
+        } catch (error) {
+          console.error("tRPC Error in testimonials.list:", error);
+          throw error;
+        }
     }),
     
     listAll: protectedProcedure.query(async ({ ctx }) => {
