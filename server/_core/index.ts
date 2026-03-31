@@ -9,7 +9,7 @@ import { createExpressMiddleware } from "@trpc/server/adapters/express";
 import { appRouter } from "../routers";
 import { createContext } from "./context";
 import { serveStatic, setupVite } from "./vite";
-import * as db from "../db";
+import * as db from "../db/index";
 import { ENV } from "./env";
 
 function isPortAvailable(port: number): Promise<boolean> {
