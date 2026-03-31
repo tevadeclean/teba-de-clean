@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Phone, Mail } from "lucide-react";
 import { Link } from "wouter";
@@ -6,22 +5,6 @@ import { Button } from "@/components/ui/button";
 import { CheckCircle2 } from "lucide-react";
 
 export default function Booking() {
-  useEffect(() => {
-    // Jotformスクリプトを動的に読み込む
-    const script = document.createElement("script");
-    script.src = "https://form.jotform.com/jsform/260891459121055";
-    script.type = "text/javascript";
-    script.async = true;
-    document.body.appendChild(script);
-
-    return () => {
-      // クリーンアップ時にスクリプトを削除
-      if (script.parentNode) {
-        script.parentNode.removeChild(script);
-      }
-    };
-  }, []);
-
   return (
     <div className="min-h-screen">
       {/* ヒーロー */}
@@ -47,9 +30,24 @@ export default function Booking() {
                     <CardTitle className="text-2xl">予約情報を入力</CardTitle>
                   </CardHeader>
                   <CardContent>
-                    <div id="jotform-container">
-                      {/* Jotformスクリプトがここにフォームを挿入します */}
-                    </div>
+                    <iframe
+                      id="JotFormIFrame"
+                      title="テバdeクリーン　ご予約＆お問合せフォーム"
+                      onLoad={() => {
+                        const iframe = document.getElementById("JotFormIFrame") as HTMLIFrameElement;
+                        if (iframe) {
+                          iframe.style.height = iframe.contentWindow?.document.body.scrollHeight + "px";
+                        }
+                      }}
+                      src="https://form.jotform.com/260891459121055"
+                      style={{
+                        width: "100%",
+                        height: "600px",
+                        border: "none",
+                        borderRadius: "0.5rem"
+                      }}
+                      allow="geolocation; microphone; camera"
+                    />
                   </CardContent>
                 </Card>
               </div>
