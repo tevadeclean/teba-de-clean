@@ -131,7 +131,7 @@ export default function BlogDetail() {
                     予約する
                   </Button>
                 </Link>
-                <a href="tel:098-XXX-XXXX">
+                <a href="tel:050-1720-0053">
                   <Button size="lg" variant="outline">
                     電話で相談
                   </Button>

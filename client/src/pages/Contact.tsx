@@ -38,8 +38,8 @@ export default function Contact() {
                     </div>
                     <div>
                       <h3 className="text-xl font-bold mb-3">お電話</h3>
-                      <a href="tel:098-XXX-XXXX" className="text-3xl font-black text-primary hover:underline">
-                        098-XXX-XXXX
+                      <a href="tel:050-1720-0053" className="text-3xl font-black text-primary hover:underline">
+                        050-1720-0053
                       </a>
                       <div className="text-base text-muted-foreground mt-4 space-y-1">
                         <p>平日: 9:00〜17:00</p>
@@ -93,8 +93,7 @@ export default function Contact() {
                       <div>
                         <h3 className="font-bold text-lg mb-2">所在地</h3>
                         <p className="text-muted-foreground leading-relaxed">
-                          沖縄県[市町村名][住所]<br />
-                          ※詳細な住所はお問い合わせ時にお伝えします
+                          沖縄県宜野湾市
                         </p>
                       </div>
                     </div>
