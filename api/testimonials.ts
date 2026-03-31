@@ -23,7 +23,7 @@ export default async function handler(
     return response.status(200).json([{
       id: -1,
       author_name: "システムエラー詳細",
-      content: `エラー: ${(error as Error).message}. 接続先: ${ENV.databaseUrl ? "設定あり" : "未設定"}.`,
+      content: `エラー: ${(error as Error).message}. 接続先: ${ENV.databaseUrl ? "設定あり" : "未設定"}. スタック: ${(error as Error).stack}`,
       rating: 0,
       serviceType: "error",
       source: "DEBUG",
