@@ -47,6 +47,19 @@ async function startServer() {
       },
     })
   );
+
+  // Direct API for Testimonials (to bypass tRPC issues)
+  app.get("/api/testimonials-direct", async (req, res) => {
+    try {
+      console.log("Direct API: Fetching testimonials...");
+      const data = await db.getPublishedTestimonials();
+      console.log(`Direct API: Returning ${data.length} items`);
+      res.json(data);
+    } catch (error) {
+      console.error("Direct API Error:", error);
+      res.status(500).json({ error: (error as Error).message });
+    }
+  });
   // development mode uses Vite, production mode uses static files
   if (process.env.NODE_ENV === "development") {
     await setupVite(app, server);
