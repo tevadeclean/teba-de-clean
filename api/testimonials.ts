@@ -1,5 +1,5 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
-import { db } from '../server/db';
+import { db } from '../server/db/index';
 import { ENV } from '../server/_core/env';
 
 export default async function handler(
