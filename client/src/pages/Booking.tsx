@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Phone, Mail } from "lucide-react";
 import { Link } from "wouter";
@@ -5,6 +6,26 @@ import { Button } from "@/components/ui/button";
 import { CheckCircle2 } from "lucide-react";
 
 export default function Booking() {
+  useEffect(() => {
+    // Jotform embed handler スクリプトを動的に読み込む
+    const script = document.createElement("script");
+    script.src = "https://cdn.jotfor.ms/s/umd/latest/for-form-embed-handler.js";
+    script.async = true;
+    script.onload = () => {
+      // スクリプト読み込み後、embed handlerを実行
+      if (window.jotformEmbedHandler) {
+        window.jotformEmbedHandler("iframe[id='JotFormIFrame-260891459121055']", "https://form.jotform.com/");
+      }
+    };
+    document.body.appendChild(script);
+
+    return () => {
+      if (script.parentNode) {
+        script.parentNode.removeChild(script);
+      }
+    };
+  }, []);
+
   return (
     <div className="min-h-screen">
       {/* ヒーロー */}
@@ -31,22 +52,20 @@ export default function Booking() {
                   </CardHeader>
                   <CardContent>
                     <iframe
-                      id="JotFormIFrame"
-                      title="テバdeクリーン　ご予約＆お問合せフォーム"
-                      onLoad={() => {
-                        const iframe = document.getElementById("JotFormIFrame") as HTMLIFrameElement;
-                        if (iframe) {
-                          iframe.style.height = iframe.contentWindow?.document.body.scrollHeight + "px";
-                        }
-                      }}
+                      id="JotFormIFrame-260891459121055"
+                      title="テバdeクリーン ご予約＆お問合せフォーム"
+                      onLoad={() => window.parent.scrollTo(0, 0)}
+                      allowTransparency={true}
+                      allow="geolocation; microphone; camera; fullscreen; payment"
                       src="https://form.jotform.com/260891459121055"
+                      frameBorder="0"
                       style={{
-                        width: "100%",
-                        height: "600px",
-                        border: "none",
-                        borderRadius: "0.5rem"
+                        minWidth: "100%",
+                        maxWidth: "100%",
+                        height: "539px",
+                        border: "none"
                       }}
-                      allow="geolocation; microphone; camera"
+                      scrolling="no"
                     />
                   </CardContent>
                 </Card>
@@ -144,4 +163,10 @@ export default function Booking() {
       </section>
     </div>
   );
+}
+
+declare global {
+  interface Window {
+    jotformEmbedHandler?: (selector: string, baseUrl: string) => void;
+  }
 }
