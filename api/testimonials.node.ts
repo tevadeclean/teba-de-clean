@@ -1,5 +1,5 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
-import { db } from '../server/db/index.js';
+import { db, getPublishedTestimonials } from '../server/db/index.js';
 import { ENV } from '../server/_core/env.js';
 
 export default async function handler(
@@ -10,7 +10,7 @@ export default async function handler(
     console.log("API: Fetching testimonials from database...");
     
     // データベースからデータを取得
-    const data = await db.getPublishedTestimonials();
+    const data = await getPublishedTestimonials();
     
     console.log(`API: Returning ${data.length} items`);
     
