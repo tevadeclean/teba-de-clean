@@ -1,6 +1,6 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
-import { db } from '../server/db/index';
-import { ENV } from '../server/_core/env';
+import { db } from '../server/db/index.js';
+import { ENV } from '../server/_core/env.js';
 
 export default async function handler(
   request: VercelRequest,
