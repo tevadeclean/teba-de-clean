@@ -2,11 +2,13 @@
   "rewrites": [
     {
       "source": "/api/testimonials",
-      "destination": "/api/testimonials.ts"
-    },
+      "destination": "/api/testimonials.node.ts"
+    }
+  ],
+  "routes": [
     {
-      "source": "/(.*)",
-      "destination": "/dist/index.html"
+      "src": "/(.*)",
+      "dest": "/index.html"
     }
   ]
 }
